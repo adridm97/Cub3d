@@ -126,6 +126,18 @@ void *ft_realloc(void *ptr, size_t new_size)
     return new_ptr;
 }
 
+void print_map(t_map *map)
+{
+	int i;
+
+	i = 0;
+	while (i < map->height)
+	{
+		printf("%s\n", map->grid[i]);
+		i++;
+	}
+}
+
 int	add_to_map(t_map *map, char *line)
 {
 	int		line_length;
@@ -134,6 +146,13 @@ int	add_to_map(t_map *map, char *line)
 
     i = 0;
 	line_length = ft_strlen(line);
+	
+	while (i < line_length) {
+        if (line[i] == ' ' || line[i] == '\t') {
+            line[i] = '2';
+        }
+        i++;
+    }
 	if (map->height == 0)
 		map->width = line_length;
     else if (line_length > map->width)
@@ -141,21 +160,30 @@ int	add_to_map(t_map *map, char *line)
 	new_grid = malloc((map->height + 1) * sizeof(char *));
 	if (new_grid == NULL)
 		return (0);
+	i = 0;
+	while (i < map->height)
+	{
+		new_grid[i] = map->grid[i];
+		i++;
+	}
+	free(map->grid);
 	map->grid = new_grid;
 	map->grid[map->height] = malloc(map->width + 1);
 	if (map->grid[map->height] == NULL)
 		return (0);
+	i = 0;
     while (i < map->width)
     {
         if (i < line_length)
             map->grid[map->height][i] = line[i];
         else
-            map->grid[map->height][i] = -2;
-        i++;
+            map->grid[map->height][i] = '2';
+		i++;
     }
     map->grid[map->height][map->width] = '\0';
-	// ft_strcpy(map->grid[map->height], line);
 	map->height++;
+
+	print_map(map);
 	return (1);
 }
 
@@ -236,6 +264,7 @@ t_map	*check_map(int fd, t_map *map)
 			break ;
 		add_line_to_map(map, line);
 	}
+	// printf(*map->grid);
 	map_valid = copy_map(map);
 	// if (validate_map(map))
 	// 	return (map_valid);
