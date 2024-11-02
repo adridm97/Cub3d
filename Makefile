@@ -1,4 +1,4 @@
-CC = gcc
+CC = cc
 CFLAGS = -Wall -Wextra -Werror
 NAME = cub
 SRCS = main.c parse.c minmap.c key_events.c #parse_player.c

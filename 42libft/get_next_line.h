@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aduenas- <aduenas-@student.42barcel>       +#+  +:+       +#+        */
+/*   By: aduenas- <aduenas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 20:25:49 by aduenas-          #+#    #+#             */
-/*   Updated: 2023/09/03 19:00:09 by aduenas-         ###   ########.fr       */
+/*   Updated: 2024/11/02 15:33:26 by aduenas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include <unistd.h>
 # include <sys/types.h>
 # include <sys/uio.h>
+# include "libft.h"
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 2
 # endif
@@ -27,6 +28,6 @@ char	*ft_line(char *buff);
 char	*ft_strjoin(char const *str1, char const *str2);
 void	*ft_calloc(size_t count, size_t size);
 
-size_t	ft_strlen(const char *str);
+// size_t	ft_strlen(const char *str);
 
 #endif

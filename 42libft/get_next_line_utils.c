@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aduenas- <aduenas-@student.42barcel>       +#+  +:+       +#+        */
+/*   By: aduenas- <aduenas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 20:36:45 by aduenas-          #+#    #+#             */
-/*   Updated: 2023/09/03 21:27:09 by aduenas-         ###   ########.fr       */
+/*   Updated: 2024/11/02 15:32:19 by aduenas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,17 +52,17 @@ char	*ft_strchr(const char *string, int c)
 		return (NULL);
 }
 
-size_t	ft_strlen(const char *str)
-{
-	int	i;
+// size_t	ft_strlen(const char *str)
+// {
+// 	int	i;
 
-	i = 0;
-	if (!str)
-		return (0);
-	while (str[i])
-		i++;
-	return (i);
-}
+// 	i = 0;
+// 	if (!str)
+// 		return (0);
+// 	while (str[i])
+// 		i++;
+// 	return (i);
+// }
 
 void	ft_bzero(void *s, size_t n)
 {
