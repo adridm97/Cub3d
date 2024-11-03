@@ -138,54 +138,76 @@ void print_map(t_map *map)
 	}
 }
 
-int	add_to_map(t_map *map, char *line)
+
+int add_to_map(t_map *map, char *line)
 {
-	int		line_length;
-	char	**new_grid;
-    int i;
-
-    i = 0;
-	line_length = ft_strlen(line);
-	
-	while (i < line_length) {
-        if (line[i] == ' ' || line[i] == '\t') {
-            line[i] = '2';
-        }
-        i++;
-    }
-	if (map->height == 0)
-		map->width = line_length;
-    else if (line_length > map->width)
-        map->width = line_length;
-	new_grid = malloc((map->height + 1) * sizeof(char *));
-	if (new_grid == NULL)
-		return (0);
-	i = 0;
-	while (i < map->height)
-	{
-		new_grid[i] = map->grid[i];
-		i++;
-	}
-	free(map->grid);
-	map->grid = new_grid;
-	map->grid[map->height] = malloc(map->width + 1);
-	if (map->grid[map->height] == NULL)
-		return (0);
-	i = 0;
-    while (i < map->width)
-    {
-        if (i < line_length)
-            map->grid[map->height][i] = line[i];
-        else
-            map->grid[map->height][i] = '2';
-		i++;
-    }
-    map->grid[map->height][map->width] = '\0';
-	map->height++;
-
-	print_map(map);
-	return (1);
+	if (strncmp(line, "NO ", 3) == 0)
+		return parse_texture(&map->north_texture, line);
+	else if (strncmp(line, "SO ", 3) == 0)
+		return parse_texture(&map->south_texture, line);
+	else if (strncmp(line, "WE ", 3) == 0)
+		return parse_texture(&map->west_texture, line);
+	else if (strncmp(line, "EA ", 3) == 0)
+		return parse_texture(&map->east_texture, line);
+	else if (strncmp(line, "F ", 2) == 0)
+		return parse_color(&map->floor, line);
+	else if (strncmp(line, "C ", 2) == 0)
+		return parse_color(&map->ceiling, line);
+	// else if (line[0] == '1' || line[0] == '0')
+	// 	return add_line_to_map(map, line);
+	// else if (line[0] == ' ')
+	// 	return 1;
+	return 0;
 }
+
+// int	add_to_map(t_map *map, char *line)
+// {
+// 	int		line_length;
+// 	char	**new_grid;
+//     int i;
+
+//     i = 0;
+// 	line_length = ft_strlen(line);
+	
+// 	while (i < line_length) {
+//         if (line[i] == ' ' || line[i] == '\t') {
+//             line[i] = '-1';
+//         }
+//         i++;
+//     }
+// 	if (map->height == 0)
+// 		map->width = line_length;
+//     else if (line_length > map->width)
+//         map->width = line_length;
+// 	new_grid = malloc((map->height + 1) * sizeof(char *));
+// 	if (new_grid == NULL)
+// 		return (0);
+// 	i = 0;
+// 	while (i < map->height)
+// 	{
+// 		new_grid[i] = map->grid[i];
+// 		i++;
+// 	}
+// 	free(map->grid);
+// 	map->grid = new_grid;
+// 	map->grid[map->height] = malloc(map->width + 1);
+// 	if (map->grid[map->height] == NULL)
+// 		return (0);
+// 	i = 0;
+//     while (i < map->width)
+//     {
+//         if (i < line_length)
+//             map->grid[map->height][i] = line[i];
+//         else
+//             map->grid[map->height][i] = ' ';
+// 		i++;
+//     }
+//     map->grid[map->height][map->width] = '\0';
+// 	map->height++;
+
+// 	print_map(map);
+// 	return (1);
+// }
 
 void	free_map(t_map *map)
 {
@@ -306,7 +328,141 @@ t_map	*check_param(int argc, char *argv[], t_map *map)
 // }
 
 
+int count_line(char *str)
+{
+	char *new;
+	int fd;
+	int i;
 
+	i = 0;
+	fd = open(str, O_RDONLY);
+	if (fd == -1)
+	{
+		printf("Error: No se pudo abrir el archivo.\n");
+		return (0);
+	}
+	new = get_next_line(fd);
+	while (new != NULL)
+	{
+		i++;
+		free(new);
+		new = get_next_line(fd);
+	}
+	free(new);
+	close(fd);
+	return (i);
+}
+
+// empezar a validar el  mapa
+
+int check_f_c(t_parser *parser, t_scene *scene)
+{
+	char **sp_f;
+	char **sp_c;
+
+	sp_f = ft_split(parser->elem.f, ',');
+	sp_c = ft_split(parser->elem.c, ',');
+	if (ft_strlen(sp_f) != 3 || ft_strlen(sp_c) != 3)
+		return (free(sp_f), free(sp_c), 1);
+	else
+	{
+		if (check_rgb_nums(sp_f) == 0 && check_rbg_nums(sp_c) == 0)
+		{
+			if (convert_hexa(sp_f, sp_c, scene) == 1)
+				return (ft_free(sp_f), ft_free(sp_c), 0);
+		}
+		else
+			return (ft_free(sp_f), ft_free(sp_c), 1);
+	}
+	ft_free(sp_f);
+	ft_free(sp_c);
+	return (0);
+}
+
+int check_elements(t_parser *parser, t_scene *scene)
+{
+	int y;
+
+	y = 0;
+	while (parser->file[y] != NULL)
+	{
+		if (ft_strcmp(parser->file[y], "\n") == 0)
+			y++;
+		else
+		{
+			if (do_it(parser, parser->file[y]) == -1)
+				return (-1);
+			y++;
+		}
+	}
+	if (parser->elem.qtt.no != 1 || parser->elem.qtt.so != 1 ||
+		parser->elem.qtt.we != 1 || parser->elem.qtt.ea != 1 ||
+		parser->elem.qtt.f != 1 || parser->elem.qtt.c != 1 ||
+		parser->elem.qtt.is_zero != 0)
+		return (1);
+	if (check_f_c(parser, scene) == 1)
+		return (1);
+	return (0);
+}
+
+int ft_rowsfile(char **file)
+{
+	int i;
+
+	i = 0;
+	while (file[i] != NULL)
+		i++;
+	return (i);
+}
+
+char *ft_strtrim()
+{
+	
+}
+
+int init_map(t_data *data, t_parser *parser)
+{
+	int y;
+	char *trimed;
+
+	y = 0;
+	parser->rowsfile = ft_rowsfile(parser->file);
+	while (parser->file[y] != NULL)
+	{
+		trimed = ft_strtrim(parser->file[y], " ");
+		if (trimed[0] == '1')
+			break ;
+		free(trimed);
+	}
+	free(trimed);
+	data->map = copy_map(*parser, y);
+	return (0);
+}
+
+char **check_file(char *str)
+{
+	char	*new;
+	int		i;
+	int		fd;
+
+	fd = 0;
+	i -1;
+	if (count_line(str) == 0)
+		return (NULL);
+	new = malloc(sizeof(char *) * count_line(str) + 1);
+	if (!new)
+		return (NULL);
+	if (!ft_contains_cub(str))
+		return (NULL);
+	fd = open(str, O_RDONLY);
+	if (fd == -1)
+		return (free(new), printf("error\n"), NULL);
+	new[++i] = get_next_line(fd);
+	while (new[i++] != NULL)
+		new[i] = get_next_line(fd);
+	close(fd);
+	return (new);
+}
 
 
 int	main(int argc, char *argv[])
