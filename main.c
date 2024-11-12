@@ -6,7 +6,7 @@
 /*   By: adrian <adrian@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/26 17:18:50 by aduenas-          #+#    #+#             */
-/*   Updated: 2024/10/30 20:45:59 by adrian           ###   ########.fr       */
+/*   Updated: 2024/11/11 10:28:47 by adrian           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ int	main(int argc, char **argv)
 		map_data.height = 0;
 		parse_file(fd, &map_data, argv[1]);
 		close(fd);
-		mlx = mlx_init(700, 700, "Cub3d", 1);
+		mlx = mlx_init(WIDTH, HEIGHT, "Cub3d", 1);
 		if (!mlx)
         	return (1);
 		drawBackground(mlx, &map_data);
