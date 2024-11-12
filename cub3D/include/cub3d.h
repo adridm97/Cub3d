@@ -12,6 +12,13 @@
 // # include "textures.h"
 // # include "utils.h"
 
+typedef struct s_color
+{
+	int	r;
+	int	g;
+	int	b;
+}	t_color;
+
 typedef struct validMap
 {
 	char	**grid;
@@ -19,6 +26,12 @@ typedef struct validMap
 	int		width;
 	int		ncoins;
 	int		nexit;
+	char	*north_texture;
+	char	*south_texture;
+	char	*west_texture;
+	char	*east_texture;
+	t_color	floor;
+	t_color	ceiling;
 	int		x;
 	int		y;
 }			t_map;
