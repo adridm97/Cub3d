@@ -6,7 +6,7 @@
 /*   By: adrian <adrian@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 17:08:43 by adrian            #+#    #+#             */
-/*   Updated: 2024/10/31 18:04:31 by adrian           ###   ########.fr       */
+/*   Updated: 2024/11/11 10:28:26 by adrian           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@
 # define KEY_D 2
 # define KEY_LEFT 123
 # define KEY_RIGHT 124
+# define WIDTH 700
+# define HEIGHT 700
 
 # include <fcntl.h>
 # include <stdlib.h>
