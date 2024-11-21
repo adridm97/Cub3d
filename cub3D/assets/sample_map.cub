@@ -1,5 +1,5 @@
-NO ./north_texture.xpm
-SO ./south_texture.xpm
+NO ./assets/north_texture.xpm
+SO ./assets/south_texture.xpm
 WE ./west_texture.xpm
 EA ./east_texture.xpm
 F 220,100,0

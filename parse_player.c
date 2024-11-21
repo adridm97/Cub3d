@@ -6,7 +6,7 @@
 /*   By: adrian <adrian@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 17:58:04 by adrian            #+#    #+#             */
-/*   Updated: 2024/11/02 10:38:01 by adrian           ###   ########.fr       */
+/*   Updated: 2024/11/14 20:49:48 by adrian           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	parse_player_position(t_mapData *map_data)
 
 	x = 0;
 	found = 0;
-
+    y = 0;
     while (y < map_data->height && !found)
 	{
         x = 0;

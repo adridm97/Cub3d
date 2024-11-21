@@ -1,7 +1,7 @@
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
 NAME = cub
-SRCS = main.c parse.c minmap.c key_events.c #parse_player.c
+SRCS = main.c parse.c minmap.c key_events.c parse_player.c ray_casting.c
 OBJS = $(SRCS:.c=.o)
 LIBFT = 42libft/libft.a
 MLX_LIB_DIR = MLX42/build

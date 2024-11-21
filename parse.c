@@ -6,7 +6,7 @@
 /*   By: adrian <adrian@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 17:03:21 by adrian            #+#    #+#             */
-/*   Updated: 2024/10/30 17:47:55 by adrian           ###   ########.fr       */
+/*   Updated: 2024/11/19 18:29:15 by adrian           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,20 +68,24 @@ void	parse_file(int fd, t_mapData *map_data, char *filename)
 	line = get_next_line(fd);
 	y = 0;
 	max_width = 0;
+	map_data->north_texture = (t_color){0, 0, 0};
+	map_data->south_texture = (t_color){128, 128, 128};
+	map_data->east_texture = (t_color){0, 0, 255};
+	map_data->west_texture = (t_color){0, 255, 0};
 	while (line != NULL)
 	{
 		if (line[0] == 'F')
 			parse_color(line, &map_data->floor);
 		else if (line[0] == 'C')
 			parse_color(line, &map_data->ceiling);
-		else if (ft_strncmp(line, "NO", 2) == 0)
-			parse_texture_path(line, &map_data->north_texture);
-		else if (ft_strncmp(line, "SO", 2) == 0)
-			parse_texture_path(line, &map_data->south_texture);
-		else if (ft_strncmp(line, "WE", 2) == 0)
-			parse_texture_path(line, &map_data->west_texture);
-		else if (ft_strncmp(line, "EA", 2) == 0)
-			parse_texture_path(line, &map_data->east_texture);
+		// else if (ft_strncmp(line, "NO", 2) == 0)
+		// 	parse_texture_path(line, &map_data->north_texture);
+		// else if (ft_strncmp(line, "SO", 2) == 0)
+		// 	parse_texture_path(line, &map_data->south_texture);
+		// else if (ft_strncmp(line, "WE", 2) == 0)
+		// 	parse_texture_path(line, &map_data->west_texture);
+		// else if (ft_strncmp(line, "EA", 2) == 0)
+		// 	parse_texture_path(line, &map_data->east_texture);
 		else if (isValidMap(line) == 0)
 		{
 			map_data->height++;
@@ -89,6 +93,7 @@ void	parse_file(int fd, t_mapData *map_data, char *filename)
 			if (width > max_width)
 				max_width = width;
 		}
+
 		free(line);
 		line = get_next_line(fd);
 	}

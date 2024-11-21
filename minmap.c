@@ -6,7 +6,7 @@
 /*   By: adrian <adrian@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 16:59:56 by adrian            #+#    #+#             */
-/*   Updated: 2024/10/29 23:18:30 by adrian           ###   ########.fr       */
+/*   Updated: 2024/11/19 22:26:11 by adrian           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,19 @@ void	draw_minimap(mlx_t *mlx, t_mapData *map_data)
 	minimap = mlx_new_image(mlx, mini_width, mini_height);
 	if (!minimap)
 		return;
+	y = 0;
+	x = 0;
+	while (x < mini_width)
+	{
+		y = 0;
+		while (y < mini_height)
+		{
+			mlx_put_pixel(minimap, x, y, 0x000000FF);
+			y++;
+		}
+		x++;
+	}
+	x = 0;
 	y = 0;
 	while (y < map_data->height)
 	{
