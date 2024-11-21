@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adrian <adrian@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aduenas- <aduenas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/26 17:18:50 by aduenas-          #+#    #+#             */
-/*   Updated: 2024/11/19 22:50:21 by adrian           ###   ########.fr       */
+/*   Updated: 2024/11/21 20:43:35 by aduenas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,48 +22,43 @@ uint32_t getColor(t_color color)
     return (color.r << 24 | color.g << 16 | color.b << 8 | 255);
 }
 
-void	drawBackground(mlx_t *mlx, t_mapData *map_data)
+void	drawBackground(mlx_t *mlx, mlx_image_t *image, t_mapData *map_data)
 {
 	int			y;
 	int			x;
-	int			width;
 	int			height;
+	int			width;
 	uint32_t	ceiling_color;
 	uint32_t	floor_color;
-	mlx_image_t	*img;
-
-	width = mlx->width;
-	height = mlx->height;
-	img = mlx_new_image(mlx, width, height);
-	if (!img)
-		return ;
-	y = 0;
+	
+	height = image->height;
+	width = image->width;
 	ceiling_color = getColor(map_data->ceiling);
 	floor_color = getColor(map_data->floor);
-	if (ceiling_color == 0 || floor_color  == 0)
-		return ;
+	if (ceiling_color == 0 || floor_color == 0)
+		return;
+	y = 0;
 	while (y < height / 2)
 	{
 		x = 0;
-		while ( x < width)
+		while (x < width)
 		{
-			mlx_put_pixel(img, x, y, ceiling_color);
+			mlx_put_pixel(image, x, y, ceiling_color);
 			x++;
 		}
 		y++;
 	}
-	y = height / 2;
-	while ( y < height)
+	while (y < height)
 	{
 		x = 0;
-		while ( x < width)
+		while (x < width)
 		{
-			mlx_put_pixel(img, x, y, floor_color);
+			mlx_put_pixel(image, x, y, floor_color);
 			x++;
 		}
 		y++;
 	}
-	if (mlx_image_to_window(mlx, img, 0, 0) < 0)
+	if (mlx_image_to_window(mlx, image, 0, 0) < 0)
 	{
 		perror("Error al mostrar la imagen en la ventana");
 		return;
@@ -98,13 +93,15 @@ int	main(int argc, char **argv)
 			fprintf(stderr, "Error: No se pudo crear la imagen\n");
 			exit(EXIT_FAILURE);
 		}
-		drawBackground(mlx, &map_data);
-		printf("1\n");
-		draw_walls(mlx, image, &map_data);
+		drawBackground(mlx, image, &map_data);
+		draw_walls(image, &map_data);
 		draw_minimap(mlx, &map_data);
-		printf("2\n");
+		if (mlx_image_to_window(mlx, image, 0, 0) < 0)
+		{
+			perror("Error al mostrar la imagen en la ventana");
+			return (1);
+		}
 		mlx_key_hook(mlx, key_hook, &map_data);
-		printf("3\n");
 		mlx_loop(mlx);
 		mlx_terminate(mlx);
 		return (0);

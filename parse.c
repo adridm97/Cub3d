@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adrian <adrian@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aduenas- <aduenas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 17:03:21 by adrian            #+#    #+#             */
-/*   Updated: 2024/11/19 18:29:15 by adrian           ###   ########.fr       */
+/*   Updated: 2024/11/21 20:00:34 by aduenas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,9 +124,10 @@ void	parse_file(int fd, t_mapData *map_data, char *filename)
 				map_data->map[y][x] = line[x];
 				if (line[x] == 'N' || line[x] == 'S' || line[x] == 'E' || line[x] == 'W')
 				{
-					map_data->player_x = x;
-					map_data->player_y = y;
-					map_data->player_dir = line[x];
+					map_data->player_x = x + 0.5;
+					map_data->player_y = y + 0.5;
+					parse_player_position(map_data);
+					line[x] = '0';
 				}
 				x++;
 			}

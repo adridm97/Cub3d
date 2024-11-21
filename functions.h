@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   functions.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adrian <adrian@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aduenas- <aduenas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 17:04:15 by adrian            #+#    #+#             */
-/*   Updated: 2024/11/19 22:45:24 by adrian           ###   ########.fr       */
+/*   Updated: 2024/11/21 20:43:14 by aduenas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,5 +32,5 @@ void key_hook(mlx_key_data_t keydata, void *param);
 void	parse_player_position(t_mapData *map_data);
 
 //ray_casting.c
-void	draw_walls(void *mlx, mlx_image_t *image, t_mapData *map_data);
+void	draw_walls(mlx_image_t *image, t_mapData *map_data);
 #endif
