@@ -1,51 +1,127 @@
-#include "utils.h"
+#include "cub3d.h"
 
-// Utility function 1
-// TODO: Implement utility function 1
+int count_args(char **check_line)
+ {
+	 int i;
 
-// Utility function 2
-// TODO: Implement utility function 2
+	 i = 0;
+	 while (check_line[i] != NULL)
+		 i++;
+	 return (i);
+ }
 
-// Utility function 3
-// TODO: Implement utility function 3
+ int ft_contains_cub(char *str)
+ {
+     int len;
 
-// Utility function 4
-// TODO: Implement utility function 4
+     len = ft_strlen(str);
+     if (len < 4)
+         return 0;
+     return (ft_strcmp(str + len - 4, ".cub") == 0);
+ }
 
-// Utility function 5
-// TODO: Implement utility function 5
+ int initialize_map(t_map *map)
+ {
+     map->grid = NULL;
+     map->height = 0;
+     map->width = 0;
+     map->nexit = 0;
+     map->ncoins = 0;
+     return (1);
+ }
 
-// Utility function 6
-// TODO: Implement utility function 6
+ void trim_first(char *s1, char *s2, int *start)
+ {
+     int i;
+     int j;
 
-// Utility function 7
-// TODO: Implement utility function 7
+     i = 0;
+     while (s1[i] != '\0')
+     {
+         j = 0;
+         while (s2[j] != '\0')
+         {
+             if (s1[i] == s2[j])
+                 break ;
+             j++;
+         }
+         if (s2[j] == '\0')
+            break ;
+         i++;
+    }
+     *start = i;
+ }
 
-// Utility function 8
-// TODO: Implement utility function 8
+ void trim_last(char *s1, char *s2, int *end)
+ {
+     int i;
+     int j;
 
-// Utility function 9
-// TODO: Implement utility function 9
+     i = ft_strlen(s1) - 1;
+     while (i >= 0)
+     {
+         j = 0;
+         while (s2[j] != '\0')
+         {
+             if (s1[i] == s2[j])
+                 break ;
+             j++;
+         }
+         if (s2[j] == '\0')
+             break ;
+         i--;
+     }
+     *end = i;
+ }
 
-// Utility function 10
-// TODO: Implement utility function 10
+ char *ft_strtrim(char const *s1, char const *s2)
+ {
+     char    *new;
+     int     start;
+     int     end;
+     int     len;
+     int     i;
 
-// Error handling function
-// TODO: Implement error handling function
+     if (!s1)
+         return (NULL);
+     if (!s2)
+         return (strdup(""));
+     i = 0;
+     trim_first((char *)s1, (char *)s2, &start);
+     trim_last((char *)s1, (char *)s2, &end);
+     if (start > end)
+         return (strdup(""));
+     len = end - start;
+     new = malloc(sizeof(char) * (len + 1));
+     if (!new)
+         return (NULL);
+     while (start < end)
+         new[i++] = s1[start++];
+     new[i] = '\0';
+     return (new);
+ }
 
-// Number parsing function
-// TODO: Implement number parsing function
+int count_line(char *str)
+ {
+     char *new;
+     int fd;
+     int i;
 
-// String parsing function
-// TODO: Implement string parsing function
-
-// File parsing function
-// TODO: Implement file parsing function
-
-// Memory allocation function
-// TODO: Implement memory allocation function
-
-// Memory deallocation function
-// TODO: Implement memory deallocation function
-
-// Other utility functions...
+     i = 0;
+     fd = open(str, O_RDONLY);
+     if (fd == -1)
+     {
+         printf("Error: No se pudo abrir el archivo.\n");
+         return (0);
+     }
+     new = get_next_line(fd);
+     while (new != NULL)
+     {
+         i++;
+         free(new);
+         new = get_next_line(fd);
+     }
+     free(new);
+     close(fd);
+     return (i);
+ }

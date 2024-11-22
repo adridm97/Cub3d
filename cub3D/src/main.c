@@ -13,15 +13,6 @@
  //     }
  //     return len;
  // }
-int count_args(char **check_line)
- {
-	 int i;
-
-	 i = 0;
-	 while (check_line[i] != NULL)
-		 i++;
-	 return (i);
- }
 
  int	cont_words(char *s, char c)
 {
@@ -145,28 +136,7 @@ char	**ft_split(char const *s, char c)
      s1[i] = '\0';
      return (s1);
  }
-
- int ft_contains_cub(char *str)
- {
-     int len;
-
-     len = ft_strlen(str);
-     if (len < 4)
-         return 0;
-     return (ft_strcmp(str + len - 4, ".cub") == 0);
- }
-
-
- int initialize_map(t_map *map)
- {
-     map->grid = NULL;
-     map->height = 0;
-     map->width = 0;
-     map->nexit = 0;
-     map->ncoins = 0;
-     return (1);
- }
-
+ 
  void    ft_exit(char *str, int ex)
  {
      int len;
@@ -177,76 +147,6 @@ char	**ft_split(char const *s, char c)
      exit(ex);
  }
 
- void trim_first(char *s1, char *s2, int *start)
- {
-     int i;
-     int j;
-
-     i = 0;
-     while (s1[i] != '\0')
-     {
-         j = 0;
-         while (s2[j] != '\0')
-         {
-             if (s1[i] == s2[j])
-                 break ;
-             j++;
-         }
-         if (s2[j] == '\0')
-            break ;
-         i++;
-    }
-     *start = i;
- }
-
- void trim_last(char *s1, char *s2, int *end)
- {
-     int i;
-     int j;
-
-     i = ft_strlen(s1) - 1;
-     while (i >= 0)
-     {
-         j = 0;
-         while (s2[j] != '\0')
-         {
-             if (s1[i] == s2[j])
-                 break ;
-             j++;
-         }
-         if (s2[j] == '\0')
-             break ;
-         i--;
-     }
-     *end = i;
- }
-
- char *ft_strtrim(char const *s1, char const *s2)
- {
-     char    *new;
-     int     start;
-     int     end;
-     int     len;
-     int     i;
-
-     if (!s1)
-         return (NULL);
-     if (!s2)
-         return (strdup(""));
-     i = 0;
-     trim_first((char *)s1, (char *)s2, &start);
-     trim_last((char *)s1, (char *)s2, &end);
-     if (start > end)
-         return (strdup(""));
-     len = end - start;
-     new = malloc(sizeof(char) * (len + 1));
-     if (!new)
-         return (NULL);
-     while (start < end)
-         new[i++] = s1[start++];
-     new[i] = '\0';
-     return (new);
- }
 
  void    *ft_memcpy(void *dest, const void *src, size_t n)
  {
@@ -492,32 +392,6 @@ char	**ft_split(char const *s, char c)
  //  return (1);
  // }
 
-
- int count_line(char *str)
- {
-     char *new;
-     int fd;
-     int i;
-
-     i = 0;
-     fd = open(str, O_RDONLY);
-     if (fd == -1)
-     {
-         printf("Error: No se pudo abrir el archivo.\n");
-         return (0);
-     }
-     new = get_next_line(fd);
-     while (new != NULL)
-     {
-         i++;
-         free(new);
-         new = get_next_line(fd);
-     }
-     free(new);
-     close(fd);
-     return (i);
- }
-
  // empezar a validar el  mapa
 
  char **check_file(char *str)
@@ -565,53 +439,6 @@ char	**ft_split(char const *s, char c)
      parser->colsx = 0;
      parser->rowsy = 0;
      parser->file = check_file(str);
- }
-
- void    free_parser(t_parser *parser)
- {
-     int y;
-
-     y = 0;
-     while (parser && parser->file && parser->file[y])
-     {
-         free(parser->file[y]);
-         y++;
-     }
-     free(parser->file);
-     // ft_free_game_elements(parser);
- }
-
- void    free_scene(t_parser *parser, t_scene *scene)
- {
-     // free_mlx(scene);
-     free_parser(parser);
- }
-
- void    free_data(t_parser *parser, t_data *data, t_scene *scene)
- {
-     int y;
-
-     y = 0;
-     while (data && data->map && data->map[y])
-     {
-         free(data->map[y]);
-         y++;
-     }
-     free(data->map);
-     free_scene(parser, scene);
- }
-
- void    ft_free_game(char **check_line)
- {
-     int i;
-
-     i = 0;
-     while (check_line[i] != NULL)
-     {
-         free(check_line[i]);
-         i++;
-    }
-     free(check_line);
  }
 
  int check_rgb_nums(char **sp)
@@ -688,117 +515,6 @@ char	**ft_split(char const *s, char c)
   return (0);
  }
 
-
-int check_is_valid(char **check_line)
-{
-    int i;
-    int x;
-    int found;
-
-    i = 0;
-    x = 0;
-    found = 0;
-    while (check_line && check_line[i] != NULL)
-    {
-        x = 0;
-        while (check_line[i][x] != '\0')
-        {
-            if (strchr("01 \nNSWE", check_line[i][x]) == NULL)
-                return (1);
-            if (strchr("NSWE", check_line[i][x]) != NULL)
-                found = 1;
-            x++;
-        }
-        i++;
-    }
-    return (0);
-}
-
-
-int check_elem1(char **check_line, t_parser *parser)
-{
-    if (ft_strcmp(check_line[0], "EA") == 0)
-    {
-        if (parser->elem.ea == NULL)
-            parser->elem.ea = strdup(check_line[1]);
-        parser->elem.qtt.ea++;
-    }
-    else if (ft_strcmp(check_line[0], "F") == 0)
-    {
-        if (parser->elem.f == NULL)
-            parser->elem.f = strdup(check_line[1]);
-        parser->elem.qtt.f++;
-    }
-    else if (ft_strcmp(check_line[0], "C") == 0)
-    {
-        if (parser->elem.c == NULL)
-            parser->elem.c = strdup(check_line[1]);
-        parser->elem.qtt.c++;
-    }
-    else
-        return (check_is_valid(check_line));
-    return (0);
-}
-
-int check_elem(char **check_line, t_parser *parser)
-{
-	if (ft_strcmp(check_line[0], "NO") == 0)
-    {
-        if (parser->elem.no == NULL)
-            parser->elem.no = strdup(check_line[1]);
-        parser->elem.qtt.no++;
-    }
-    else if (ft_strcmp(check_line[0], "SO") == 0)
-    {
-        if (parser->elem.so == NULL)
-            parser->elem.so = strdup(check_line[1]);
-        parser->elem.qtt.so++;
-    }
-    else if (ft_strcmp(check_line[0], "WE") == 0)
-    {
-        if (parser->elem.we == NULL)
-            parser->elem.we = strdup(check_line[1]);
-        parser->elem.qtt.we++;
-    }
-    else
-        return (check_elem1(check_line, parser));
-    return (0);
-}
-
-int check_nums(char *str, t_parser *parser)
-{
-    if (str != NULL)
-    {
-        if (str[0] != '1')
-        {
-            parser->elem.qtt.is_zero++;
-            return (free(str), 1);
-        }
-    }
-    free(str);
-    return (0);
-}
-
- int do_it(t_parser *parser, char *str)
- {
-	char **check_line;
-	int count;
-
-	check_line = ft_split(str, ' ');
-	count = count_args(check_line);
-	if (count == 2)
-	{
-		if (check_elem(check_line, parser) == 1)
-			return (1);
-	}
-    else
-    {
-        check_nums(ft_strtrim(check_line[0], " "), parser);
-    }
-    // hacer un free de check_line
-	return (0);
- }
-
 // int check_f_c(t_parser *parser, t_scene *scene)
 // {
 //     char **sp_f;
@@ -859,48 +575,7 @@ int check_nums(char *str, t_parser *parser)
      return (i);
  }
 
- char **copy_map(t_parser parser, int y)
- {
-    char **map;
-    int i;
-
-    i = 0;
-    if (y == 0)
-        return (NULL);
-    map = malloc(sizeof(char *) * (parser.rowsfile - y + 1));
-    if (!map)
-         return (NULL);
-     while (parser.file[y] != NULL)
-     {
-         map[i] = strdup(parser.file[y]);
-         y++;
-         i++;
-     }
-     map[i] = NULL;
-     return (map);
- }
-
- int init_map(t_data *data, t_parser *parser)
- {
-     int y;
-     char *trimed;
-
-     y = 0;
-     parser->rowsfile = ft_rowsfile(parser->file);
-     while (parser->file[y] != NULL)
-    {
-         trimed = ft_strtrim(parser->file[y], " ");
-         if (trimed[0] == '1')
-             break ;
-        y++;
-        free(trimed);
-     }
-     free(trimed);
-     data->map = copy_map(*parser, y);
-     return (0);
- }
-
- // checking if the map its valid or not
+ // checking if the map is valid or not
 
  int is_player(char **map, int x, int y)
  {
@@ -951,9 +626,9 @@ int check_nums(char *str, t_parser *parser)
  {
      if (map[y][x] != '1' && map[y][x] != '0' && map[y][x] != ' '
         && map[y][x] != letter_player && map[y][x] != '\0' && map[y][x] != '\n')
-         return (1);
+        	return (1);
      if ((map[y][x] == '0' || map[y][x] == letter_player) && y == 0)
-         return (1);
+    	return (1);
      if ((map[y][x] == '0' || map[y][x] == letter_player) && (map[y -1][x] == ' '
         || map[y + 1][x] == ' '))
          return (1);
@@ -967,70 +642,6 @@ int check_nums(char *str, t_parser *parser)
          return (1);
      return (0);
  }
-
- int check_map(t_parser *parser, t_scene scene)
- {
-    int y;
-    int x;
-
-     y = 0;
-     x = 0;
-     if (check_player(scene.map, parser) == 1)
-         return (1);
-     while (scene.map != NULL && scene.map[y] != NULL)
-     {
-         if (scene.map[y][x] == '\0')
-         {
-             x = 0;
-             y++;
-         }
-         else
-         {
-             if (check_space(scene.map, x, y, parser->letter_player) == 1)
-                 return (1);
-         }
-         x++;
-     }
-     return (0);
- }
-
-void calc_x_y(t_data *data)
-{
-    int i;
-    int j;
-
-    i = 0;
-    j = 0;
-    while (data->map[i] != NULL)
-    {
-        j = 0;
-        while (data->map[i][j] != '\0')
-            j++;
-        i++;
-    }
-    data->rowsy = i;
-    data->colsx = j;
-}
-
-void    delete_enter(char **map)
-{
-    int i;
-    int j;
-
-    i = 0;
-    j = 0;
-    while (map[i] != NULL)
-    {
-        j = 0;
-        while (map[i][j] != '\0')
-        {
-            if (map[i][j] == '\n')
-                map[i][j] = '\0';
-            j++;
-        }
-        i++;
-    }
-}
 
 size_t strlcpy(char *dst, const char *src, size_t dstsize)
 {
@@ -1056,53 +667,14 @@ size_t strlcpy(char *dst, const char *src, size_t dstsize)
     return (s - src - 1);
 }
 
-char **padding_map(char **map, int *rows, int *cols)
-{
-    char    **new_map;
-    int     i;
-
-    delete_enter(map);
-    *rows += 10 * 2;
-    *cols += 10 * 2;
-    new_map = malloc(sizeof(char *) * (*rows + 1));
-    if (!new_map)
-        return (NULL);
-    i = 0;
-    while (i < *rows)
-    {
-        new_map[i] = malloc(sizeof(char) * (*cols + 1));
-        if (!new_map[i])
-            return (ft_free_game(new_map), NULL);
-        memset(new_map[i], ' ', *cols + 1);
-        if (i >= 10 && i < *rows - 10)
-            strlcpy(new_map[i] + 10 - 2, map[i - 10], *cols + 1);
-        new_map[i][*cols] = '\0';
+void print_scene_map(char **map, int rows) {
+    int i = 0;
+    printf("Contenido del mapa:\n");
+    while (i < rows) {
+        printf("%s\n", map[i]);
         i++;
     }
-    new_map[i] = NULL;
-    return (new_map);
 }
-
- void set_scene(t_scene *scene, t_parser parser, t_data *data)
- {
-    calc_x_y(data);
-    scene->rows = parser.rowsy;
-    scene->cols = parser.colsx;
-    scene->width = 1920;
-    scene->height = 1080;
-    // cubrir el mapa para protegerlo para el raycasting
-    // esta mal, en el mapa se queda solo espacios blancos y ya no verifica bien lo siguiente !!!
-    scene->map = padding_map(data->map, &scene->rows, &scene->cols);
-    // scene->player = set_player(scene->map);
-    // set_mlx(scene, parser, &data);
-    if (scene->map == NULL)
-    {
-        free_data(&parser, data, scene);
-        // mlx_destroy_window(scene->mlx, scene->win);
-        exit(0);
-    }
-    // set_scene_image(scene, parser, *data);
- }
 
  int main(int argc, char *argv[])
  {
@@ -1123,9 +695,9 @@ char **padding_map(char **map, int *rows, int *cols)
      set_scene(&scene, parser, &data);
      if (check_map(&parser, scene))
      {
-         write(2, "Error map\n", 10);
+        write(2, "Error map\n", 10);
         free_data(&parser, &data, &scene);
-         exit(1);
+        exit(1);
      }
      // inicializacion de keys
      // funcion que escucha los movimientos
