@@ -6,7 +6,7 @@
 /*   By: adrian <adrian@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 17:08:43 by adrian            #+#    #+#             */
-/*   Updated: 2024/11/19 18:49:49 by adrian           ###   ########.fr       */
+/*   Updated: 2024/11/27 17:20:50 by adrian           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,8 @@
 # define KEY_RIGHT 124
 # define WIDTH 700
 # define HEIGHT 700
-#define TILE_SIZE 32
+# define TILE_SIZE 32
+# define SCALE 2.5
 
 # include <fcntl.h>
 # include <stdlib.h>

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ray_casting.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aduenas- <aduenas-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: adrian <adrian@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 10:29:45 by adrian            #+#    #+#             */
-/*   Updated: 2024/11/21 20:14:54 by aduenas-         ###   ########.fr       */
+/*   Updated: 2024/11/27 17:37:28 by adrian           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,23 @@ void	draw_walls(mlx_image_t *image, t_mapData *map_data)
 	x = 0;
 	while (x < WIDTH)
 	{
-        printf("player x: %d    player y: %d \n", map_data->player_x, map_data->player_y);
-		camera_x = 2 * x / (double)WIDTH - 1;
+		if (x == WIDTH / 2)
+		{
+			camera_x = 0;
+			printf("Ray Central [%d]:\n", x);
+			printf("  Camera X: %f\n", camera_x);
+			printf("  Ray Dir: (%f, %f)\n", ray_dir_x, ray_dir_y);
+			printf("  Player Pos: (%d, %d)\n", map_data->player_x, map_data->player_y);
+			printf("  Plane: (%f, %f)\n", map_data->plane_x, map_data->plane_y);
+		}
+		else
+			camera_x = 2 * x / (double)WIDTH - 1;
 		ray_dir_x = map_data->player_dir_x + map_data->plane_x * camera_x;
 		ray_dir_y = map_data->player_dir_y + map_data->plane_y * camera_x;
+		if (fabs(ray_dir_x) < 1e-6)
+			ray_dir_x = 0;
+		if (fabs(ray_dir_y) < 1e-6)
+    		ray_dir_y = 0;
 		map_x = (int)map_data->player_x;
 		map_y = (int)map_data->player_y;
 		if (ray_dir_x == 0)
@@ -97,6 +110,9 @@ void	draw_walls(mlx_image_t *image, t_mapData *map_data)
 			perp_wall_dist = (map_x - map_data->player_x + (1 - step_x) / 2.0) / ray_dir_x;
 		else
 			perp_wall_dist = (map_y - map_data->player_y + (1 - step_y) / 2.0) / ray_dir_y;
+		if (perp_wall_dist < 1e-3)
+			perp_wall_dist = 1e-3;
+		perp_wall_dist *= SCALE;
 		line_height = (int)(HEIGHT / perp_wall_dist);
 		draw_start = -line_height / 2 + HEIGHT / 2;
 		if (draw_start < 0)
@@ -114,8 +130,6 @@ void	draw_walls(mlx_image_t *image, t_mapData *map_data)
 			((uint32_t *)image->pixels)[y * WIDTH + x] = color;
 			y++;
 		}
-        printf("Ray [%d]: Hit wall at map (%d, %d) with perp_wall_dist = %f\n", x, map_x, map_y, perp_wall_dist);
 		x++;
 	}
-	// mlx_image_to_window(mlx, image, 0, 0);
 }
