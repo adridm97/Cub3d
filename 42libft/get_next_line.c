@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aduenas- <aduenas-@student.42barcel>       +#+  +:+       +#+        */
+/*   By: mel-atta <mel-atta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 21:10:35 by aduenas-          #+#    #+#             */
-/*   Updated: 2023/09/03 21:36:08 by aduenas-         ###   ########.fr       */
+/*   Updated: 2024/11/23 15:50:51 by mel-atta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ char	*read_file(int fd, char *buff)
 		buff = ft_free(buff, buffer);
 		if (!buff)
 			return (NULL);
-		if (ft_strchr(buffer, '\n'))
+		if (ft_strchr_getline(buffer, '\n'))
 			break ;
 	}
 	free(buffer);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   functions.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aduenas- <aduenas-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mel-atta <mel-atta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 17:04:15 by adrian            #+#    #+#             */
-/*   Updated: 2024/11/21 20:43:14 by aduenas-         ###   ########.fr       */
+/*   Updated: 2024/11/30 16:28:29 by mel-atta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int     isValidMap(char *line);
 void	draw_minimap(mlx_t *mlx, t_mapData *map_data);
 
 //key_events.c
-void key_hook(mlx_key_data_t keydata, void *param);
+// void key_hook(mlx_key_data_t keydata, void *param);
 
 //parse_player.c
 void	parse_player_position(t_mapData *map_data);

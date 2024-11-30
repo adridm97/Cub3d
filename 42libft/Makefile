@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: aduenas- <aduenas-@student.42.fr>          +#+  +:+       +#+         #
+#    By: mel-atta <mel-atta@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/03 22:21:03 by aduenas-          #+#    #+#              #
-#    Updated: 2024/10/26 18:29:44 by aduenas-         ###   ########.fr        #
+#    Updated: 2024/11/23 12:44:21 by mel-atta         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,6 +36,7 @@ SRC		= 	ft_isalpha.c	\
 			ft_atoi.c		\
 			ft_calloc.c	\
 			ft_strdup.c	\
+			ft_strcmp.c \
 			ft_substr.c	\
 			ft_strjoin.c	\
 			ft_strtrim.c	\

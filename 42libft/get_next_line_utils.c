@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aduenas- <aduenas-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mel-atta <mel-atta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 20:36:45 by aduenas-          #+#    #+#             */
-/*   Updated: 2024/11/02 15:32:19 by aduenas-         ###   ########.fr       */
+/*   Updated: 2024/11/23 15:48:35 by mel-atta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ char	*ft_strjoin(char const *str1, char const *str2)
 	return (buffer);
 }
 
-char	*ft_strchr(const char *string, int c)
+char	*ft_strchr_getline(const char *string, int c)
 {
 	char	*str;
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aduenas- <aduenas-@student.42barcel>       +#+  +:+       +#+        */
+/*   By: mel-atta <mel-atta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 22:21:40 by aduenas-          #+#    #+#             */
-/*   Updated: 2023/06/10 18:55:54 by aduenas-         ###   ########.fr       */
+/*   Updated: 2024/11/23 15:50:00 by mel-atta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static int ft_count_c(char const *s, char c)
 	}
 	return (n);
 }
-char	**ft_free(char **split, size_t i)
+char	**ft_free_split(char **split, size_t i)
 {
 	while (i > 0)
 	{
@@ -73,7 +73,7 @@ char **ft_write(char **split, char const *s, char c)
 		{
 			split[j] = ft_word(s, copy, i);
 			if(split[j] == NULL)
-				return(ft_free(split, j));
+				return(ft_free_split(split, j));
 			copy = -1;
 			j++;
 		}

@@ -1,9 +1,7 @@
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -fsanitize=address -g
+CFLAGS = -Wall -Wextra -Werror
 NAME = cub
-SRCS = cub3D.c parse.c minmap.c key_events.c parse_player.c ray_casting.c \
-	src/check_map.c src/check_player.c src/ft_free.c src/map_parser.c \
-	src/set_scene.c src/utils.c src/utils2.c src/set_player.c src/render.c
+SRCS = main.c parse.c minmap.c key_events.c parse_player.c ray_casting.c 
 OBJS = $(SRCS:.c=.o)
 LIBFT = 42libft/libft.a
 MLX_LIB_DIR = MLX42/build
@@ -20,7 +18,6 @@ $(LIBFT):
 clean:
 	rm -f $(OBJS)
 	make -C 42libft clean
-	cd MLX42 && cmake -B build
 	cd MLX42/build && make clean
 fclean: clean
 	rm -f $(NAME)
