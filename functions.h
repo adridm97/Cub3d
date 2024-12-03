@@ -23,7 +23,7 @@ void	parse_texture_path(char *line, char **texture_path);
 int     isValidMap(char *line);
 
 //minimap.c
-void	draw_minimap(mlx_t *mlx, t_mapData *map_data);
+// void	draw_minimap(mlx_t *mlx, t_mapData *map_data);
 
 //key_events.c
 // void key_hook(mlx_key_data_t keydata, void *param);
@@ -32,5 +32,5 @@ void	draw_minimap(mlx_t *mlx, t_mapData *map_data);
 void	parse_player_position(t_mapData *map_data);
 
 //ray_casting.c
-void	draw_walls(mlx_image_t *image, t_mapData *map_data);
+// void	draw_walls(mlx_image_t *image, t_mapData *map_data);
 #endif

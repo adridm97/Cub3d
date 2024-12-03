@@ -105,6 +105,7 @@ int check_is_valid(char **check_line)
     i = 0;
     x = 0;
     found = 0;
+    (void)found;
     while (check_line && check_line[i] != NULL)
     {
         x = 0;

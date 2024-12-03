@@ -1,5 +1,5 @@
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -fsanitize=address -g
+CFLAGS = -Wall -Wextra -Werror -fsanitize=address -g -O3
 NAME = cub
 SRCS = cub3D.c parse.c minmap.c key_events.c parse_player.c ray_casting.c \
 	src/check_map.c src/check_player.c src/ft_free.c src/map_parser.c \

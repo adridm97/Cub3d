@@ -20,8 +20,8 @@
 # define KEY_D 2
 # define KEY_LEFT 123
 # define KEY_RIGHT 124
-# define WIDTH 700
-# define HEIGHT 700
+// # define WIDTH 700
+// # define HEIGHT 700
 # define TILE_SIZE 32
 # define SCALE 2.5
 

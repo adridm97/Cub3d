@@ -12,7 +12,7 @@
 
 #include "functions.h"
 
-int	isValidMap(char *line)
+int	isValidMap1(char *line)
 {
 	int	i;
 
@@ -27,7 +27,7 @@ int	isValidMap(char *line)
 	return (0);
 }
 
-void	parse_color(char *line, t_color *color)
+void	parse_color1(char *line, t_color *color)
 {
 	int	i;
 
@@ -43,7 +43,7 @@ void	parse_color(char *line, t_color *color)
 	color->b = ft_atoi(&line[++i]);
 }
 
-void	parse_texture_path(char *line, char **texture_path)
+void	parse_texture_path1(char *line, char **texture_path)
 {
     int	i;
 	
@@ -56,7 +56,7 @@ void	parse_texture_path(char *line, char **texture_path)
     *texture_path = ft_strdup(&line[i]);
 }
 
-void	parse_file(int fd, t_mapData *map_data, char *filename)
+void	parse_file1(int fd, t_mapData *map_data, char *filename)
 {
 	char	*line;
 	int		y;
@@ -75,9 +75,9 @@ void	parse_file(int fd, t_mapData *map_data, char *filename)
 	while (line != NULL)
 	{
 		if (line[0] == 'F')
-			parse_color(line, &map_data->floor);
+			parse_color1(line, &map_data->floor);
 		else if (line[0] == 'C')
-			parse_color(line, &map_data->ceiling);
+			parse_color1(line, &map_data->ceiling);
 		// else if (ft_strncmp(line, "NO", 2) == 0)
 		// 	parse_texture_path(line, &map_data->north_texture);
 		// else if (ft_strncmp(line, "SO", 2) == 0)
@@ -86,7 +86,7 @@ void	parse_file(int fd, t_mapData *map_data, char *filename)
 		// 	parse_texture_path(line, &map_data->west_texture);
 		// else if (ft_strncmp(line, "EA", 2) == 0)
 		// 	parse_texture_path(line, &map_data->east_texture);
-		else if (isValidMap(line) == 0)
+		else if (isValidMap1(line) == 0)
 		{
 			map_data->height++;
 			width = ft_strlen(line);
@@ -116,7 +116,7 @@ void	parse_file(int fd, t_mapData *map_data, char *filename)
 	y = 0;
 	while (line != NULL)
 	{
-		if (isValidMap(line) == 0)
+		if (isValidMap1(line) == 0)
 		{
 			x = 0;
 			while (x < map_data->width && line[x] != '\n')
