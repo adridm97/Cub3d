@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mel-atta <mel-atta@student.42.fr>          +#+  +:+       +#+        */
+/*   By: adrian <adrian@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 12:15:26 by mel-atta          #+#    #+#             */
-/*   Updated: 2024/11/23 17:19:19 by mel-atta         ###   ########.fr       */
+/*   Updated: 2024/12/03 17:36:56 by adrian           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,14 +64,14 @@ int check_f_c(t_parser *parser, t_scene *scene)
 
  int convert_hexa(char **sp_f, char **sp_c, t_scene *scene)
  {
-     int i;
-     int j;
+    //  int i;
+    //  int j;
      int num;
      int num2;
      int num3;
 
-     i = 0;
-     j = 0;
+    //  i = 0;
+    //  j = 0;
      num = 0;
      num2 = 0;
      num3 = 0;
@@ -89,7 +89,7 @@ int check_f_c(t_parser *parser, t_scene *scene)
          num2 = atoi(sp_c[1]);
          num3 = atoi(sp_c[2]);
          scene->ccolor = (num << 16) | (num2 << 8) | num3;
-         j++;
+         //j++;
     //  }
      return (0);
  }
@@ -119,11 +119,11 @@ int check_f_c(t_parser *parser, t_scene *scene)
  int check_rgb_nums(char **sp)
  {
      int i;
-     int j;
+    //  int j;
      int num;
 
      i = 0;
-     j = 0;
+    //  j = 0;
      while (sp[i] != NULL)
      {
         num = atoi(sp[i]);    

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mel-atta <mel-atta@student.42.fr>          +#+  +:+       +#+        */
+/*   By: adrian <adrian@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 12:17:32 by mel-atta          #+#    #+#             */
-/*   Updated: 2024/11/23 16:32:00 by mel-atta         ###   ########.fr       */
+/*   Updated: 2024/12/02 09:07:53 by adrian           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ int check_is_valid(char **check_line)
     i = 0;
     x = 0;
     found = 0;
-    while (check_line && check_line[i] != NULL)
+    while (check_line && check_line[i] != NULL && found == 0)
     {
         x = 0;
         while (check_line[i][x] != '\0')
