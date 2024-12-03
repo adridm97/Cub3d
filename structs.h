@@ -6,7 +6,7 @@
 /*   By: adrian <adrian@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 17:08:43 by adrian            #+#    #+#             */
-/*   Updated: 2024/11/27 17:20:50 by adrian           ###   ########.fr       */
+/*   Updated: 2024/12/03 18:16:32 by adrian           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,21 +34,21 @@
 # include "./42libft/libft.h"
 #include "./MLX42/include/MLX42/MLX42.h"
 
-typedef struct s_color
-{
-	int	r;
-	int	g;
-	int	b;
-}	t_color;
+// typedef struct s_color
+// {
+// 	int	r;
+// 	int	g;
+// 	int	b;
+// }	t_color;
 
 typedef struct s_mapData
 {
-	t_color	floor;
-	t_color	ceiling;
-	t_color	north_texture;
-	t_color	south_texture;
-	t_color	west_texture;
-	t_color	east_texture;
+	// t_color	floor;
+	// t_color	ceiling;
+	// t_color	north_texture;
+	// t_color	south_texture;
+	// t_color	west_texture;
+	// t_color	east_texture;
 	int		player_x;
 	int		player_y;
 	int		player_dir_x;

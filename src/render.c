@@ -18,7 +18,7 @@ void render(void *scene_keys)
     // t_img   *image;
     // t_mapData map_data;
 	// t_scene scene;
-	t_data *data = scene_keys;
+	t_data *data = (t_data *)scene_keys;
 	// t_keys *key;
 	// mlx_image_t image;
 	// scene = (t_scene *)(scene_keys[0]);

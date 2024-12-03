@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mel-atta <mel-atta@student.42.fr>          +#+  +:+       +#+        */
+/*   By: adrian <adrian@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 20:36:45 by aduenas-          #+#    #+#             */
-/*   Updated: 2024/11/23 15:48:35 by mel-atta         ###   ########.fr       */
+/*   Updated: 2024/12/03 17:39:26 by adrian           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,13 +78,13 @@ void	ft_bzero(void *s, size_t n)
 	}
 }
 
-void	*ft_calloc(size_t count, size_t size)
-{
-	char	*res;
+// void	*ft_calloc(size_t count, size_t size)
+// {
+// 	char	*res;
 
-	res = malloc(size * count);
-	if (!res)
-		return (NULL);
-	ft_bzero(res, size * count);
-	return (res);
-}
+// 	res = malloc(size * count);
+// 	if (!res)
+// 		return (NULL);
+// 	ft_bzero(res, size * count);
+// 	return (res);
+// }
