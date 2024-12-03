@@ -1,9 +1,9 @@
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -fsanitize=address -g
 NAME = cub
-SRCS = cub3D.c parse.c minmap.c key_events.c parse_player.c ray_casting.c \
-	src/check_map.c src/check_player.c src/ft_free.c src/map_parser.c \
-	src/set_scene.c src/utils.c src/utils2.c src/set_player.c src/render.c
+SRCS = cub3D.c src/check_map.c src/check_player.c src/ft_free.c src/map_parser.c \
+	src/set_scene.c src/utils.c src/utils2.c src/set_player.c src/render.c key_events.c
+#parse.c minmap.c key_events.c parse_player.c ray_casting.c
 OBJS = $(SRCS:.c=.o)
 LIBFT = 42libft/libft.a
 MLX_LIB_DIR = MLX42/build

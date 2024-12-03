@@ -40,15 +40,15 @@ void render(void *scene_keys)
     // t_img   *image;
     // t_mapData map_data;
 	// t_scene scene;
-	t_data *data = scene_keys;
+	t_data *data = (t_data *)scene_keys;
 	// t_keys *key;
 	// mlx_image_t image;
-	(void)scene_keys;
+	// (void)scene_keys;
 	// scene = (t_scene *)(scene_keys[0]);
 	// key = (t_keys *)(scene_keys[1]);
-    key_hook();
+    key_hook(data);
     drawBackground(data->image, data->scene);
-    draw_walls(data, data->scene);
+    //draw_walls(data, data->scene);
 
     // draw_minimap(scene->mlx, scene->map);
     //draw();

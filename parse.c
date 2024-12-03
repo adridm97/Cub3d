@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aduenas- <aduenas-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: adrian <adrian@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 17:03:21 by adrian            #+#    #+#             */
-/*   Updated: 2024/11/21 20:00:34 by aduenas-         ###   ########.fr       */
+/*   Updated: 2024/12/03 18:17:30 by adrian           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "functions.h"
+// #include "functions.h"
 
 int	isValidMap(char *line)
 {

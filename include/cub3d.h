@@ -255,7 +255,7 @@ int check_elements(t_parser *parser, t_scene *scene);
 void set_scene(t_scene *scene, t_parser parser, t_data *data);
  int check_map(t_parser *parser, t_scene scene);
 t_player	set_player(char **map);
-void key_hook();
+void key_hook(t_data *data);
 void	drawBackground(mlx_image_t *image, t_scene *scene);
 void render(void  *scene_keys);
 void	draw_walls(t_data *data, t_scene *scene);
