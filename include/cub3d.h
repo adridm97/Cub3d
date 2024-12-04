@@ -14,8 +14,8 @@
 // # include "textures.h"
 // # include "utils.h"
 
-# define WIDTH 900
-# define HEIGHT 700
+# define WIDTH 1020
+# define HEIGHT 720
 
 typedef struct s_color
 {
@@ -214,6 +214,15 @@ typedef struct  s_cub3d
     // t_image      image;
 }               t_cub3d;
 
+typedef struct s_minimap
+{
+    mlx_image_t *img; // Imagen del minimapa
+    int width;        // Ancho del minimapa
+    int height;       // Alto del minimapa
+    float scale_x;    // Escala en el eje X
+    float scale_y;    // Escala en el eje Y
+} t_minimap;
+
 typedef struct s_data
 {
     char    **map;
@@ -222,7 +231,9 @@ typedef struct s_data
     int     colsx;
     int     rowsy;
     mlx_image_t *image;
+    mlx_key_data_t *keydata;
     // t_mapData *map_data;
+    t_minimap minimap;
     t_scene *scene;
 }   t_data;
 
@@ -259,9 +270,9 @@ void key_hook(t_data *data);
 void	drawBackground(mlx_image_t *image, t_scene *scene);
 void render(void  *scene_keys);
 void	draw_walls(t_data *data, t_scene *scene);
-
-
-
+void init_minimap(t_data *data);
+void draw_minimap(t_data *data);
+void draw_player_on_minimap(t_data *data);
 
 
 

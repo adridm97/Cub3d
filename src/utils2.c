@@ -89,7 +89,7 @@ int check_f_c(t_parser *parser, t_scene *scene)
          num2 = atoi(sp_c[1]);
          num3 = atoi(sp_c[2]);
          scene->ccolor = (num << 16) | (num2 << 8) | num3;
-         //j++;
+        //  j++;
     //  }
      return (0);
  }

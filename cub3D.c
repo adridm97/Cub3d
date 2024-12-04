@@ -481,19 +481,8 @@
      }
      // inicializacion de keys
      //  
-     // cambiar por la mlx_loop_hook y poner funcion de render en vez de key_hook
-     data.scene = &scene;
-     mlx_loop_hook(scene.mlx, &render, &data);
-     mlx_loop(scene.mlx);
-     mlx_terminate(scene.mlx);
-     // t_cub3d  game;
-     // t_map    map;
-     // t_map    *map_pars;
-
-     // map_pars = check_param(argc, argv, &map);
-     // if (!map_pars)
-     // {
-     //     printf("Error: No se pudo inicializar el juego.\n");
-     //     return (1);
-     // }
+    data.scene = &scene;
+    mlx_loop_hook(scene.mlx, &render, &data);
+    mlx_loop(scene.mlx);
+    mlx_terminate(scene.mlx);
  }

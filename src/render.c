@@ -2,28 +2,6 @@
 // #include "textures.h"
 #include "../include/cub3d.h"
 
-void render_walls()
-{
-    // TODO: Implement rendering of walls using textures
-}
-
-void render_floor()
-{
-    // TODO: Implement rendering of the floor
-}
-
-void render_ceiling()
-{
-    // TODO: Implement rendering of the ceiling
-}
-
-void render_scene()
-{
-    render_walls();
-    render_floor();
-    render_ceiling();
-}
-
 // int	render(void **pack)
 // {
 // 	t_scene	*scene;
@@ -43,15 +21,18 @@ void render(void *scene_keys)
 	t_data *data = (t_data *)scene_keys;
 	// t_keys *key;
 	// mlx_image_t image;
-	// (void)scene_keys;
 	// scene = (t_scene *)(scene_keys[0]);
 	// key = (t_keys *)(scene_keys[1]);
+	init_minimap(data);
     key_hook(data);
-    drawBackground(data->image, data->scene);
-    //draw_walls(data, data->scene);
-
-    // draw_minimap(scene->mlx, scene->map);
-    //draw();
+    // drawBackground(data->image, data->scene);
+    // draw_walls(data, data->scene);
+    draw_minimap(data);
+	draw_player_on_minimap(data);
+	mlx_image_to_window(data->scene->mlx, data->minimap.img, 10, 10);
+    mlx_image_to_window(data->scene->mlx, data->minimap.img, 0, 0);
+    
+	//draw();
 
 }
 
@@ -136,9 +117,9 @@ void	draw_walls(t_data *data, t_scene *scene)
 		if (x == WIDTH / 2)
 		{
 			camera_x = 0;
-			printf("Ray Central [%d]:\n", x);
-			printf("  Camera X: %f\n", camera_x);
-			printf("  Ray Dir: (%f, %f)\n", ray_dir_x, ray_dir_y);
+			// printf("Ray Central [%d]:\n", x);
+			// printf("  Camera X: %f\n", camera_x);
+			// printf("  Ray Dir: (%f, %f)\n", ray_dir_x, ray_dir_y);
 			// printf("  Player Pos: (%d, %d)\n", data->player_x, map_data->player_y);
 			// printf("  Plane: (%f, %f)\n", map_data->plane_x, map_data->plane_y);
 		}
