@@ -65,6 +65,18 @@ void	drawBackground(mlx_image_t *image, t_scene *scene)
 	// floor_color = getColor(map_data->floor);
 	// if (ceiling_color == 0 || floor_color == 0)
 	// 	return;
+	if (scene->ccolor == 0 || scene->fcolor == 0)
+    {
+        printf("Error: Los colores del fondo no son válidos (ccolor: %x, fcolor: %x).\n", scene->ccolor, scene->fcolor);
+        return;
+    }
+
+    // Validar imagen
+    if (!image)
+    {
+        printf("Error: La imagen no está inicializada.\n");
+        return;
+    }
 	y = 0;
 	while (y < HEIGHT / 2)
 	{
@@ -92,6 +104,7 @@ void	drawBackground(mlx_image_t *image, t_scene *scene)
 		perror("Error al mostrar la imagen en la ventana");
 		exit(1);
 	}
+	printf("mlx initialized: %p\n", (void *)scene->mlx);
 }
 
 void	draw_walls(t_data *data, t_scene *scene)
