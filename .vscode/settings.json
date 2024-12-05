@@ -64,5 +64,12 @@
     "*.tcc": "cpp",
     "structs.h": "c",
     "mlx42.h": "c"
-  }
+  },
+  "makefile.launchConfigurations": [
+    {
+      "cwd": "/home/aduenas-/Desktop/Cub3d",
+      "binaryPath": "/home/aduenas-/Desktop/Cub3d/cub",
+      "binaryArgs": []
+    }
+  ]
 }
