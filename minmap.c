@@ -85,25 +85,31 @@
 // 		perror("Error al mostrar el minimapa en la ventana");
 // }
 
-void init_minimap(t_data *data)
-{
-	int mini_width;
-	int mini_height;
+// void init_minimap(t_data *data)
+// {
+// 	int mini_width;
+// 	int mini_height;
 
-	mini_height = 200;
-	mini_width = 200;
+// 	mini_height = 400;
+// 	mini_width = 400;
 
-	data->minimap.img = mlx_new_image(data->scene->mlx, mini_width, mini_height);
-	if (!data->minimap.img)
-	{
-		printf("Error al crear la imagen del minimapa\n");
-		exit(1);
-	}
+// 	data->minimap.img = mlx_new_image(data->scene->mlx, mini_width, mini_height);
+// 	if (!data->minimap.img)
+// 	{
+// 		printf("Error al crear la imagen del minimapa\n");
+// 		exit(1);
+// 	}
 
-	data->minimap.width = mini_width;
-	data->minimap.height = mini_height;
-	data->minimap.scale_x = (float)mini_width / data->scene->cols;
-	data->minimap.scale_y = (float)mini_height / data->scene->rows;
+// 	data->minimap.width = mini_width;
+// 	data->minimap.height = mini_height;
+// 	data->minimap.scale_x = (float)mini_width / data->scene->cols;
+// 	data->minimap.scale_y = (float)mini_height / data->scene->rows;
+// }
+
+void init_minimap(t_data *data) {
+    data->minimap.width = data->colsx * data->minimap.scale_x;
+    data->minimap.height = data->rowsy * data->minimap.scale_y;
+    data->minimap.img = mlx_new_image(data->scene->mlx, data->minimap.width, data->minimap.height);
 }
 
 void draw_minimap(t_data *data)
@@ -111,31 +117,50 @@ void draw_minimap(t_data *data)
     int x, y;
     int color;
 
-    for (y = 0; y < data->rowsy; y++) {
-		
-        for (x = 0; x < data->colsx; x++) {
-            if (data->scene->map[y][x] == '1') // Suponiendo que '1' representa una pared
-                color = 0xFFFFFF; // Color blanco para las paredes
-            else
-                color = 0x000000; // Color negro para el espacio vacío
+    int rect_width = data->minimap.scale_x * 2;
+    int rect_height = data->minimap.scale_y * 2;
 
-            int mini_x = x * data->minimap.scale_x;
-            int mini_y = y * data->minimap.scale_y;
-            mlx_put_pixel(data->minimap.img, mini_x, mini_y, color);
+    for (y = 0; y < data->rowsy; y++) {
+        for (x = 0; x < data->colsx; x++) {
+            if (data->scene->map[y][x] == '1')
+            {
+                color = 0xFFFFFF; // Color blanco para las paredes
+            }
+            else if (data->scene->map[y][x] == '0')
+            {
+                color = 0xFF0000;
+            }
+            else
+                continue; // Color negro para el espacio vacío
+
+            // int mini_x = x * data->minimap.scale_x;
+            // int mini_y = y * data->minimap.scale_y;
+            for (int i = 0; i < rect_width; i++) {
+                for (int j = 0; j < rect_height; j++) {
+                    mlx_put_pixel(data->minimap.img, x * rect_width + j, y * rect_height + i, color);
+                }
+            }
         }
     }
 }
 
+void my_mlx_pixel_put(t_minimap *img, int x, int y, int color) {
+    char *dst;
+    dst = img->addr + (y * img->line_length + x * (img->bpp / 8));
+    *(unsigned int*)dst = color;
+}
+
 void draw_player_on_minimap(t_data *data)
 {
-    int player_x = data->scene->player.pos.x * data->minimap.scale_x;
-    int player_y = data->scene->player.pos.y * data->minimap.scale_y;
-    int player_size = 2; // Tamaño del jugador en el minimapa
-    int x, y;
+    int player_x = data->scene->player.pos.x / data->minimap.scale_x;
+    int player_y = data->scene->player.pos.y / data->minimap.scale_y;
+    // int player_size = 2; // Tamaño del jugador en el minimapa
+    // int x, y;
+    int color = 0x0000FF;
 
-    for (y = player_y - player_size; y <= player_y + player_size; y++) {
-        for (x = player_x - player_size; x <= player_x + player_size; x++) {
-            mlx_put_pixel(data->minimap.img, x, y, 0xFF0000); // Color rojo para el jugador
+    for (int i = 0; i < data->minimap.scale_y; i++) {
+        for (int j = 0; j < data->minimap.scale_x; j++) {
+            my_mlx_pixel_put(&data->minimap, player_x * data->minimap.scale_x + j, player_y * data->minimap.scale_y + i, color);
         }
     }
 }
