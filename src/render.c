@@ -204,12 +204,12 @@ void	draw_walls(t_data *data, t_scene *scene)
         {
             if (ray_dir_x > 0)
 			{
-                color = 0x0000FF;
+                color = 0xFF0000FF;
 				printf("Ray %d: side = %d, ray_dir_x = %f, color = 0X%X (Azul)\n", x, side, ray_dir_x, color);
 			}
             else
 			{
-                color = 0xFF0000;
+                color = 0xFFFF0000;
 				printf("Ray %d: side = %d, ray_dir_x = %f, color = 0X%X (Rojo)\n", x, side, ray_dir_x, color);
 			}
         }
@@ -217,12 +217,12 @@ void	draw_walls(t_data *data, t_scene *scene)
         {
             if (ray_dir_y > 0)
 			{
-                color = 0x00FF00;
+                color = 0xFF00FF00;
 				printf("Ray %d: side = %d, ray_dir_y = %f, color = 0X%X (Verde)\n", x, side, ray_dir_y, color);
 			}
             else
 			{
-                color = 0xFF00FF;
+                color = 0xFFFF00FF;
 				printf("Ray %d: side = %d, ray_dir_y = %f, color = 0X%X (Magenta)\n", x, side, ray_dir_y, color);
 			}
         }

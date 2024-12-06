@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   set_player.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mel-atta <mel-atta@student.42.fr>          +#+  +:+       +#+        */
+/*   By: adrian <adrian@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 00:02:48 by mel-atta          #+#    #+#             */
-/*   Updated: 2024/11/30 00:10:28 by mel-atta         ###   ########.fr       */
+/*   Updated: 2024/12/06 18:27:41 by adrian           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,23 +37,23 @@ void	set_player_dir(t_player *player, char c)
 {
 	if (c == 'N')
 	{
-		player->dir = create_vector2d(-1, 0);
-		player->plane = create_vector2d(0, 1);
+		player->dir = create_vector2d(0, -1);
+		player->plane = create_vector2d(0.66, 0);
 	}
 	else if (c == 'S')
 	{
-		player->dir = create_vector2d(1, 0);
-		player->plane = create_vector2d(0, -1);
+		player->dir = create_vector2d(0, 1);
+		player->plane = create_vector2d(-0.66, 0);
 	}
 	else if (c == 'W')
 	{
-		player->dir = create_vector2d(0, -1);
-		player->plane = create_vector2d(1, 0);
+		player->dir = create_vector2d(-1, 0);
+		player->plane = create_vector2d(0, -0.66);
 	}
 	else if (c == 'E')
 	{
-		player->dir = create_vector2d(0, 1);
-		player->plane = create_vector2d(1, 0);
+		player->dir = create_vector2d(1, 0);
+		player->plane = create_vector2d(0, 0.66);
 	}
 }
 
@@ -72,7 +72,7 @@ t_player	set_player(char **map)
 		{
 			if (ft_strchr("NSWE", map[i][j]) != NULL)
 			{
-				player.pos = create_vector2d((double)i + 0.5, (double)j + 0.5);
+				player.pos = create_vector2d((double)j + 0.5, (double)i + 0.5);
 				set_player_dir(&player, map[i][j]);
 				player.dir_len = length_vec2(player.dir);
 				player.plane = scale_vec2(player.plane, 1.5f);
