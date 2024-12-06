@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minmap.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aduenas- <aduenas-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: adrian <adrian@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 16:59:56 by adrian            #+#    #+#             */
-/*   Updated: 2024/11/21 20:43:24 by aduenas-         ###   ########.fr       */
+/*   Updated: 2024/12/06 19:36:26 by adrian           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,61 +106,73 @@
 // 	data->minimap.scale_y = (float)mini_height / data->scene->rows;
 // }
 
-void init_minimap(t_data *data) {
-    data->minimap.width = data->colsx * data->minimap.scale_x;
-    data->minimap.height = data->rowsy * data->minimap.scale_y;
-    data->minimap.img = mlx_new_image(data->scene->mlx, data->minimap.width, data->minimap.height);
+void	init_minimap(t_data *data)
+{
+	data->minimap.width = data->colsx * 10;
+	data->minimap.height = data->rowsy * 10;
+	data->minimap.img = mlx_new_image(data->scene->mlx, data->minimap.width, data->minimap.height);
+	if (!data->minimap.img)
+	{
+		fprintf(stderr, "Error: No se pudo crear la imagen para el minimapa\n");
+		exit(EXIT_FAILURE);
+	}
 }
 
-void draw_minimap(t_data *data)
+void	draw_minimap(t_data *data)
 {
-    int x, y;
-    int color;
+	int	x;
+	int	y;
+	int	color;
+    int	rect_width;
+    int	rect_height;
 
-    int rect_width = data->minimap.scale_x * 2;
-    int rect_height = data->minimap.scale_y * 2;
-
+	rect_height = data->minimap.scale_y * 2;
+	rect_width = data->minimap.scale_x * 2;
     for (y = 0; y < data->rowsy; y++) {
         for (x = 0; x < data->colsx; x++) {
             if (data->scene->map[y][x] == '1')
             {
-                color = 0xFFFFFF; // Color blanco para las paredes
+                color = 0xFFFFFFFF; // Color blanco para las paredes
             }
             else if (data->scene->map[y][x] == '0')
             {
-                color = 0xFF0000;
+                color = 0xFFFF0000;
             }
             else
                 continue; // Color negro para el espacio vacío
 
             // int mini_x = x * data->minimap.scale_x;
             // int mini_y = y * data->minimap.scale_y;
-            for (int i = 0; i < rect_width; i++) {
-                for (int j = 0; j < rect_height; j++) {
+            for (int i = 0; i < rect_width; i++)
+			{
+                for (int j = 0; j < rect_height; j++)
                     mlx_put_pixel(data->minimap.img, x * rect_width + j, y * rect_height + i, color);
-                }
             }
         }
     }
 }
 
-void my_mlx_pixel_put(t_minimap *img, int x, int y, int color) {
-    char *dst;
-    dst = img->addr + (y * img->line_length + x * (img->bpp / 8));
-    *(unsigned int*)dst = color;
+void	my_mlx_pixel_put(t_minimap *img, int x, int y, int color)
+{
+	char *dst;
+	
+	dst = img->addr + (y * img->line_length + x * (img->bpp / 8));
+	*(unsigned int*)dst = color;
 }
 
 void draw_player_on_minimap(t_data *data)
 {
-    int player_x = data->scene->player.pos.x / data->minimap.scale_x;
-    int player_y = data->scene->player.pos.y / data->minimap.scale_y;
+    int player_x;
+    int player_y;
     // int player_size = 2; // Tamaño del jugador en el minimapa
     // int x, y;
-    int color = 0x0000FF;
+    int color = 0xFF0000FF;
 
-    for (int i = 0; i < data->minimap.scale_y; i++) {
-        for (int j = 0; j < data->minimap.scale_x; j++) {
-            my_mlx_pixel_put(&data->minimap, player_x * data->minimap.scale_x + j, player_y * data->minimap.scale_y + i, color);
-        }
-    }
+	player_x = data->scene->player.pos.x / data->minimap.scale_x;
+	player_y = data->scene->player.pos.y / data->minimap.scale_y;
+	for (int i = 0; i < data->minimap.scale_y; i++)
+	{
+		for (int j = 0; j < data->minimap.scale_x; j++)
+			my_mlx_pixel_put(&data->minimap, player_x * data->minimap.scale_x + j, player_y * data->minimap.scale_y + i, color);
+	}
 }
