@@ -216,7 +216,7 @@ typedef struct  s_cub3d
 
 typedef struct s_minimap
 {
-    void    *img; // Imagen del minimapa
+    mlx_image_t    *img; // Imagen del minimapa
     int width;        // Ancho del minimapa
     int height;       // Alto del minimapa
     float scale_x;    // Escala en el eje X

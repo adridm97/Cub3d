@@ -28,9 +28,10 @@ void render(void *scene_keys)
     drawBackground(data->image, data->scene);
     draw_walls(data, data->scene);
     draw_minimap(data);
-	draw_player_on_minimap(data);
-	mlx_image_to_window(data->scene->mlx, data->minimap.img, 100, 100);
-    mlx_image_to_window(data->scene->mlx, data->minimap.img, 0, 0);
+	// draw_player_on_minimap(data);
+	// mlx_image_to_window(data->scene->mlx, data->minimap.img, 100, 100);
+    // mlx_image_to_window(data->scene->mlx, data->minimap.img, 0, 0);
+    //mlx_image_to_window(data->scene->mlx, data->minimap.img, 0, 0);
     
 	//draw();
 
