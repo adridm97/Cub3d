@@ -31,6 +31,7 @@ void render(void *scene_keys)
 	draw_player_on_minimap(data);
 	mlx_image_to_window(data->scene->mlx, data->minimap.img, 100, 100);
     mlx_image_to_window(data->scene->mlx, data->minimap.img, 0, 0);
+    //mlx_image_to_window(data->scene->mlx, data->minimap.img, 0, 0);
     
 	//draw();
 
@@ -46,6 +47,18 @@ void	drawBackground(mlx_image_t *image, t_scene *scene)
 	// floor_color = getColor(map_data->floor);
 	// if (ceiling_color == 0 || floor_color == 0)
 	// 	return;
+	if (scene->ccolor == 0 || scene->fcolor == 0)
+    {
+        printf("Error: Los colores del fondo no son válidos (ccolor: %x, fcolor: %x).\n", scene->ccolor, scene->fcolor);
+        return;
+    }
+
+    // Validar imagen
+    if (!image)
+    {
+        printf("Error: La imagen no está inicializada.\n");
+        return;
+    }
 	y = 0;
 	while (y < HEIGHT / 2)
 	{
@@ -165,10 +178,13 @@ void	draw_walls(t_data *data, t_scene *scene)
 				map_y += step_y;
 				side = 1;
 			}
-			if (map_x >= 0 && map_x < WIDTH && map_y >= 0 && map_y < HEIGHT)
+			if (map_x >= 0 && map_x < scene->cols && map_y >= 0 && map_y < scene->rows)
 			{
 				if (scene->map[map_y][map_x] == '1')
+				{
 					hit = 1;
+					break;
+				}
 			}
 		}
 		if (side == 0)
@@ -185,10 +201,32 @@ void	draw_walls(t_data *data, t_scene *scene)
 		draw_end = line_height / 2 + HEIGHT/ 2;
 		if (draw_end >= HEIGHT)
 			draw_end = HEIGHT - 1;
-		if (side == 1)
-			color = 0xAAAAAA;
-		else
-			color = 0xFFFFFF;
+		if (side == 0)
+        {
+            if (ray_dir_x > 0)
+			{
+                color = 0x0000FF;
+				printf("Ray %d: side = %d, ray_dir_x = %f, color = 0X%X (Azul)\n", x, side, ray_dir_x, color);
+			}
+            else
+			{
+                color = 0xFF0000;
+				printf("Ray %d: side = %d, ray_dir_x = %f, color = 0X%X (Rojo)\n", x, side, ray_dir_x, color);
+			}
+        }
+        else
+        {
+            if (ray_dir_y > 0)
+			{
+                color = 0x00FF00;
+				printf("Ray %d: side = %d, ray_dir_y = %f, color = 0X%X (Verde)\n", x, side, ray_dir_y, color);
+			}
+            else
+			{
+                color = 0xFF00FF;
+				printf("Ray %d: side = %d, ray_dir_y = %f, color = 0X%X (Magenta)\n", x, side, ray_dir_y, color);
+			}
+        }
 		y = draw_start;
 		while (y < draw_end)
 		{
