@@ -6,7 +6,7 @@
 /*   By: adrian <adrian@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 18:57:16 by adrian            #+#    #+#             */
-/*   Updated: 2024/12/06 19:46:20 by adrian           ###   ########.fr       */
+/*   Updated: 2024/12/08 18:20:53 by adrian           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,11 @@ bool	is_wall(t_data *data, float x, float y)
 	map_x = (int)(x / 10);
 	if (map_x < 0 || map_x >= data->colsx || map_y < 0 || map_y >= data->rowsy)
 		return true;
-	return data->scene->map[map_y][map_x] == '1';
+	return data->scene->map[map_y][map_x] == '1' ||
+	data->scene->map[map_y][map_x + 1] == '1' ||
+	data->scene->map[map_y + 1][map_x] == '1' ||
+	data->scene->map[map_y][map_x - 1] == '1' ||
+	data->scene->map[map_y - 1][map_x] == '1';
 }
 
 t_vec2	sum_vec2(t_vec2 v1, t_vec2 v2)
@@ -97,8 +101,8 @@ void	key_hook(t_data *data)
 	}
 	new_y = data->scene->player.pos.y + move.y;
 	new_x = data->scene->player.pos.x + move.x;
-	if (!is_wall(data, new_x, new_y)) {
-        data->scene->player.pos.x = new_x;
-        data->scene->player.pos.y = new_y;
-    }
+	if (!is_wall(data, new_x, data->scene->player.pos.y))
+		data->scene->player.pos.x = new_x;
+	if (!is_wall(data, data->scene->player.pos.x, new_y))
+		data->scene->player.pos.y = new_y;
 }
