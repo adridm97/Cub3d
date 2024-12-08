@@ -216,7 +216,7 @@ typedef struct  s_cub3d
 
 typedef struct s_minimap
 {
-    void    *img; // Imagen del minimapa
+    mlx_image_t    *img; // Imagen del minimapa
     int width;        // Ancho del minimapa
     int height;       // Alto del minimapa
     float scale_x;    // Escala en el eje X
@@ -277,9 +277,9 @@ void	draw_walls(t_data *data, t_scene *scene);
 void init_minimap(t_data *data);
 void draw_minimap(t_data *data);
 void draw_player_on_minimap(t_data *data);
-
-
-
+void close_window(void *param);
+void cleanup(t_data *data);
+void handle_mouse_move(double x, double y, void *param);
 
 
 
@@ -306,5 +306,4 @@ void    parse_resolution(t_cub3d *game, char *line);
 void    parse_map(t_cub3d *game, char *line);
 void    check_map_validity(t_cub3d *game);
 void    exit_error(t_cub3d *game, char *message);
-
 #endif

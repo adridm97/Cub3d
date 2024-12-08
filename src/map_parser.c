@@ -6,7 +6,7 @@
 /*   By: mel-atta <mel-atta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 12:16:33 by mel-atta          #+#    #+#             */
-/*   Updated: 2024/11/30 15:56:24 by mel-atta         ###   ########.fr       */
+/*   Updated: 2024/12/07 12:46:27 by mel-atta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int	init_map(t_data *data, t_parser *parser)
 		y++;
 		free(trimed);
 	}
-	// free(trimed);
+	free(trimed);
 	data->map = copy_map(*parser, y);
 	return (0);
 }
