@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aduenas- <aduenas-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mel-atta <mel-atta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 12:17:32 by mel-atta          #+#    #+#             */
-/*   Updated: 2024/12/14 21:05:04 by aduenas-         ###   ########.fr       */
+/*   Updated: 2024/12/15 00:46:18 by mel-atta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,14 +39,19 @@ int check_elem(char **check_line, t_parser *parser)
 
 int check_nums(char *str, t_parser *parser)
 {
+    // exit(1);
+    
     if (str != NULL)
     {
+        // printf("entraaa: %s", str);
+        // exit(1);
         if (str[0] != '1')
         {
             parser->elem.qtt.is_zero++;
             return (free(str), 1);
         }
     }
+    // exit(1);
     free(str);
     return (0);
 }
@@ -65,9 +70,11 @@ int check_nums(char *str, t_parser *parser)
 	}
     else
     {
+        printf("str: %s", str);
+        printf("check_line[0]: %s", check_line[0]);
         check_nums(ft_strtrim(check_line[0], " "), parser);
     }
-    ft_free_game(check_line);
+    // ft_free_game(check_line);
 	return (0);
 }
 

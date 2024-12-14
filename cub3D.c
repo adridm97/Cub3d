@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adrian <adrian@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mel-atta <mel-atta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 23:34:14 by mel-atta          #+#    #+#             */
-/*   Updated: 2024/12/12 16:32:25 by adrian           ###   ########.fr       */
+/*   Updated: 2024/12/15 00:46:08 by mel-atta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	main(int argc, char *argv[])
 	if (parser.file == NULL)
 		return (free_parser(&parser), 1);
 	if (check_elements(&parser, &scene))
-		return (write(2, "Error file\n", 11), free_parser(&parser), 1);
+		return (write(2, "Error file\n", 11), free_scene(&parser, &scene), 1);
 	if (init_map(&data, &parser))
 		return (write(2, "Error map\n", 10), free_data(&parser, &data, &scene),
 			1);
