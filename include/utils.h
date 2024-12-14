@@ -4,7 +4,7 @@
 // Function prototypes for utility functions
 
 // Function to parse the scene description file
-int parse_scene_file(const char* filename);
+//int parse_scene_file(const char* filename);
 
 // Function to check if a character is a valid map element
 int is_valid_map_element(char c);

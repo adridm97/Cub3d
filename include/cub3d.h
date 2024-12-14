@@ -311,4 +311,6 @@ void    parse_resolution(t_cub3d *game, char *line);
 void    parse_map(t_cub3d *game, char *line);
 void    check_map_validity(t_cub3d *game);
 void    exit_error(t_cub3d *game, char *message);
+char	*ft_strtrim(char const *s1, char const *s2);
+
 #endif

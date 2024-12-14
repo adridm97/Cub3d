@@ -8,8 +8,8 @@
       "args": ["../assets/map2.cub"],
       "stopAtEntry": false,
       "externalConsole": false,
-      "cwd": "/home/mel-atta/cub3d/cub3D/",
-      "program": "/home/mel-atta/cub3d/cub",
+      "cwd": "/home/aduenas-/Desktop/Cub3d/cub3D/",
+      "program": "/home/aduenas-/Desktop/Cub3d/cub",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adrian <adrian@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aduenas- <aduenas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 18:28:30 by adrian            #+#    #+#             */
-/*   Updated: 2024/12/13 16:25:25 by adrian           ###   ########.fr       */
+/*   Updated: 2024/12/14 22:13:16 by aduenas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@ void init_textures(t_data *data)
 {
 	data->scene->textures = malloc(sizeof(mlx_texture_t *) * 4);
 	printf("Ruta de carga: %s\n", data->parser->elem.no);
-	if (ft_strcmp(data->parser->elem.no, "assets/north.png") == 0) 
+	if (data->parser->elem.no) 
 	{
-		data->scene->textures[0] = mlx_load_png(data->parser->elem.no);
+		data->scene->textures[0] = mlx_load_png(ft_strtrim_ft(data->parser->elem.no, "\n"));
 		if (!data->scene->textures[0])
 			printf("Error al cargar textura norte: %s\n", data->parser->elem.no);
 	}
@@ -27,7 +27,7 @@ void init_textures(t_data *data)
 
 	if (data->parser->elem.so)
 	{
-		data->scene->textures[1] = mlx_load_png("assets/south.png");
+		data->scene->textures[1] = mlx_load_png(ft_strtrim_ft(data->parser->elem.so, "\n"));
 		if (!data->scene->textures[1])
 			printf("Error al cargar textura sur: %s\n", data->parser->elem.so);
 	}
@@ -36,7 +36,7 @@ void init_textures(t_data *data)
 
 	if (data->parser->elem.ea)
 	{
-		data->scene->textures[2] = mlx_load_png("assets/east.png");
+		data->scene->textures[2] = mlx_load_png(ft_strtrim_ft(data->parser->elem.ea, "\n"));
 		if (!data->scene->textures[2])
 			printf("Error al cargar textura este: %s\n", data->parser->elem.ea);
 	}
@@ -45,7 +45,7 @@ void init_textures(t_data *data)
 
 	if (data->parser->elem.we)
 	{
-		data->scene->textures[3] = mlx_load_png("assets/west.png");
+		data->scene->textures[3] = mlx_load_png(ft_strtrim_ft(data->parser->elem.we, "\n"));
 		if (!data->scene->textures[3])
 			printf("Error al cargar textura oeste: %s\n", data->parser->elem.we);
 	}
@@ -154,12 +154,7 @@ void	draw_walls(t_data *data, t_scene *scene)
 	}
 	while (x < WIDTH)
 	{
-		if (x == WIDTH / 2)
-		{
-			camera_x = 0;
-		}
-		else
-			camera_x = 2 * x / (double)WIDTH - 1;
+		camera_x = 2 * x / (double)WIDTH - 1;
 		ray_dir_x = scene->player.dir.x + scene->player.plane.x * camera_x;
 		// ray_dir_x = scene->player.player_dir_x + scene->player.plane_x * camera_x;
 		// ray_dir_y = scene->player.player_dir_y + scene->player.plane_y * camera_x;
@@ -228,7 +223,7 @@ void	draw_walls(t_data *data, t_scene *scene)
 			perp_wall_dist = (map_y - scene->player.pos.y + (1 - step_y) / 2.0) / ray_dir_y;
 		if (perp_wall_dist < 1e-3)
 			perp_wall_dist = 1e-3;
-		perp_wall_dist *= 1.5f;
+		// perp_wall_dist *= 1.5f;
 		line_height = (int)(HEIGHT / perp_wall_dist);
 		draw_start = -line_height / 2 + HEIGHT / 2;
 		if (draw_start < 0)
@@ -236,28 +231,6 @@ void	draw_walls(t_data *data, t_scene *scene)
 		draw_end = line_height / 2 + HEIGHT/ 2;
 		if (draw_end >= HEIGHT)
 			draw_end = HEIGHT - 1;
-		// if (side == 0)
-        // {
-        //     if (ray_dir_x > 0)
-		// 	{
-        //         color = 0xFF0000FF;
-		// 	}
-        //     else
-		// 	{
-        //         color = 0xFFFF0000;
-		// 	}
-        // }
-        // else
-        // {
-        //     if (ray_dir_y > 0)
-		// 	{
-        //         color = 0xFF00FF00;
-		// 	}
-        //     else
-		// 	{
-        //         color = 0xFFFF00FF;
-		// 	}
-        // }
 		if (side == 0)
 		{
 			if (ray_dir_x > 0)
@@ -274,11 +247,17 @@ void	draw_walls(t_data *data, t_scene *scene)
 		}
 
 		if (side == 0)
-		wall_x = scene->player.pos.y + perp_wall_dist * ray_dir_y;
+			wall_x = scene->player.pos.y + perp_wall_dist * ray_dir_y;
 		else
-		wall_x = scene->player.pos.x + perp_wall_dist * ray_dir_x;
-		wall_x -= floor(wall_x);
-		tex_x = (int)(wall_x * texture->width);
+			wall_x = scene->player.pos.x + perp_wall_dist * ray_dir_x;
+		wall_x = fmod(wall_x, 1.0);
+		if (wall_x < 0)
+			wall_x += 1.0;
+		tex_x = (int)(wall_x * (double)texture->width);
+		if (tex_x < 0)
+			tex_x = 0;
+		if (tex_x >= (int)texture->width)
+			tex_x = texture->width - 1;
 		if ((side == 0 && ray_dir_x < 0) || (side == 1 && ray_dir_y > 0))
 			tex_x = texture->width - tex_x - 1;
 		step = 1.0 * texture->height / line_height;
