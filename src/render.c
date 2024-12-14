@@ -1,59 +1,87 @@
-// #include "render.h"
-// #include "textures.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   render.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: adrian <adrian@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/12/12 18:28:30 by adrian            #+#    #+#             */
+/*   Updated: 2024/12/13 16:25:25 by adrian           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../include/cub3d.h"
 
-// int	render(void **pack)
-// {
-// 	t_scene	*scene;
-// 	t_keys	*keys;
+void init_textures(t_data *data)
+{
+	data->scene->textures = malloc(sizeof(mlx_texture_t *) * 4);
+	printf("Ruta de carga: %s\n", data->parser->elem.no);
+	if (ft_strcmp(data->parser->elem.no, "assets/north.png") == 0) 
+	{
+		data->scene->textures[0] = mlx_load_png(data->parser->elem.no);
+		if (!data->scene->textures[0])
+			printf("Error al cargar textura norte: %s\n", data->parser->elem.no);
+	}
+	else
+		printf("Error: Ruta de textura norte es NULL\n");
 
-// 	scene = (t_scene *)(pack[0]);
-// 	keys = (t_keys *)(pack[1]);
+	if (data->parser->elem.so)
+	{
+		data->scene->textures[1] = mlx_load_png("assets/south.png");
+		if (!data->scene->textures[1])
+			printf("Error al cargar textura sur: %s\n", data->parser->elem.so);
+	}
+	else
+		printf("Error: Ruta de textura sur es NULL\n");
+
+	if (data->parser->elem.ea)
+	{
+		data->scene->textures[2] = mlx_load_png("assets/east.png");
+		if (!data->scene->textures[2])
+			printf("Error al cargar textura este: %s\n", data->parser->elem.ea);
+	}
+	else
+		printf("Error: Ruta de textura este es NULL\n");
+
+	if (data->parser->elem.we)
+	{
+		data->scene->textures[3] = mlx_load_png("assets/west.png");
+		if (!data->scene->textures[3])
+			printf("Error al cargar textura oeste: %s\n", data->parser->elem.we);
+	}
+	else
+		printf("Error: Ruta de textura oeste es NULL\n");
+}
 
 
 void render(void *scene_keys)
 {
-    // t_map *map;
+	t_data *data;
 
-    // t_img   *image;
-    // t_mapData map_data;
-	// t_scene scene;
-	t_data *data = (t_data *)scene_keys;
-	// t_keys *key;
-	// mlx_image_t image;
-	// scene = (t_scene *)(scene_keys[0]);
-	// key = (t_keys *)(scene_keys[1]);
+	data = (t_data *)scene_keys;
+	if (!data || !data->scene || !data->image)
+	{
+		perror("Error: Datos de escena no inicializados correctamente.\n");
+		return ;
+	}
+	init_textures(data);
 	init_minimap(data);
     key_hook(data);
     drawBackground(data->image, data->scene);
     draw_walls(data, data->scene);
     draw_minimap(data);
-	// draw_player_on_minimap(data);
-	// mlx_image_to_window(data->scene->mlx, data->minimap.img, 100, 100);
-    // mlx_image_to_window(data->scene->mlx, data->minimap.img, 0, 0);
-    //mlx_image_to_window(data->scene->mlx, data->minimap.img, 0, 0);
-    
-	//draw();
-
 }
 
 void	drawBackground(mlx_image_t *image, t_scene *scene)
 {
-	int			y;
-	int			x;
-	// uint32_t	ceiling_color;
-	// uint32_t	floor_color;
-	// ceiling_color = getColor(map_data->ceiling);
-	// floor_color = getColor(map_data->floor);
-	// if (ceiling_color == 0 || floor_color == 0)
-	// 	return;
+	int	y;
+	int	x;
+
 	if (scene->ccolor == 0 || scene->fcolor == 0)
     {
         printf("Error: Los colores del fondo no son válidos (ccolor: %x, fcolor: %x).\n", scene->ccolor, scene->fcolor);
         return;
     }
-
-    // Validar imagen
     if (!image)
     {
         printf("Error: La imagen no está inicializada.\n");
@@ -90,38 +118,45 @@ void	drawBackground(mlx_image_t *image, t_scene *scene)
 
 void	draw_walls(t_data *data, t_scene *scene)
 {
-	int			step_x;
-	int			step_y;
-	int			hit;
-	int			side;
-	int			x;
-	int			y;
-	int			map_x;
-	int			map_y;
-	int			line_height;
-	int			draw_start;
-	int			draw_end;
-	double		camera_x;
-	double		ray_dir_x;
-	double		ray_dir_y;
-	double		side_dist_x;
-	double		side_dist_y;
-	double		delta_dist_x;
-	double		delta_dist_y;
-	double		perp_wall_dist;
-	uint32_t	color;
+	int				step_x;
+	int				step_y;
+	int				hit;
+	int				side;
+	int				x;
+	int				y;
+	int				map_x;
+	int				map_y;
+	int				line_height;
+	int				draw_start;
+	int				draw_end;
+	int				tex_x;
+	int				tex_y;
+	double			step;
+	double			tex_pos;
+	double			camera_x;
+	double			ray_dir_x;
+	double			ray_dir_y;
+	double			side_dist_x;
+	double			side_dist_y;
+	double			delta_dist_x;
+	double			delta_dist_y;
+	double			perp_wall_dist;
+	double			wall_x;
+	uint32_t		color;
+	mlx_texture_t	*texture;
 
+	texture = NULL;
 	x = 0;
+	if (!scene || !scene->map || !data->image)
+	{
+		printf("Error: Datos de escena no válidos en draw_walls.\n");
+		return;
+	}
 	while (x < WIDTH)
 	{
 		if (x == WIDTH / 2)
 		{
 			camera_x = 0;
-			// printf("Ray Central [%d]:\n", x);
-			// printf("  Camera X: %f\n", camera_x);
-			// printf("  Ray Dir: (%f, %f)\n", ray_dir_x, ray_dir_y);
-			// printf("  Player Pos: (%d, %d)\n", data->player_x, map_data->player_y);
-			// printf("  Plane: (%f, %f)\n", map_data->plane_x, map_data->plane_y);
 		}
 		else
 			camera_x = 2 * x / (double)WIDTH - 1;
@@ -201,35 +236,59 @@ void	draw_walls(t_data *data, t_scene *scene)
 		draw_end = line_height / 2 + HEIGHT/ 2;
 		if (draw_end >= HEIGHT)
 			draw_end = HEIGHT - 1;
+		// if (side == 0)
+        // {
+        //     if (ray_dir_x > 0)
+		// 	{
+        //         color = 0xFF0000FF;
+		// 	}
+        //     else
+		// 	{
+        //         color = 0xFFFF0000;
+		// 	}
+        // }
+        // else
+        // {
+        //     if (ray_dir_y > 0)
+		// 	{
+        //         color = 0xFF00FF00;
+		// 	}
+        //     else
+		// 	{
+        //         color = 0xFFFF00FF;
+		// 	}
+        // }
 		if (side == 0)
-        {
-            if (ray_dir_x > 0)
-			{
-                color = 0xFF0000FF;
-				printf("Ray %d: side = %d, ray_dir_x = %f, color = 0X%X (Azul)\n", x, side, ray_dir_x, color);
-			}
-            else
-			{
-                color = 0xFFFF0000;
-				printf("Ray %d: side = %d, ray_dir_x = %f, color = 0X%X (Rojo)\n", x, side, ray_dir_x, color);
-			}
-        }
-        else
-        {
-            if (ray_dir_y > 0)
-			{
-                color = 0xFF00FF00;
-				printf("Ray %d: side = %d, ray_dir_y = %f, color = 0X%X (Verde)\n", x, side, ray_dir_y, color);
-			}
-            else
-			{
-                color = 0xFFFF00FF;
-				printf("Ray %d: side = %d, ray_dir_y = %f, color = 0X%X (Magenta)\n", x, side, ray_dir_y, color);
-			}
-        }
+		{
+			if (ray_dir_x > 0)
+				texture = data->scene->textures[0];
+			else
+				texture = data->scene->textures[1];
+		}
+		else
+		{
+			if (ray_dir_y > 0)
+				texture = data->scene->textures[2];
+			else
+				texture = data->scene->textures[3];
+		}
+
+		if (side == 0)
+		wall_x = scene->player.pos.y + perp_wall_dist * ray_dir_y;
+		else
+		wall_x = scene->player.pos.x + perp_wall_dist * ray_dir_x;
+		wall_x -= floor(wall_x);
+		tex_x = (int)(wall_x * texture->width);
+		if ((side == 0 && ray_dir_x < 0) || (side == 1 && ray_dir_y > 0))
+			tex_x = texture->width - tex_x - 1;
+		step = 1.0 * texture->height / line_height;
+		tex_pos = (draw_start - HEIGHT / 2 + line_height / 2) * step;
 		y = draw_start;
 		while (y < draw_end)
 		{
+			tex_y = (int)tex_pos & (texture->height - 1);
+			tex_pos += step;
+			color = ((uint32_t *)texture->pixels)[tex_y * texture->width + tex_x];
 			((uint32_t *)data->image->pixels)[y * WIDTH + x] = color;
 			y++;
 		}

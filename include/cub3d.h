@@ -6,8 +6,8 @@
 # include <unistd.h>
 # include <fcntl.h>
 # include <math.h>
-#include "../42libft/libft.h"
-#include "../MLX42/include/MLX42/MLX42.h"
+# include "../42libft/libft.h"
+# include "../MLX42/include/MLX42/MLX42.h"
 // # include "raycaster.h"
 // # include "input.h"
 // # include "render.h"
@@ -16,6 +16,7 @@
 
 # define WIDTH 1020
 # define HEIGHT 720
+# define WALL_PADDING 0.1
 
 typedef struct s_color
 {
@@ -128,15 +129,16 @@ typedef struct s_door
 
 typedef struct s_scene
 {
-    t_player    player;
-    t_door      *doors;
-    char        **map;
-    int         rows;
-    int         cols;
-    int         prev_frame;
-    mlx_t        *mlx;
-    void        *win;
-    t_img       *screen;
+    t_player	player;
+    t_door		*doors;
+    char		**map;
+    int			rows;
+    int			cols;
+    int			prev_frame;
+    mlx_t		*mlx;
+    mlx_texture_t		**textures;
+    void		*win;
+    t_img		*screen;
     t_img       *n_wall;
     t_img       *s_wall;
     t_img       *e_wall;
@@ -149,6 +151,7 @@ typedef struct s_scene
     t_byte      left_m;
     t_byte      right_m;
     t_vec2      prev_point;
+	t_map		*v_map;
 }   t_scene;
 
 // typedef struct s_mapData
@@ -239,6 +242,8 @@ typedef struct s_data
     // t_mapData *map_data;
     t_minimap minimap;
     t_scene *scene;
+    t_map   *v_map;
+	t_parser *parser;
 }   t_data;
 
 int check_is_valid(char **check_line);

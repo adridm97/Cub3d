@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mel-atta <mel-atta@student.42.fr>          +#+  +:+       +#+        */
+/*   By: adrian <adrian@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 23:34:14 by mel-atta          #+#    #+#             */
-/*   Updated: 2024/12/07 23:34:15 by mel-atta         ###   ########.fr       */
+/*   Updated: 2024/12/12 16:32:25 by adrian           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ int	main(int argc, char *argv[])
 		exit(1);
 	}
 	data.scene = &scene;
+    data.parser = &parser;
 	mlx_loop_hook(scene.mlx, &render, &data);
 	mlx_cursor_hook(scene.mlx, handle_mouse_move, &data);
 	mlx_close_hook(scene.mlx, close_window, &data);
