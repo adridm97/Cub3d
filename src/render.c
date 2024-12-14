@@ -6,7 +6,7 @@
 /*   By: aduenas- <aduenas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 18:28:30 by adrian            #+#    #+#             */
-/*   Updated: 2024/12/14 22:13:16 by aduenas-         ###   ########.fr       */
+/*   Updated: 2024/12/14 23:30:45 by aduenas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 void init_textures(t_data *data)
 {
 	data->scene->textures = malloc(sizeof(mlx_texture_t *) * 4);
-	printf("Ruta de carga: %s\n", data->parser->elem.no);
 	if (data->parser->elem.no) 
 	{
 		data->scene->textures[0] = mlx_load_png(ft_strtrim_ft(data->parser->elem.no, "\n"));
@@ -156,8 +155,6 @@ void	draw_walls(t_data *data, t_scene *scene)
 	{
 		camera_x = 2 * x / (double)WIDTH - 1;
 		ray_dir_x = scene->player.dir.x + scene->player.plane.x * camera_x;
-		// ray_dir_x = scene->player.player_dir_x + scene->player.plane_x * camera_x;
-		// ray_dir_y = scene->player.player_dir_y + scene->player.plane_y * camera_x;
 		ray_dir_y = scene->player.dir.y + scene->player.plane.y * camera_x;
 		if (fabs(ray_dir_x) < 1e-6)
 			ray_dir_x = 0;
@@ -223,7 +220,6 @@ void	draw_walls(t_data *data, t_scene *scene)
 			perp_wall_dist = (map_y - scene->player.pos.y + (1 - step_y) / 2.0) / ray_dir_y;
 		if (perp_wall_dist < 1e-3)
 			perp_wall_dist = 1e-3;
-		// perp_wall_dist *= 1.5f;
 		line_height = (int)(HEIGHT / perp_wall_dist);
 		draw_start = -line_height / 2 + HEIGHT / 2;
 		if (draw_start < 0)
