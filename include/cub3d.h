@@ -18,7 +18,7 @@
 # define HEIGHT 720
 # define WALL_PADDING 0.1
 # define MOVE_SPEED 0.2f
-#define ROTATION_SPEED (M_PI / 180.0f)
+#define ROTATION_SPEED 0.2f
 
 typedef struct s_color
 {
