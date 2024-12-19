@@ -5,13 +5,13 @@
       "name": "C/C++ Runner: Debug Session",
       "type": "cppdbg",
       "request": "launch",
-      "args": ["../maps/bad/map_first.cub"],
+      "args": ["../assets/map2.cub"],
       "stopAtEntry": false,
       "externalConsole": false,
-      "cwd": "/home/aduenas-/Desktop/Cub3d/cub3D/",
-      "program": "/home/aduenas-/Desktop/Cub3d/cub",
+      "cwd": "/Users/adrian/Desktop/Cub3d/cub3D/",
+      "program": "/Users/adrian/Desktop/Cub3d/cub",
       "MIMode": "gdb",
-      "miDebuggerPath": "gdb",
+      "miDebuggerPath": "/usr/local/bin/gdb",
       "setupCommands": [
         {
           "description": "Enable pretty-printing for gdb",

@@ -3,55 +3,36 @@
 /*                                                        :::      ::::::::   */
 /*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mel-atta <mel-atta@student.42.fr>          +#+  +:+       +#+        */
+/*   By: adrian <adrian@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 18:28:30 by adrian            #+#    #+#             */
-/*   Updated: 2024/12/15 00:47:06 by mel-atta         ###   ########.fr       */
+/*   Updated: 2024/12/16 16:24:58 by adrian           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/cub3d.h"
 
+static mlx_texture_t	*load_texture(const char *path, const char *name)
+{
+	char	*trimmed_path;
+	mlx_texture_t	*texture;
+
+	trimmed_path = ft_strtrim_ft(path, "\n");
+	texture = mlx_load_png(trimmed_path);
+	if (!texture)
+		printf("Error al cargar textura %s: %s\n", name, trimmed_path);
+	free(trimmed_path);
+	return texture;
+}
+
 void init_textures(t_data *data)
 {
 	data->scene->textures = malloc(sizeof(mlx_texture_t *) * 4);
-	if (data->parser->elem.no) 
-	{
-		data->scene->textures[0] = mlx_load_png(ft_strtrim_ft(data->parser->elem.no, "\n"));
-		if (!data->scene->textures[0])
-			printf("Error al cargar textura norte: %s\n", data->parser->elem.no);
-	}
-	else
-		printf("Error: Ruta de textura norte es NULL\n");
-
-	if (data->parser->elem.so)
-	{
-		data->scene->textures[1] = mlx_load_png(ft_strtrim_ft(data->parser->elem.so, "\n"));
-		if (!data->scene->textures[1])
-			printf("Error al cargar textura sur: %s\n", data->parser->elem.so);
-	}
-	else
-		printf("Error: Ruta de textura sur es NULL\n");
-
-	if (data->parser->elem.ea)
-	{
-		data->scene->textures[2] = mlx_load_png(ft_strtrim_ft(data->parser->elem.ea, "\n"));
-		if (!data->scene->textures[2])
-			printf("Error al cargar textura este: %s\n", data->parser->elem.ea);
-	}
-	else
-		printf("Error: Ruta de textura este es NULL\n");
-
-	if (data->parser->elem.we)
-	{
-		data->scene->textures[3] = mlx_load_png(ft_strtrim_ft(data->parser->elem.we, "\n"));
-		if (!data->scene->textures[3])
-			printf("Error al cargar textura oeste: %s\n", data->parser->elem.we);
-	}
-	else
-		printf("Error: Ruta de textura oeste es NULL\n");
+	data->scene->textures[0] = load_texture(data->parser->elem.no, "norte");
+	data->scene->textures[1] = load_texture(data->parser->elem.so, "sur");
+	data->scene->textures[2] = load_texture(data->parser->elem.ea, "este");
+	data->scene->textures[3] = load_texture(data->parser->elem.we, "oeste");
 }
-
 
 void render(void *scene_keys)
 {

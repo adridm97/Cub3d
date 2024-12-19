@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   key_events.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aduenas- <aduenas-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: adrian <adrian@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 18:57:16 by adrian            #+#    #+#             */
-/*   Updated: 2024/12/15 00:23:51 by aduenas-         ###   ########.fr       */
+/*   Updated: 2024/12/16 18:52:37 by adrian           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,25 +36,6 @@
 // 		return true;
 // 	return false;
 // }
-bool is_wall(t_data *data, float x, float y)
-{
-    int padding = 10; // Radio del jugador
-    int map_x, map_y;
-
-    // Verificar el centro del jugador
-    map_x = (int)((x - padding) / 64);
-    map_y = (int)((y - padding) / 64);
-    if (data->scene->map[map_y][map_x] == '1')
-        return true;
-
-    map_x = (int)((x + padding) / 64);
-    map_y = (int)((y + padding) / 64);
-    if (data->scene->map[map_y][map_x] == '1')
-        return true;
-
-    return false;
-}
-
 
 t_vec2	sum_vec2(t_vec2 v1, t_vec2 v2)
 {
@@ -80,80 +61,83 @@ void	handle_exit()
     exit(0);
 }
 
-void	handle_forward_backward(t_data *data, double move_speed)
+void	handle_forward_backward(t_data *data)
 {
-	float	new_x;
-	float	new_y;
+	t_vec2	new_pos;
+	t_vec2	forward;
+	t_vec2	backward;
 
-	new_x = 0;
-	new_y = 0;
+	new_pos = data->scene->player.pos;
 	if (mlx_is_key_down(data->scene->mlx, MLX_KEY_W))
 	{
-		new_x = data->scene->player.pos.x + data->scene->player.dir.x * move_speed;
-		new_y = data->scene->player.pos.y + data->scene->player.dir.y * move_speed;
-		printf("new x: %f, new y: %f\n", new_x,new_y);
+		forward.x = data->scene->player.dir.x * MOVE_SPEED;
+		forward.y = data->scene->player.dir.y * MOVE_SPEED;
+		new_pos = sum_vec2(new_pos, forward);
 	}
 	else if (mlx_is_key_down(data->scene->mlx, MLX_KEY_S))
 	{
-		new_x = data->scene->player.pos.x - data->scene->player.dir.x * move_speed;
-		new_y = data->scene->player.pos.y - data->scene->player.dir.y * move_speed;
+		backward.x = -data->scene->player.dir.x * MOVE_SPEED;
+		backward.y = -data->scene->player.dir.y * MOVE_SPEED;
 	}
-	if (!is_wall(data, new_x, new_y))
+	printf("Nueva posición (forward/backward): (%f, %f)\n", new_pos.x, new_pos.y);
+	if (!check_collision(data, new_pos))
 	{
-		data->scene->player.pos.x = new_x;
-		data->scene->player.pos.y = new_y;
+		data->scene->player.pos = new_pos;
+		printf("entra en el backward\n");
 	}
+	else
+		printf("hay colision en el backward\n");
 }
-void	handle_strafe(t_data *data, double move_speed)
+void	handle_strafe(t_data *data)
 {
-	float	new_x;
-	float	new_y;
+	t_vec2	new_pos;
+	t_vec2	left;
+	t_vec2	right;
 
-	new_x = 0;
-	new_y = 0;
+	new_pos = data->scene->player.pos;
 	if (mlx_is_key_down(data->scene->mlx, MLX_KEY_A))
 	{
-		new_x = data->scene->player.pos.x - data->scene->player.plane.x * move_speed;
-		new_y = data->scene->player.pos.y - data->scene->player.plane.y * move_speed;
+		left.x = -data->scene->player.plane.x * MOVE_SPEED;
+		left.y = -data->scene->player.plane.y * MOVE_SPEED;
+		new_pos = sum_vec2(new_pos, left);
 	}
 	else if (mlx_is_key_down(data->scene->mlx, MLX_KEY_D))
 	{
-		new_x = data->scene->player.pos.x + data->scene->player.plane.x * move_speed;
-		new_y = data->scene->player.pos.y + data->scene->player.plane.y * move_speed;
+		right.x = data->scene->player.plane.x * MOVE_SPEED;
+		right.y = data->scene->player.plane.y * MOVE_SPEED;
+		new_pos = sum_vec2(new_pos, right);
 	}
-	if (!is_wall(data, new_x, new_y))
+	printf("Nueva posición (strafe): (%f, %f)\n", new_pos.x, new_pos.y);
+	if (!check_collision(data, new_pos))
 	{
-		data->scene->player.pos.x = new_x;
-		data->scene->player.pos.y = new_y;
+		data->scene->player.pos = new_pos;
+		printf("entra en el strafe\n");
 	}
+	else
+		printf("hay colision strafe\n");
 }
-void	handle_rotation(t_data *data, double rotation_speed)
+void	handle_rotation(t_data *data)
 {
 	if (mlx_is_key_down(data->scene->mlx, MLX_KEY_LEFT))
 	{
-		data->scene->player.dir = rotate_vec2(data->scene->player.dir, -rotation_speed);
-		data->scene->player.plane = rotate_vec2(data->scene->player.plane, -rotation_speed);
+		data->scene->player.dir = rotate_vec2(data->scene->player.dir, -ROTATION_SPEED);
+		data->scene->player.plane = rotate_vec2(data->scene->player.plane, -ROTATION_SPEED);
 	}
 	else if (mlx_is_key_down(data->scene->mlx, MLX_KEY_RIGHT))
 	{
-		data->scene->player.dir = rotate_vec2(data->scene->player.dir, rotation_speed);
-		data->scene->player.plane = rotate_vec2(data->scene->player.plane, rotation_speed);
+		data->scene->player.dir = rotate_vec2(data->scene->player.dir, ROTATION_SPEED);
+		data->scene->player.plane = rotate_vec2(data->scene->player.plane, ROTATION_SPEED);
 	}
 }
 
 void	key_hook(t_data *data)
 {
-	double	move_speed;
-	double	rotation_speed;
-
-	move_speed = 0.1;
-	rotation_speed = 0.1;
 	if (mlx_is_key_down(data->scene->mlx, MLX_KEY_ESCAPE))
 		handle_exit();
 	if (mlx_is_key_down(data->scene->mlx, MLX_KEY_W) || mlx_is_key_down(data->scene->mlx, MLX_KEY_S))
-		handle_forward_backward(data, move_speed);
+		handle_forward_backward(data);
 	if (mlx_is_key_down(data->scene->mlx, MLX_KEY_A) || mlx_is_key_down(data->scene->mlx, MLX_KEY_D))
-		handle_strafe(data, move_speed);
+		handle_strafe(data);
 	if (mlx_is_key_down(data->scene->mlx, MLX_KEY_LEFT) || mlx_is_key_down(data->scene->mlx, MLX_KEY_RIGHT))
-		handle_rotation(data, rotation_speed);
+		handle_rotation(data);
 }

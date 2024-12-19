@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   set_scene.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mel-atta <mel-atta@student.42.fr>          +#+  +:+       +#+        */
+/*   By: adrian <adrian@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 12:15:17 by mel-atta          #+#    #+#             */
-/*   Updated: 2024/11/30 16:16:45 by mel-atta         ###   ########.fr       */
+/*   Updated: 2024/12/16 16:55:22 by adrian           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 void set_mlx(t_scene *scene, t_parser parser, t_data *data)
 {
-
     scene->mlx = mlx_init(WIDTH, HEIGHT, "Cub3d", 1);
     if (scene->mlx == NULL)
     {
@@ -27,12 +26,6 @@ void set_mlx(t_scene *scene, t_parser parser, t_data *data)
         free_data(&parser, data, scene);
         exit(0);
     }
-    // scene->win = mlx_new_window(scene->mlx, scene->width, scene->height, "Cub3D");
-    // if (scene->win == NULL)
-    // {
-    //     free_data(&parser, &data, scene);
-    //     exit(0);
-    // }
 }
 
 
