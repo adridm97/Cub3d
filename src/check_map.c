@@ -69,11 +69,7 @@ int check_nums(char *str, t_parser *parser)
 			return (1);
 	}
     else
-    {
-        printf("str: %s", str);
-        printf("check_line[0]: %s", check_line[0]);
         check_nums(ft_strtrim(check_line[0], " "), parser);
-    }
     // ft_free_game(check_line);
 	return (0);
 }

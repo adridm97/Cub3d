@@ -28,6 +28,9 @@ int	check_elements(t_parser *parser, t_scene *scene)
 			y++;
 		}
 	}
+    // revisar cual de estas variables no ha incrementado 
+    // porque cuando pongo un cero o 255 en el cielo o suelo 
+    // deja de funcionar el mapa, con otros valores funciona
 	if (parser->elem.qtt.no != 1 || parser->elem.qtt.so != 1 || 
 	parser->elem.qtt.we != 1 || parser->elem.qtt.ea != 1 ||
 	parser->elem.qtt.f != 1 || parser->elem.qtt.c != 1 ||
@@ -110,14 +113,15 @@ int	check_rgb_nums(char **sp)
 	int	num;
 
 	i = 0;
+    printf("sp[0] %s\n", sp[0]);
 	while (sp[i] != NULL)
 	{
-		num = atoi(sp[i]);    
-		if (num < 0 || num > 255)
-			return (1);
+		num = atoi(sp[i]);
+		if (num >= 0 || num <= 255)
+			return (0);
 		i++;
 	}
-	return (0);
+	return (1);
 }
 
  int is_map_line(const char *line)
