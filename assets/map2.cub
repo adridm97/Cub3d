@@ -1,7 +1,7 @@
-NO assets/north.png
-EA assets/east.png
-SO assets/south.png
-WE assets/west.png
+NO assets/eagle.png
+EA assets/mossy.png
+SO assets/red_brick.png
+WE assets/wood.png
 
 C 35,19,73
 F 15,6,40

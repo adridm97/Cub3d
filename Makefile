@@ -3,7 +3,7 @@ CFLAGS = -Wall -Wextra -Werror -g -O3 -fsanitize=address
 NAME = cub
 SRCS = cub3D.c src/check_map.c src/check_player.c src/ft_free.c src/map_parser.c \
 	src/set_scene.c src/utils.c src/utils2.c src/set_player.c src/render.c key_events.c minmap.c \
-	src/free.c src/handle_mouse_move.c
+	src/free.c src/handle_mouse_move.c src/player_colision.c
 #parse.c minmap.c key_events.c parse_player.c ray_casting.c
 OBJS = $(SRCS:.c=.o)
 LIBFT = 42libft/libft.a
