@@ -365,6 +365,7 @@ void	close_window(void *param);
 void	cleanup(t_data *data);
 void	handle_mouse_move(double x, double y, void *param);
 bool	is_wall(t_data *data, int x, int y);
+void free_string(char *str);
 int		init_game(t_cub3d *game, char *scene_file);
 void	setup_window(t_cub3d *game);
 void	render_frame(t_cub3d *game);

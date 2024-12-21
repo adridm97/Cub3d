@@ -6,7 +6,7 @@
 /*   By: mel-atta <mel-atta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 12:17:47 by mel-atta          #+#    #+#             */
-/*   Updated: 2024/12/14 18:40:43 by mel-atta         ###   ########.fr       */
+/*   Updated: 2024/12/21 14:33:49 by mel-atta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,28 +44,40 @@ void    free_data(t_parser *parser, t_data *data, t_scene *scene)
 //     (void)mlx;
 // 	if (img)
 // 	{
-// 		// mlx_delete_image(mlx, img);
+// 		mlx_delete_image(mlx, img);
 // 		free(img);
 // 	}
 // }
 
+void free_string(char *str)
+{
+    if (str)
+        free(str);
+}
+
 void	free_mlx(t_scene *scene, t_parser *parser)
 {
+    (void)scene;
 	// free_image(scene->mlx, scene->ccolor);
-	// free_image(scene->mlx, parser->elem.no);
+	free_string(parser->elem.no);
+    free_string(parser->elem.so);
+    free_string(parser->elem.we);
+    free_string(parser->elem.ea);
+    free_string(parser->elem.f);
+    free_string(parser->elem.c);
 	// free_image(scene->mlx, parser->elem.so);
 	// free_image(scene->mlx, parser->elem.ea);
 	// free_image(scene->mlx, scene->full_map);
 	// free_image(scene->mlx, scene->screen);
     (void)parser;
-	mlx_terminate(scene->mlx);
-	ft_free_game(scene->map);
+	// mlx_terminate(scene->mlx);
+	// ft_free_game(scene->map);
 }
 
 void    free_scene(t_parser *parser, t_scene *scene)
 {
     (void)scene;
-    // free_mlx(scene, parser);
+    free_mlx(scene, parser);
     free_parser(parser);
 }
 
