@@ -1,32 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free.c                                             :+:      :+:    :+:   */
+/*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aduenas- <aduenas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/07 12:39:56 by mel-atta          #+#    #+#             */
-/*   Updated: 2024/12/21 16:40:57 by aduenas-         ###   ########.fr       */
+/*   Created: 2024/12/21 13:18:28 by aduenas-          #+#    #+#             */
+/*   Updated: 2024/12/21 15:35:15 by aduenas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/cub3d.h"
 
-void close_window(void *param)
+void	free_textures(t_data *data)
 {
-    t_data *data = (t_data *)param;
-    cleanup(data);
-}
+	int	i;
 
-void cleanup(t_data *data)
-{
-    if (!data)
-        return ;
-    if (data->minimap.img)
-        mlx_delete_image(data->scene->mlx, data->minimap.img);
-    if (data->image)
-        mlx_delete_image(data->scene->mlx, data->image);
-    if (data->scene->mlx)
-        mlx_terminate(data->scene->mlx);
-    exit(0);
+	if (!data || !data->scene || !data->scene->textures)
+		return ;
+	i = 0;
+	while (i < 4)
+	{
+		if (data->scene->textures[i])
+		{
+			free(data->scene->textures[i]);
+			data->scene->textures[i] = NULL;
+		}
+		i++;
+	}
+	free(data->scene->textures);
+	data->scene->textures = NULL;
 }

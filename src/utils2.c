@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mel-atta <mel-atta@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aduenas- <aduenas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 12:15:26 by mel-atta          #+#    #+#             */
-/*   Updated: 2024/12/21 12:26:30 by mel-atta         ###   ########.fr       */
+/*   Updated: 2024/12/21 15:47:25 by aduenas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,6 @@ int	check_rgb_nums(char **sp)
 	int	num;
 
 	i = 0;
-    printf("sp[0] %s\n", sp[0]);
 	while (sp[i] != NULL)
 	{
 		num = atoi(sp[i]);
@@ -140,11 +139,9 @@ int check_file1(const char *filename)
     int fd = open(filename, O_RDONLY);
     if (fd == -1)
         return (write(2, "Error opening file\n", 19), 1);
-
     char *line = get_next_line(fd);
     while (line)
     {
-        // Eliminar espacios en blanco al inicio y al final de la línea
         char *trimmed_line = ft_strtrim(line, " \t\n");
         free(line);
         if (ft_strlen(trimmed_line) == 0)
@@ -153,18 +150,15 @@ int check_file1(const char *filename)
             line = get_next_line(fd);
             continue;
         }
-
         if (is_map_line(trimmed_line))
         {
             free(trimmed_line);
             close(fd);
             return (write(2, "Error: file starts with map\n", 28), 1);
         }
-
         free(trimmed_line);
         break;
     }
-
     close(fd);
     return 0;
 }

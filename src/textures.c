@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   textures.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adrian <adrian@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aduenas- <aduenas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/20 23:03:11 by adrian            #+#    #+#             */
-/*   Updated: 2024/12/21 11:12:46 by adrian           ###   ########.fr       */
+/*   Updated: 2024/12/21 15:22:40 by aduenas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,18 +20,36 @@ static mlx_texture_t	*load_texture(const char *path, const char *name)
 	trimmed_path = ft_strtrim_ft(path, "\n");
 	texture = mlx_load_png(trimmed_path);
 	if (!texture)
+	{
 		printf("Error al cargar textura %s: %s\n", name, trimmed_path);
+		free(trimmed_path);
+		exit(1);	
+	}
 	free(trimmed_path);
 	return texture;
 }
 
 void	init_textures(t_data *data)
 {
+	int	i;
 	data->scene->textures = malloc(sizeof(mlx_texture_t *) * 4);
+	if (!data->scene->textures)
+		return ;
+	i = 0;
+	while (i < 4)
+		data->scene->textures[i++] = NULL;
 	data->scene->textures[0] = load_texture(data->parser->elem.no, "norte");
+	if (!data->scene->textures[0])
+		return (free_textures(data));
 	data->scene->textures[1] = load_texture(data->parser->elem.so, "sur");
+	if (!data->scene->textures[1])
+		return (free_textures(data));
 	data->scene->textures[2] = load_texture(data->parser->elem.ea, "este");
+	if (!data->scene->textures[2])
+		return (free_textures(data));
 	data->scene->textures[3] = load_texture(data->parser->elem.we, "oeste");
+	if (!data->scene->textures[3])
+		return (free_textures(data));
 }
 void	calculate_wall_x(t_wall *walls, t_data *data, mlx_texture_t *texture)
 {

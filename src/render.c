@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mel-atta <mel-atta@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aduenas- <aduenas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 18:28:30 by adrian            #+#    #+#             */
-/*   Updated: 2024/12/21 12:26:12 by mel-atta         ###   ########.fr       */
+/*   Updated: 2024/12/21 16:28:19 by aduenas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 void render(void *scene_keys)
 {
 	t_data *data;
-
 	data = (t_data *)scene_keys;
 	if (!data || !data->scene || !data->image)
 	{
@@ -41,13 +40,17 @@ void	drawBackground(mlx_image_t *image, t_scene *scene)
 	{
 		x = -1;
 		while (++x < WIDTH)
+		{
 			mlx_put_pixel(image, x, y, scene->ccolor);
+		}
 	}
 	while (++y < HEIGHT)
 	{
 		x = -1;
 		while (++x < WIDTH)
+		{
 			mlx_put_pixel(image, x, y, scene->fcolor);
+		}
 	}
 	if (mlx_image_to_window(scene->mlx, image, 0, 0) < 0)
 	{

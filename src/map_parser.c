@@ -6,7 +6,7 @@
 /*   By: aduenas- <aduenas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 12:16:33 by mel-atta          #+#    #+#             */
-/*   Updated: 2024/12/14 21:04:42 by aduenas-         ###   ########.fr       */
+/*   Updated: 2024/12/21 13:48:07 by aduenas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int	init_map(t_data *data, t_parser *parser)
 		free(trimed);
 	}
 	// depende de que pc no compila
-	// free(trimed);
+	free(trimed);
 	data->map = copy_map(*parser, y);
 	return (0);
 }

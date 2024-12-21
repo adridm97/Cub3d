@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   key_events.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mel-atta <mel-atta@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aduenas- <aduenas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 18:57:16 by adrian            #+#    #+#             */
-/*   Updated: 2024/12/21 12:12:18 by mel-atta         ###   ########.fr       */
+/*   Updated: 2024/12/21 16:35:45 by aduenas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,10 +55,15 @@ t_vec2	rotate_vec2(t_vec2 vec, double angle)
 	return (rotated);
 }
 
-void	handle_exit()
+void	handle_exit(t_data *data)
 {
+	if (data)
+	{
+		cleanup(data);
+		free_textures(data);
+	}
 	printf("Saliendo del juego...\n");
-    exit(0);
+	mlx_terminate(data->scene->mlx);
 }
 
 void	handle_forward_backward(t_data *data)
@@ -138,7 +143,7 @@ void	handle_rotation(t_data *data)
 void	key_hook(t_data *data)
 {
 	if (mlx_is_key_down(data->scene->mlx, MLX_KEY_ESCAPE))
-		handle_exit();
+		handle_exit(data);
 	if (mlx_is_key_down(data->scene->mlx, MLX_KEY_W) || mlx_is_key_down(data->scene->mlx, MLX_KEY_S))
 		handle_forward_backward(data);
 	if (mlx_is_key_down(data->scene->mlx, MLX_KEY_A) || mlx_is_key_down(data->scene->mlx, MLX_KEY_D))
