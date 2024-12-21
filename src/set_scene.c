@@ -27,7 +27,11 @@ void set_mlx(t_scene *scene, t_parser parser, t_data *data)
         exit(0);
     }
 }
-
+void print_map(char **map, int rows) {
+    for (int i = 0; i < rows; i++) {
+        printf("%s\n", map[i]);
+    }
+}
 
 void set_scene(t_scene *scene, t_parser parser, t_data *data)
  {
@@ -37,6 +41,8 @@ void set_scene(t_scene *scene, t_parser parser, t_data *data)
 
     // cubrir el mapa para protegerlo para el raycasting
     scene->map = padding_map(data->map, &scene->rows, &scene->cols);
+    // printf("rows,%d cols %d\n", scene->rows, scene->cols);
+    // print_map(scene->map, 32);
 	// print_scene_map(scene->map, 29);
     scene->player = set_player(scene->map);
     set_mlx(scene, parser, data);
@@ -47,7 +53,7 @@ void set_scene(t_scene *scene, t_parser parser, t_data *data)
         exit(0);
     }
     // set_scene_image(scene, parser, *data);
- }
+}
 
 char **padding_map(char **map, int *rows, int *cols)
 {
@@ -55,8 +61,8 @@ char **padding_map(char **map, int *rows, int *cols)
     int     i;
 
     delete_enter(map);
-    *rows += 10 * 2;
-    *cols += 10 * 2;
+    *rows += 20 * 2;
+    *cols += 20 * 2;
     new_map = malloc(sizeof(char *) * (*rows + 1));
     if (!new_map)
         return (NULL);
@@ -67,10 +73,8 @@ char **padding_map(char **map, int *rows, int *cols)
         if (!new_map[i])
             return (ft_free_game(new_map), NULL);
         ft_memset(new_map[i], ' ', *cols + 1);
-        if (i >= 10 && i < *rows - 10)
-		{
-            ft_strlcpy(new_map[i] + 10 - 2, map[i - 10], *cols);
-		}
+        if (i >= 20 && i < *rows - 20)
+            ft_strlcpy(new_map[i] + 20 - 2, map[i - 20], *cols + 1);
         new_map[i][*cols] = '\0';
         i++;
     }

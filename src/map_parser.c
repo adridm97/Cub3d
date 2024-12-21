@@ -60,7 +60,8 @@ int	init_map(t_data *data, t_parser *parser)
 		y++;
 		free(trimed);
 	}
-	free(trimed);
+	// depende de que pc no compila
+	// free(trimed);
 	data->map = copy_map(*parser, y);
 	return (0);
 }

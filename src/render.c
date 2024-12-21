@@ -26,7 +26,7 @@ void render(void *scene_keys)
 	init_minimap(data);
     key_hook(data);
     drawBackground(data->image, data->scene);
-    draw_walls(data, data->scene);
+    // draw_walls(data, data->scene);
     draw_minimap(data);
 }
 
