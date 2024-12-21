@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mel-atta <mel-atta@student.42.fr>          +#+  +:+       +#+        */
+/*   By: adrian <adrian@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 12:15:26 by mel-atta          #+#    #+#             */
-/*   Updated: 2024/12/15 00:47:58 by mel-atta         ###   ########.fr       */
+/*   Updated: 2024/12/21 11:25:19 by adrian           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,7 @@ int	check_rgb_nums(char **sp)
 	while (sp[i] != NULL)
 	{
 		num = atoi(sp[i]);
-		if (num >= 0 || num <= 255)
+		if (num >= 0 && num <= 255)
 			return (0);
 		i++;
 	}

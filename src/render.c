@@ -6,7 +6,7 @@
 /*   By: adrian <adrian@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 18:28:30 by adrian            #+#    #+#             */
-/*   Updated: 2024/12/21 11:21:09 by adrian           ###   ########.fr       */
+/*   Updated: 2024/12/21 11:25:30 by adrian           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void render(void *scene_keys)
 	init_minimap(data);
     key_hook(data);
     drawBackground(data->image, data->scene);
-    // draw_walls(data, data->scene);
+    draw_walls(data, data->scene);
     draw_minimap(data);
 }
 
