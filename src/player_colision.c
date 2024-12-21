@@ -3,37 +3,43 @@
 /*                                                        :::      ::::::::   */
 /*   player_colision.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adrian <adrian@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mel-atta <mel-atta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 12:35:00 by adrian            #+#    #+#             */
-/*   Updated: 2024/12/16 18:57:05 by adrian           ###   ########.fr       */
+/*   Updated: 2024/12/21 12:17:20 by mel-atta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/cub3d.h"
 
-bool	is_wall(t_data *data, float x, float y)
+bool	is_wall(t_data *data, int x, int y)
 {
-    int map_x;
-	int	map_y;
-	int	block_size;
-
-	block_size = WIDTH / data->colsx;
-	printf("Tamaño del mapa: %d , %d \n", data->colsx, data->rowsy);
-    map_x = (int)(x / block_size);
-    map_y = (int)(y / block_size);
-	printf("Coordenadas transformadas a índices (map_x: %d, map_y: %d) desde (x: %f, y: %f)\n", map_x, map_y, x, y);
-	if (map_x < 0 || map_y < 0 || map_y >= data->rowsy || map_x >= data->colsx)
-	{
-		printf("Índices fuera de los límites del mapa en is_wall (map_x: %d, map_y: %d)\n", map_x, map_y);
+    // int map_x;
+	// int	map_y;
+	// int	block_size;
+	// t_scene	scene;
+	(void)x;
+	(void)y;
+	// (void)data;
+	// block_size = WIDTH / data->colsx;
+	// printf("posicion del player: %d , %d \n", x, y);
+	// printf("contenido mapa: %c\n", data->scene->map[y][x]);
+	if (data->scene->map[y][x] == '1')
 		return (true);
-	}
-	printf("Celda en mapa[%d][%d]: %c\n", map_y, map_x, data->map[map_y][map_x]);
-    if (data->map[map_y][map_x] == '1')
-	{
-		printf("Muro detectado en (x: %f, y: %f)\n", x, y);
-		return (true);
-	}
+    // map_x = (int)(x / block_size);
+    // map_y = (int)(y / block_size);
+	// printf("Coordenadas transformadas a índices (map_x: %d, map_y: %d) desde (x: %d, y: %d)\n", map_x, map_y, x, y);
+	// if (map_x < 0 || map_y < 0 || map_y >= data->rowsy || map_x >= data->colsx)
+	// {
+	// 	printf("Índices fuera de los límites del mapa en is_wall (map_x: %d, map_y: %d)\n", map_x, map_y);
+	// 	return (true);
+	// }
+	// printf("Celda en mapa[%d][%d]: %c\n", map_y, map_x, data->map[map_y][map_x]);
+    // if (data->map[map_y][map_x] == '1')
+	// {
+	// 	printf("Muro detectado en (x: %d, y: %d)\n", x, y);
+	// 	return (true);
+	// }
 	return (false);
 }
 

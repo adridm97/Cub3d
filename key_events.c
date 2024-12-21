@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   key_events.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adrian <adrian@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mel-atta <mel-atta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 18:57:16 by adrian            #+#    #+#             */
-/*   Updated: 2024/12/16 18:52:37 by adrian           ###   ########.fr       */
+/*   Updated: 2024/12/21 12:12:18 by mel-atta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,15 +78,18 @@ void	handle_forward_backward(t_data *data)
 	{
 		backward.x = -data->scene->player.dir.x * MOVE_SPEED;
 		backward.y = -data->scene->player.dir.y * MOVE_SPEED;
+		new_pos = sum_vec2(new_pos, backward);
 	}
-	printf("Nueva posición (forward/backward): (%f, %f)\n", new_pos.x, new_pos.y);
-	if (!check_collision(data, new_pos))
-	{
-		data->scene->player.pos = new_pos;
-		printf("entra en el backward\n");
-	}
-	else
-		printf("hay colision en el backward\n");
+	if (is_wall(data, new_pos.x, new_pos.y))
+		return ;
+	// printf("Nueva posición (forward/backward): (%f, %f)\n", new_pos.x, new_pos.y);
+	// if (!check_collision(data, new_pos))
+	// {
+	data->scene->player.pos = new_pos;
+	// 	printf("entra en el backward\n");
+	// }
+	// else
+	// 	printf("hay colision en el backward\n");
 }
 void	handle_strafe(t_data *data)
 {
@@ -107,14 +110,16 @@ void	handle_strafe(t_data *data)
 		right.y = data->scene->player.plane.y * MOVE_SPEED;
 		new_pos = sum_vec2(new_pos, right);
 	}
-	printf("Nueva posición (strafe): (%f, %f)\n", new_pos.x, new_pos.y);
-	if (!check_collision(data, new_pos))
-	{
-		data->scene->player.pos = new_pos;
-		printf("entra en el strafe\n");
-	}
-	else
-		printf("hay colision strafe\n");
+	if (is_wall(data, new_pos.x, new_pos.y))
+		return ;
+	// printf("Nueva posición (strafe): (%f, %f)\n", new_pos.x, new_pos.y);
+	// if (!check_collision(data, new_pos))
+	// {
+	data->scene->player.pos = new_pos;
+	// 	printf("entra en el strafe\n");
+	// }
+	// else
+	// 	printf("hay colision strafe\n");
 }
 void	handle_rotation(t_data *data)
 {
