@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adrian <adrian@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aduenas- <aduenas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/21 13:18:28 by aduenas-          #+#    #+#             */
-/*   Updated: 2024/12/23 20:24:03 by adrian           ###   ########.fr       */
+/*   Updated: 2024/12/23 21:33:26 by aduenas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,5 +52,7 @@ void	handle_exit(t_data *data)
 		free_textures(data->textures);
 	}
 	printf("Saliendo del juego...\n");
+	mlx_delete_image(data->scene->mlx, data->image);
 	mlx_terminate(data->scene->mlx);
+	exit(0);
 }
