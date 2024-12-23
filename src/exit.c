@@ -3,31 +3,54 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aduenas- <aduenas-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: adrian <adrian@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/21 13:18:28 by aduenas-          #+#    #+#             */
-/*   Updated: 2024/12/21 15:35:15 by aduenas-         ###   ########.fr       */
+/*   Updated: 2024/12/23 20:24:03 by adrian           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/cub3d.h"
 
-void	free_textures(t_data *data)
+void	free_textures(t_textures *textures)
+{
+	if (textures)
+	{
+		if (textures->north)
+			mlx_delete_texture(textures->north);
+		if (textures->south)
+			mlx_delete_texture(textures->south);
+		if (textures->east)
+			mlx_delete_texture(textures->east);
+		if (textures->west)
+			mlx_delete_texture(textures->west);
+		free(textures);
+	}
+}
+
+void	free_split(char **split)
 {
 	int	i;
 
-	if (!data || !data->scene || !data->scene->textures)
-		return ;
 	i = 0;
-	while (i < 4)
+	if (split)
 	{
-		if (data->scene->textures[i])
+		while (split[i])
 		{
-			free(data->scene->textures[i]);
-			data->scene->textures[i] = NULL;
+			free(split[i]);
+			i++;
 		}
-		i++;
+		free(split);
 	}
-	free(data->scene->textures);
-	data->scene->textures = NULL;
+}
+
+void	handle_exit(t_data *data)
+{
+	if (data)
+	{
+		cleanup(data);
+		free_textures(data->textures);
+	}
+	printf("Saliendo del juego...\n");
+	mlx_terminate(data->scene->mlx);
 }

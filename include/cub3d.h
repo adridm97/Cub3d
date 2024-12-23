@@ -120,33 +120,14 @@ typedef struct s_player
 	char	player_dir;
 }   t_player;
 
-typedef struct	s_door
-{
-	int				x;
-	int				y;
-	char			state;
-	double			timer;
-	struct s_door	*next;
-}	t_door;
-
-typedef struct	s_ray {
-	t_vec2	direction;
-	t_vec2	delta_dist;
-	t_vec2	side_dist;
-	t_vec2	map;
-	t_vec2	step;
-}	t_ray;
-
 typedef struct	s_scene
 {
 	t_player		player;
-	t_door			*doors;
 	char			**map;
 	int				rows;
 	int				cols;
 	int				prev_frame;
 	mlx_t			*mlx;
-	mlx_texture_t	**textures;
 	void			*win;
 	t_img			*screen;
 	t_img			*n_wall;
@@ -203,15 +184,20 @@ typedef struct	s_cub3d
 
 typedef struct	s_minimap
 {
-	mlx_image_t	*img; // Imagen del minimapa
-	int			width;        // Ancho del minimapa
-	int			height;       // Alto del minimapa
-	float		scale_x;    // Escala en el eje X
-	float		scale_y;    // Escala en el eje Y
+	mlx_image_t	*img;
+	int			width;
+	int			height;
+	float		scale_x;
+	float		scale_y;
 	char		*addr;
 	int			bpp;
 	int			line_length;
 	int			endian;
+	int			player_x;
+	int			player_y;
+	int			player_size;
+	int			draw_x;
+	int			draw_y;
 }	t_minimap;
 
 typedef struct	s_walls
@@ -241,6 +227,14 @@ typedef struct	s_walls
 	uint32_t		color;
 }	t_wall;
 
+typedef struct	s_textures
+{
+	mlx_texture_t	*north;
+	mlx_texture_t	*south;
+	mlx_texture_t	*east;
+	mlx_texture_t	*west;
+}	t_textures;
+
 typedef struct	s_data
 {
 	char			**map;
@@ -254,6 +248,7 @@ typedef struct	s_data
 	t_scene			*scene;
 	t_map			*v_map;
 	t_parser		*parser;
+	t_textures		*textures;
 }	t_data;
 
 int				check_is_valid(char **check_line);
@@ -286,7 +281,7 @@ void			set_scene(t_scene *scene, t_parser parser, t_data *data);
 int				check_map(t_parser *parser, t_scene scene);
 t_player		set_player(char **map);
 void			key_hook(t_data *data);
-void			drawBackground(mlx_image_t *image, t_scene *scene);
+void			draw_background(mlx_image_t *image, t_scene *scene);
 void			render(void  *scene_keys);
 void			draw_walls(t_data *data, t_scene *scene);
 void			init_minimap(t_data *data);
@@ -308,7 +303,7 @@ void			rotate_left(t_cub3d *game);
 void			rotate_right(t_cub3d *game);
 void			draw_floor_ceiling(t_cub3d *game, int x, int wall_bottom, int wall_top);
 void			load_textures(t_cub3d *game);
-void			free_textures(t_data *data);
+void			free_textures(t_textures *textures);
 void			parse_scene_file(t_cub3d *game, char *scene_file);
 void			parse_resolution(t_cub3d *game, char *line);
 void			parse_map(t_cub3d *game, char *line);
@@ -316,7 +311,7 @@ void			check_map_validity(t_cub3d *game);
 void			exit_error(t_cub3d *game, char *message);
 char			*ft_strtrim(char const *s1, char const *s2);
 bool			check_collision(t_data *data, t_vec2 new_pos);
-void			handleErrorsBackground(mlx_image_t *image, t_scene *scene);
+void			handle_errors_background(mlx_image_t *image, t_scene *scene);
 void			validate_scene_and_data(t_data *data, t_scene *scene);
 void			init_textures(t_data *data);
 void			initialize_step_and_distance(t_wall *walls, t_scene *scene);
@@ -324,67 +319,73 @@ void			initialize_ray_properties(t_wall *walls, t_scene *scene, int x);
 void			perform_dda(t_wall *walls, t_scene *scene);
 void			calculate_wall_parameters(t_wall *walls, t_scene *scene);
 mlx_texture_t	*select_texture(t_wall *walls, t_data *data);
-void			draw_walls_loop(t_data *data, t_scene *scene, t_wall *walls, mlx_texture_t *texture);
-int		check_is_valid(char **check_line);
-int		check_elem1(char **check_line, t_parser *parser);
-int		count_args(char **check_line);
-t_point	init_pos(void);
-int		is_player(char **map, int x, int y);
-void	free_parser(t_parser *parser);
-void	free_scene(t_parser *parser, t_scene *scene);
-int		ft_rowsfile(char **file);
-int		check_player(char **map, t_parser *parser);
-int		check_space(char **map, int x, int y, char letter_player);
-void	calc_x_y(t_data *data);
-char	**padding_map(char **map, int *rows, int *cols);
-void	free_data(t_parser *parser, t_data *data, t_scene *scene);
-void	delete_enter(char **map);
-void	ft_free_game(char **check_line);
-char	*get_next_line(int fd);
-int		do_it(t_parser *parser, char *str);
-int		check_f_c(t_parser *parser, t_scene *scene);
-int		check_rgb_nums(char **sp);
-int		convert_hexa(char **sp_f, char **sp_c, t_scene *scene);
-char	**check_file(char *str);
-int		count_line(char *str);
-int		ft_contains_cub(char *str);
-void	parser_init(t_parser *parser, char *str);
-int		check_elements(t_parser *parser, t_scene *scene);
-int		init_map(t_data *data, t_parser *parser);
-void	set_scene(t_scene *scene, t_parser parser, t_data *data);
-int		check_map(t_parser *parser, t_scene scene);
-t_player	set_player(char **map);
-void	key_hook(t_data *data);
-void	drawBackground(mlx_image_t *image, t_scene *scene);
-void	render(void  *scene_keys);
-void	draw_walls(t_data *data, t_scene *scene);
-void	init_minimap(t_data *data);
-void	draw_minimap(t_data *data);
-void	draw_player_on_minimap(t_data *data);
-void	close_window(void *param);
-void	cleanup(t_data *data);
-void	handle_mouse_move(double x, double y, void *param);
-bool	is_wall(t_data *data, int x, int y);
-void free_string(char *str);
-int		init_game(t_cub3d *game, char *scene_file);
-void	setup_window(t_cub3d *game);
-void	render_frame(t_cub3d *game);
-void	handle_input(t_cub3d *game);
-void	update_player(t_cub3d *game);
-void	move_forward(t_cub3d *game);
-void	move_backward(t_cub3d *game);
-void	strafe_left(t_cub3d *game);
-void	strafe_right(t_cub3d *game);
-void	rotate_left(t_cub3d *game);
-void	rotate_right(t_cub3d *game);
-void	draw_floor_ceiling(t_cub3d *game, int x, int wall_bottom, int wall_top);
-void	load_textures(t_cub3d *game);
-void	parse_scene_file(t_cub3d *game, char *scene_file);
-void	parse_resolution(t_cub3d *game, char *line);
-void	parse_map(t_cub3d *game, char *line);
-void	check_map_validity(t_cub3d *game);
-void	exit_error(t_cub3d *game, char *message);
-char	*ft_strtrim(char const *s1, char const *s2);
-bool    check_collision(t_data *data, t_vec2 new_pos);
+void			draw_walls_loop(t_data *data, t_wall *walls, mlx_texture_t *texture);
+int				check_is_valid(char **check_line);
+int				check_elem1(char **check_line, t_parser *parser);
+int				count_args(char **check_line);
+t_point			init_pos(void);
+int				is_player(char **map, int x, int y);
+void			free_parser(t_parser *parser);
+void			free_scene(t_parser *parser, t_scene *scene);
+int				ft_rowsfile(char **file);
+int				check_player(char **map, t_parser *parser);
+int				check_space(char **map, int x, int y, char letter_player);
+void			calc_x_y(t_data *data);
+char			**padding_map(char **map, int *rows, int *cols);
+void			free_data(t_parser *parser, t_data *data, t_scene *scene);
+void			delete_enter(char **map);
+void			ft_free_game(char **check_line);
+char			*get_next_line(int fd);
+int				do_it(t_parser *parser, char *str);
+int				check_f_c(t_parser *parser, t_scene *scene);
+int				check_rgb_nums(char **sp);
+int				convert_hexa(char **sp_f, char **sp_c, t_scene *scene);
+char			**check_file(char *str);
+int				count_line(char *str);
+int				ft_contains_cub(char *str);
+void			parser_init(t_parser *parser, char *str);
+int				check_elements(t_parser *parser, t_scene *scene);
+int				init_map(t_data *data, t_parser *parser);
+void			set_scene(t_scene *scene, t_parser parser, t_data *data);
+int				check_map(t_parser *parser, t_scene scene);
+t_player		set_player(char **map);
+void			key_hook(t_data *data);
+void			draw_background(mlx_image_t *image, t_scene *scene);
+void			render(void  *scene_keys);
+void			draw_walls(t_data *data, t_scene *scene);
+void			init_minimap(t_data *data);
+void			draw_minimap(t_data *data);
+void			draw_player_on_minimap(t_data *data);
+void			close_window(void *param);
+void			cleanup(t_data *data);
+void			handle_mouse_move(double x, double y, void *param);
+bool			is_wall(t_data *data, int x, int y);
+void			free_string(char *str);
+int				init_game(t_cub3d *game, char *scene_file);
+void			setup_window(t_cub3d *game);
+void			render_frame(t_cub3d *game);
+void			handle_input(t_cub3d *game);
+void			update_player(t_cub3d *game);
+void			move_forward(t_cub3d *game);
+void			move_backward(t_cub3d *game);
+void			strafe_left(t_cub3d *game);
+void			strafe_right(t_cub3d *game);
+void			rotate_left(t_cub3d *game);
+void			rotate_right(t_cub3d *game);
+void			draw_floor_ceiling(t_cub3d *game, int x, int wall_bottom, int wall_top);
+void			load_textures(t_cub3d *game);
+void			parse_scene_file(t_cub3d *game, char *scene_file);
+void			parse_resolution(t_cub3d *game, char *line);
+void			parse_map(t_cub3d *game, char *line);
+void			check_map_validity(t_cub3d *game);
+void			exit_error(t_cub3d *game, char *message);
+char			*ft_strtrim(char const *s1, char const *s2);
+bool    		check_collision(t_data *data, t_vec2 new_pos);
+void			free_split(char **split);
+void			handle_exit(t_data *data);
+t_vec2			sum_vec2(t_vec2 v1, t_vec2 v2);
+t_vec2			rotate_vec2(t_vec2 vec, double angle);
+void			free_mlx(t_scene *scene, t_parser *parser);
+void			free_map(char **map, int size);
 
 #endif

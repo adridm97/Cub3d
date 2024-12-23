@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   textures.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aduenas- <aduenas-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: adrian <adrian@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/20 23:03:11 by adrian            #+#    #+#             */
-/*   Updated: 2024/12/21 15:22:40 by aduenas-         ###   ########.fr       */
+/*   Updated: 2024/12/23 19:16:59 by adrian           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,40 +23,37 @@ static mlx_texture_t	*load_texture(const char *path, const char *name)
 	{
 		printf("Error al cargar textura %s: %s\n", name, trimmed_path);
 		free(trimmed_path);
-		exit(1);	
+		exit(1);
 	}
 	free(trimmed_path);
-	return texture;
+	return (texture);
 }
 
 void	init_textures(t_data *data)
 {
-	int	i;
-	data->scene->textures = malloc(sizeof(mlx_texture_t *) * 4);
-	if (!data->scene->textures)
-		return ;
-	i = 0;
-	while (i < 4)
-		data->scene->textures[i++] = NULL;
-	data->scene->textures[0] = load_texture(data->parser->elem.no, "norte");
-	if (!data->scene->textures[0])
-		return (free_textures(data));
-	data->scene->textures[1] = load_texture(data->parser->elem.so, "sur");
-	if (!data->scene->textures[1])
-		return (free_textures(data));
-	data->scene->textures[2] = load_texture(data->parser->elem.ea, "este");
-	if (!data->scene->textures[2])
-		return (free_textures(data));
-	data->scene->textures[3] = load_texture(data->parser->elem.we, "oeste");
-	if (!data->scene->textures[3])
-		return (free_textures(data));
+	if (!data->textures)
+	{
+		data->textures = (t_textures *)malloc(sizeof(t_textures));
+		if (!data->textures)
+		{
+			perror("Error al inicializar las texturas");
+			exit(1);
+		}
+	}
+	data->textures->north = load_texture(data->parser->elem.no, "norte");
+	data->textures->south = load_texture(data->parser->elem.so, "sur");
+	data->textures->east = load_texture(data->parser->elem.ea, "este");
+	data->textures->west = load_texture(data->parser->elem.we, "oeste");
 }
+
 void	calculate_wall_x(t_wall *walls, t_data *data, mlx_texture_t *texture)
 {
 	if (walls->side == 0)
-		walls->wall_x = data->scene->player.pos.y + walls->perp_wall_dist * walls->ray_dir_y;
+		walls->wall_x = data->scene->player.pos.y + walls->perp_wall_dist * \
+		walls->ray_dir_y;
 	else
-		walls->wall_x = data->scene->player.pos.x + walls->perp_wall_dist * walls->ray_dir_x;
+		walls->wall_x = data->scene->player.pos.x + walls->perp_wall_dist * \
+		walls->ray_dir_x;
 	walls->wall_x = fmod(walls->wall_x, 1.0);
 	if (walls->wall_x < 0)
 		walls->wall_x += 1.0;
@@ -65,27 +62,28 @@ void	calculate_wall_x(t_wall *walls, t_data *data, mlx_texture_t *texture)
 		walls->tex_x = 0;
 	if (walls->tex_x >= (int)texture->width)
 		walls->tex_x = texture->width - 1;
-	if ((walls->side == 0 && walls->ray_dir_x < 0) || (walls->side == 1 && walls->ray_dir_y > 0))
+	if ((walls->side == 0 && walls->ray_dir_x < 0) || (walls->side == 1 && \
+	walls->ray_dir_y > 0))
 		walls->tex_x = texture->width - walls->tex_x - 1;
 }
 
 mlx_texture_t	*select_texture(t_wall *walls, t_data *data)
 {
-	mlx_texture_t *texture;
+	mlx_texture_t	*texture;
 
 	if (walls->side == 0)
 	{
 		if (walls->ray_dir_x > 0)
-			texture = data->scene->textures[0];
+			texture = data->textures->north;
 		else
-			texture = data->scene->textures[1];
+			texture = data->textures->south;
 	}
 	else
 	{
 		if (walls->ray_dir_y > 0)
-			texture = data->scene->textures[2];
+			texture = data->textures->east;
 		else
-			texture = data->scene->textures[3];
+			texture = data->textures->west;
 	}
 	calculate_wall_x(walls, data, texture);
 	return (texture);

@@ -3,18 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aduenas- <aduenas-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: adrian <adrian@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 18:28:30 by adrian            #+#    #+#             */
-/*   Updated: 2024/12/21 16:28:19 by aduenas-         ###   ########.fr       */
+/*   Updated: 2024/12/23 20:04:33 by adrian           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/cub3d.h"
 
-void render(void *scene_keys)
+void	render(void *scene_keys)
 {
-	t_data *data;
+	t_data	*data;
+
 	data = (t_data *)scene_keys;
 	if (!data || !data->scene || !data->image)
 	{
@@ -23,18 +24,18 @@ void render(void *scene_keys)
 	}
 	init_textures(data);
 	init_minimap(data);
-    key_hook(data);
-    drawBackground(data->image, data->scene);
-    draw_walls(data, data->scene);
-    draw_minimap(data);
+	key_hook(data);
+	draw_background(data->image, data->scene);
+	draw_walls(data, data->scene);
+	draw_minimap(data);
 }
 
-void	drawBackground(mlx_image_t *image, t_scene *scene)
+void	draw_background(mlx_image_t *image, t_scene *scene)
 {
 	int	y;
 	int	x;
 
-	handleErrorsBackground(image, scene);
+	handle_errors_background(image, scene);
 	y = -1;
 	while (++y < HEIGHT / 2)
 	{
@@ -72,6 +73,6 @@ void	draw_walls(t_data *data, t_scene *scene)
 		exit(1);
 	}
 	validate_scene_and_data(data, scene);
-	draw_walls_loop(data, scene, walls, texture);
+	draw_walls_loop(data, walls, texture);
 	free(walls);
 }

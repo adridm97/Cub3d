@@ -3,24 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   map_parser.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mel-atta <mel-atta@student.42.fr>          +#+  +:+       +#+        */
+/*   By: adrian <adrian@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 12:16:33 by mel-atta          #+#    #+#             */
-/*   Updated: 2024/12/21 17:02:01 by mel-atta         ###   ########.fr       */
+/*   Updated: 2024/12/23 20:30:59 by adrian           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/cub3d.h"
-
-void free_map(char **map, int size)
-{
-    for (int i = 0; i < size; i++)
-    {
-        if (map[i])
-            free(map[i]);
-    }
-    free(map);
-}
 
 char	**copy_map(t_parser parser, int y)
 {
@@ -60,7 +50,6 @@ int	init_map(t_data *data, t_parser *parser)
 		y++;
 		free(trimed);
 	}
-	// depende de que pc no compila
 	free(trimed);
 	data->map = copy_map(*parser, y);
 	return (0);
@@ -109,7 +98,7 @@ void	calc_x_y(t_data *data)
 
 void	delete_enter(char **map)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (map != NULL && map[i] != NULL)

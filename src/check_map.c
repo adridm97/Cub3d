@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mel-atta <mel-atta@student.42.fr>          +#+  +:+       +#+        */
+/*   By: adrian <adrian@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 12:17:32 by mel-atta          #+#    #+#             */
-/*   Updated: 2024/12/21 17:01:54 by mel-atta         ###   ########.fr       */
+/*   Updated: 2024/12/22 20:53:59 by adrian           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,36 +39,16 @@ int	check_elem(char **check_line, t_parser *parser)
 
 int	check_nums(char *str, t_parser *parser)
 {
-	// exit(1);
 	if (str != NULL)
 	{
-		// printf("entraaa: %s", str);
-		// exit(1);
 		if (str[0] != '1')
 		{
 			parser->elem.qtt.is_zero++;
 			return (free(str), 1);
 		}
 	}
-	// exit(1);
 	free(str);
 	return (0);
-}
-
-void	free_split(char **split)
-{
-	int	i;
-
-	i = 0;
-	if (split)
-	{
-		while (split[i])
-		{
-			free(split[i]);
-			i++;
-		}
-		free(split);
-	}
 }
 
 int	do_it(t_parser *parser, char *str)
@@ -119,9 +99,9 @@ int	check_elem1(char **check_line, t_parser *parser)
 
 int	check_is_valid(char **check_line)
 {
-	int i;
-	int x;
-	int found;
+	int	i;
+	int	x;
+	int	found;
 
 	i = 0;
 	x = 0;
