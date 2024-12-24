@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aduenas- <aduenas-@student.42barcel>       +#+  +:+       +#+        */
+/*   By: aduenas- <aduenas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/06 14:44:13 by aduenas-          #+#    #+#             */
-/*   Updated: 2023/06/05 19:56:18 by aduenas-         ###   ########.fr       */
+/*   Updated: 2024/12/24 15:42:24 by aduenas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ size_t	ft_count(long int n)
 	}
 	return (size);
 }
+
 void	ft_base_converter(long int n, char *str, long int i)
 {
 	if (n < 0)
@@ -42,6 +43,7 @@ void	ft_base_converter(long int n, char *str, long int i)
 		ft_base_converter((n / 10), str, (i - 1));
 	str[i] = (n % 10) + '0';
 }
+
 char	*ft_itoa(int n)
 {
 	size_t	size;

@@ -31,19 +31,10 @@ static mlx_texture_t	*load_texture(const char *path, const char *name)
 
 void	init_textures(t_data *data)
 {
-	if (!data->textures)
-	{
-		data->textures = (t_textures *)malloc(sizeof(t_textures));
-		if (!data->textures)
-		{
-			perror("Error al inicializar las texturas");
-			exit(1);
-		}
-	}
-	data->textures->north = load_texture(data->parser->elem.no, "norte");
-	data->textures->south = load_texture(data->parser->elem.so, "sur");
-	data->textures->east = load_texture(data->parser->elem.ea, "este");
-	data->textures->west = load_texture(data->parser->elem.we, "oeste");
+	data->textures.north = load_texture(data->parser->elem.no, "norte");
+	data->textures.south = load_texture(data->parser->elem.so, "sur");
+	data->textures.east = load_texture(data->parser->elem.ea, "este");
+	data->textures.west = load_texture(data->parser->elem.we, "oeste");
 }
 
 void	calculate_wall_x(t_wall *walls, t_data *data, mlx_texture_t *texture)
@@ -74,16 +65,16 @@ mlx_texture_t	*select_texture(t_wall *walls, t_data *data)
 	if (walls->side == 0)
 	{
 		if (walls->ray_dir_x > 0)
-			texture = data->textures->north;
+			texture = data->textures.north;
 		else
-			texture = data->textures->south;
+			texture = data->textures.south;
 	}
 	else
 	{
 		if (walls->ray_dir_y > 0)
-			texture = data->textures->east;
+			texture = data->textures.east;
 		else
-			texture = data->textures->west;
+			texture = data->textures.west;
 	}
 	calculate_wall_x(walls, data, texture);
 	return (texture);

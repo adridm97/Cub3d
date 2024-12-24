@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adrian <adrian@student.42.fr>              +#+  +:+       +#+        */
+/*   By: moha <moha@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 18:28:30 by adrian            #+#    #+#             */
-/*   Updated: 2024/12/23 20:04:33 by adrian           ###   ########.fr       */
+/*   Updated: 2024/12/24 00:43:13 by moha             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,9 +41,7 @@ void	draw_background(mlx_image_t *image, t_scene *scene)
 	{
 		x = -1;
 		while (++x < WIDTH)
-		{
 			mlx_put_pixel(image, x, y, scene->ccolor);
-		}
 	}
 	while (++y < HEIGHT)
 	{
