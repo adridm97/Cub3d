@@ -1,6 +1,6 @@
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -g -O3 -fsanitize=address
-NAME = cub
+NAME = cub3D
 SRCS = cub3D.c src/check_map.c src/check_player.c src/ft_free.c src/map_parser.c \
 	src/set_scene.c src/utils.c src/utils2.c src/set_player.c src/render.c src/key_events.c src/minmap.c \
 	src/free.c src/handle_mouse_move.c src/player_colision.c src/errors.c src/textures.c src/walls.c \
