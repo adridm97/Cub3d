@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_mouse_move.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: moha <moha@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: mel-atta <mel-atta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 22:26:47 by mel-atta          #+#    #+#             */
-/*   Updated: 2024/12/24 00:53:06 by moha             ###   ########.fr       */
+/*   Updated: 2024/12/24 16:43:34 by mel-atta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,10 @@ void	handle_mouse_move(double x, double y, void *param)
 	last_x = x;
 	angle = delta_x * 0.002;
 	old_dir_x = data->scene->player.dir.x;
-	data->scene->player.dir.x = data->scene->player.dir.x * \
-	cos(angle) - data->scene->player.dir.y * sin(angle);
-	data->scene->player.dir.y = old_dir_x * \
-		sin(angle) + data->scene->player.dir.y * cos(angle);
+	data->scene->player.dir.x = data->scene->player.dir.x * cos(angle)
+		- data->scene->player.dir.y * sin(angle);
+	data->scene->player.dir.y = old_dir_x * sin(angle)
+		+ data->scene->player.dir.y * cos(angle);
 }
 
 void	draw_player_minimap(t_data *data)
@@ -49,8 +49,25 @@ void	draw_player_minimap(t_data *data)
 		j = -1;
 		while (++j < data->minimap.player_size)
 		{
-			mlx_put_pixel(data->minimap.img, data->minimap.player_x + i, \
+			mlx_put_pixel(data->minimap.img, data->minimap.player_x + i,
 				data->minimap.player_y + j, 0xFF0000FF);
+		}
+	}
+}
+
+void	draw_pixel_block(t_data *data)
+{
+	int	i;
+	int	j;
+
+	i = -1;
+	while (++i < data->minimap.scale_x)
+	{
+		j = -1;
+		while (++j < data->minimap.scale_y)
+		{
+			mlx_put_pixel(data->minimap.img, data->minimap.draw_x + i,
+				data->minimap.draw_y + j, 0xFFFFFFFF);
 		}
 	}
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minmap.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: moha <moha@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: mel-atta <mel-atta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 16:59:56 by adrian            #+#    #+#             */
-/*   Updated: 2024/12/24 00:56:02 by moha             ###   ########.fr       */
+/*   Updated: 2024/12/24 16:37:45 by mel-atta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,6 @@ void	draw_minimap(t_data *data)
 {
 	int	y;
 	int	x;
-	int	j;
-	int	i;
 
 	data->minimap.player_x = data->scene->player.pos.x * data->minimap.scale_x;
 	data->minimap.player_y = data->scene->player.pos.y * data->minimap.scale_y;
@@ -70,16 +68,7 @@ void	draw_minimap(t_data *data)
 			{
 				data->minimap.draw_x = x * data->minimap.scale_x;
 				data->minimap.draw_y = y * data->minimap.scale_y;
-				i = -1;
-				while (++i < data->minimap.scale_x)
-				{
-					j = -1;
-					while (++j < data->minimap.scale_y)
-					{
-						mlx_put_pixel(data->minimap.img, data->minimap.draw_x + \
-						i, data->minimap.draw_y + j, 0xFFFFFFFF);
-					}
-				}
+				draw_pixel_block(data);
 			}
 		}
 	}
