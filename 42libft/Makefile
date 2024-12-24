@@ -6,7 +6,7 @@
 #    By: aduenas- <aduenas-@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/03 22:21:03 by aduenas-          #+#    #+#              #
-#    Updated: 2024/12/23 22:10:23 by aduenas-         ###   ########.fr        #
+#    Updated: 2024/12/24 15:30:43 by aduenas-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -57,8 +57,8 @@ all: $(NAME) Makefile
 
 $(NAME): $(OBJ) $(LIB)
 	ar rcs $(NAME) $(OBJ)
-
 %.o: %.c $(LIB) Makefile
+
 	cc $(CFLAGS) -c $< -o $@ 
 
 clean:
