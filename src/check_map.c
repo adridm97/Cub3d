@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adrian <adrian@student.42.fr>              +#+  +:+       +#+        */
+/*   By: moha <moha@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 12:17:32 by mel-atta          #+#    #+#             */
-/*   Updated: 2024/12/22 20:53:59 by adrian           ###   ########.fr       */
+/*   Updated: 2024/12/24 00:45:26 by moha             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,6 @@ int	do_it(t_parser *parser, char *str)
 	else
 		check_nums(ft_strtrim(check_line[0], " "), parser);
 	free_split(check_line);
-	// ft_free_game(check_line);
 	return (0);
 }
 

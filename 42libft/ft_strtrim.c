@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strtrim.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aduenas- <aduenas-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: moha <moha@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 20:13:52 by aduenas-          #+#    #+#             */
-/*   Updated: 2024/12/14 20:49:26 by aduenas-         ###   ########.fr       */
+/*   Updated: 2024/12/24 01:01:39 by moha             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 char	*ft_strtrim_ft(char const *s1, char const *set)
 {
-	size_t end;
-	size_t start;
+	size_t	end;
+	size_t	start;
 
 	if (!s1 || !set)
 		return (NULL);

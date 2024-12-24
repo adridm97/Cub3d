@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adrian <adrian@student.42.fr>              +#+  +:+       +#+        */
+/*   By: moha <moha@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 12:15:26 by mel-atta          #+#    #+#             */
-/*   Updated: 2024/12/23 19:55:52 by adrian           ###   ########.fr       */
+/*   Updated: 2024/12/24 00:28:58 by moha             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,75 +118,4 @@ int	check_rgb_nums(char **sp)
 		i++;
 	}
 	return (1);
-}
-
-int	is_map_line(const char *line)
-{
-	while (*line)
-	{
-		if (*line != ' ' && *line != '1' && *line != '0')
-			return (0);
-		line++;
-	}
-	return (1);
-}
-
-int	check_file1(const char *filename)
-{
-	int		fd;
-	char	*line;
-	char	*trimmed_line;
-
-	fd = open(filename, O_RDONLY);
-	if (fd == -1)
-		return (write(2, "Error opening file\n", 19), 1);
-	line = get_next_line(fd);
-	while (line)
-	{
-		trimmed_line = ft_strtrim(line, " \t\n");
-		free(line);
-		if (ft_strlen(trimmed_line) == 0)
-		{
-			free(trimmed_line);
-			line = get_next_line(fd);
-			continue ;
-		}
-		if (is_map_line(trimmed_line))
-		{
-			free(trimmed_line);
-			close(fd);
-			return (write(2, "Error: file starts with map\n", 28), 1);
-		}
-		free(trimmed_line);
-		break ;
-	}
-	close(fd);
-	return (0);
-}
-
-char	**check_file(char *str)
-{
-	char	**new;
-	int		i;
-	int		fd;
-
-	fd = 0;
-	i = -1;
-	if (count_line(str) == 0)
-		return (NULL);
-	new = malloc(sizeof(char *) * (count_line(str) + 1));
-	if (!new)
-		return (NULL);
-	if (!ft_contains_cub(str))
-		return (write(2, "Invalid extention file\n", 22), free(new), NULL);
-	if (check_file1(str) == 1)
-		return (free(new), NULL);
-	fd = open(str, O_RDONLY);
-	if (fd == -1)
-		return (ft_free_game(new), ft_putstr_fd("error\n", 2), NULL);
-	new[++i] = get_next_line(fd);
-	while (new[i++] != NULL)
-		new[i] = get_next_line(fd);
-	close(fd);
-	return (new);
 }

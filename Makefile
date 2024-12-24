@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: aduenas- <aduenas-@student.42.fr>          +#+  +:+       +#+         #
+#    By: moha <moha@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/23 21:44:47 by aduenas-          #+#    #+#              #
-#    Updated: 2024/12/23 22:07:21 by aduenas-         ###   ########.fr        #
+#    Updated: 2024/12/24 01:04:04 by moha             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ CFLAGS = -Wall -Wextra -Werror -g -O3 -fsanitize=address
 SRCS = cub3D.c src/check_map.c src/check_player.c src/ft_free.c src/map_parser.c \
 	src/set_scene.c src/utils.c src/utils2.c src/set_player.c src/render.c src/key_events.c src/minmap.c \
 	src/free.c src/handle_mouse_move.c src/player_colision.c src/errors.c src/textures.c src/walls.c \
-	src/exit.c src/vectors.c src/trim.c
+	src/exit.c src/vectors.c src/trim.c src/utils3.c
 OBJS = $(SRCS:.c=.o)
 MLX_LIB_DIR = MLX42/build
 MLX_LIB = -L$(MLX_LIB_DIR) -lmlx42

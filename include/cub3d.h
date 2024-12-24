@@ -248,7 +248,7 @@ typedef struct	s_data
 	t_scene			*scene;
 	t_map			*v_map;
 	t_parser		*parser;
-	t_textures		*textures;
+	t_textures		textures;
 }	t_data;
 
 int				check_is_valid(char **check_line);
@@ -303,7 +303,7 @@ void			rotate_left(t_cub3d *game);
 void			rotate_right(t_cub3d *game);
 void			draw_floor_ceiling(t_cub3d *game, int x, int wall_bottom, int wall_top);
 void			load_textures(t_cub3d *game);
-void			free_textures(t_textures *textures);
+void			free_textures(t_textures textures);
 void			parse_scene_file(t_cub3d *game, char *scene_file);
 void			parse_resolution(t_cub3d *game, char *line);
 void			parse_map(t_cub3d *game, char *line);
@@ -387,5 +387,6 @@ t_vec2			sum_vec2(t_vec2 v1, t_vec2 v2);
 t_vec2			rotate_vec2(t_vec2 vec, double angle);
 void			free_mlx(t_scene *scene, t_parser *parser);
 void			free_map(char **map, int size);
-
+int	check_file1(const char *filename);
+void	draw_player_minimap(t_data *data);
 #endif
