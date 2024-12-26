@@ -6,7 +6,7 @@
 /*   By: moha <moha@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 12:17:32 by mel-atta          #+#    #+#             */
-/*   Updated: 2024/12/24 00:45:26 by moha             ###   ########.fr       */
+/*   Updated: 2024/12/25 22:45:10 by moha             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,6 @@ int	check_is_valid(char **check_line)
 	i = 0;
 	x = 0;
 	found = 0;
-	(void)found;
 	while (check_line && check_line[i] != NULL && found == 0)
 	{
 		x = 0;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mel-atta <mel-atta@student.42.fr>          +#+  +:+       +#+        */
+/*   By: moha <moha@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/24 15:43:43 by aduenas-          #+#    #+#             */
-/*   Updated: 2024/12/24 16:38:23 by mel-atta         ###   ########.fr       */
+/*   Updated: 2024/12/25 22:46:22 by moha             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -406,4 +406,6 @@ void					free_map(char **map, int size);
 int						check_file1(const char *filename);
 void					draw_player_minimap(t_data *data);
 void					draw_pixel_block(t_data *data);
+int						contar_comas(const char *cadena);
+int						check_rgb_rang(int r, int g, int b);
 #endif

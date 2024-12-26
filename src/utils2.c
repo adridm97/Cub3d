@@ -6,7 +6,7 @@
 /*   By: moha <moha@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 12:15:26 by mel-atta          #+#    #+#             */
-/*   Updated: 2024/12/24 00:28:58 by moha             ###   ########.fr       */
+/*   Updated: 2024/12/25 15:44:42 by moha             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,8 @@ int	check_f_c(t_parser *parser, t_scene *scene)
 
 	sp_f = ft_split(parser->elem.f, ',');
 	sp_c = ft_split(parser->elem.c, ',');
+	if (contar_comas(parser->elem.f) != 2 || contar_comas(parser->elem.c) != 2)
+		return (ft_free_game(sp_f), ft_free_game(sp_c), 1);
 	if (count_args(sp_f) != 3 || count_args(sp_c) != 3)
 		return (free(sp_f), free(sp_c), 1);
 	else
@@ -52,7 +54,7 @@ int	check_f_c(t_parser *parser, t_scene *scene)
 		if (check_rgb_nums(sp_f) == 0 && check_rgb_nums(sp_c) == 0)
 		{
 			if (convert_hexa(sp_f, sp_c, scene) == 1)
-				return (ft_free_game(sp_f), ft_free_game(sp_c), 0);
+				return (ft_free_game(sp_f), ft_free_game(sp_c), 1);
 		}
 		else
 			return (ft_free_game(sp_f), ft_free_game(sp_c), 1);
@@ -64,21 +66,22 @@ int	check_f_c(t_parser *parser, t_scene *scene)
 
 int	convert_hexa(char **sp_f, char **sp_c, t_scene *scene)
 {
-	int	num;
-	int	num2;
-	int	num3;
+	int	r;
+	int	g;
+	int	b;
 
-	num = 0;
-	num2 = 0;
-	num3 = 0;
-	num = atoi(sp_f[0]);
-	num2 = atoi(sp_f[1]);
-	num3 = atoi(sp_f[2]);
-	scene->fcolor = (num << 16) | (num2 << 8) | num3;
-	num = atoi(sp_c[0]);
-	num2 = atoi(sp_c[1]);
-	num3 = atoi(sp_c[2]);
-	scene->ccolor = (num << 16) | (num2 << 8) | num3;
+	r = ft_atoi(sp_f[0]);
+	g = ft_atoi(sp_f[1]);
+	b = ft_atoi(sp_f[2]);
+	if (check_rgb_rang(r, g, b) == 1)
+		return (1);
+	scene->fcolor = (r << 16) + (g << 8) + b;
+	r = ft_atoi(sp_c[0]);
+	g = ft_atoi(sp_c[1]);
+	b = ft_atoi(sp_c[2]);
+	if (check_rgb_rang(r, g, b) == 1)
+		return (1);
+	scene->ccolor = (r << 16) + (g << 8) + b;
 	return (0);
 }
 
@@ -106,16 +109,22 @@ void	parser_init(t_parser *parser, char *str)
 
 int	check_rgb_nums(char **sp)
 {
-	int	i;
-	int	num;
+	int	y;
+	int	x;
 
-	i = 0;
-	while (sp[i] != NULL)
+	y = 0;
+	x = 0;
+	while (sp[y] != NULL)
 	{
-		num = atoi(sp[i]);
-		if (num >= 0 && num <= 255)
-			return (0);
-		i++;
+		x = 0;
+		while (sp[y][x] != '\0')
+		{
+			if (!ft_isdigit(sp[y][x]) && (sp[y][x] != '\0'
+				&& sp[y][x] != '\n'))
+				return (1);
+			x++;
+		}
+		y++;
 	}
-	return (1);
+	return (0);
 }

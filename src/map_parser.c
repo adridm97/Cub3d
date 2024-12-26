@@ -6,7 +6,7 @@
 /*   By: moha <moha@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 12:16:33 by mel-atta          #+#    #+#             */
-/*   Updated: 2024/12/24 11:29:05 by moha             ###   ########.fr       */
+/*   Updated: 2024/12/26 10:28:05 by moha             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int	init_map(t_data *data, t_parser *parser)
 		y++;
 		free(trimed);
 	}
-	free(trimed);
+	// free(trimed);
 	data->map = copy_map(*parser, y);
 	return (0);
 }

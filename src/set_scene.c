@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   set_scene.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adrian <adrian@student.42.fr>              +#+  +:+       +#+        */
+/*   By: moha <moha@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 12:15:17 by mel-atta          #+#    #+#             */
-/*   Updated: 2024/12/23 19:07:51 by adrian           ###   ########.fr       */
+/*   Updated: 2024/12/26 10:33:39 by moha             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,12 @@ void	print_map(char **map, int rows)
 
 	i = 0;
 	while (i < rows)
-		printf("%s\n", map[i]);
+		printf("%s\n", map[i++]);
+}
+
+void	parse_scene(t_scene *scene, t_data *data)
+{
+	
 }
 
 void	set_scene(t_scene *scene, t_parser parser, t_data *data)
@@ -42,7 +47,9 @@ void	set_scene(t_scene *scene, t_parser parser, t_data *data)
 	calc_x_y(data);
 	scene->rows = data->rowsy;
 	scene->cols = data->colsx;
+
 	scene->map = padding_map(data->map, &scene->rows, &scene->cols);
+	// print_map(data->map, 10);
 	scene->player = set_player(scene->map);
 	set_mlx(scene, parser, data);
 	if (scene->map == NULL)
@@ -71,7 +78,9 @@ char	**padding_map(char **map, int *rows, int *cols)
 			return (ft_free_game(new_map), NULL);
 		ft_memset(new_map[i], ' ', *cols + 1);
 		if (i >= 20 && i < *rows - 20)
+		{
 			ft_strlcpy(new_map[i] + 20 - 2, map[i - 20], *cols + 1);
+		}
 		new_map[i][*cols] = '\0';
 		i++;
 	}
