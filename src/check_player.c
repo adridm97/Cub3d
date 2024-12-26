@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_player.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: moha <moha@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: mel-atta <mel-atta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 12:17:39 by mel-atta          #+#    #+#             */
-/*   Updated: 2024/12/25 22:54:32 by moha             ###   ########.fr       */
+/*   Updated: 2024/12/26 15:39:11 by mel-atta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,23 +53,23 @@ int	check_space(char **map, int x, int y, char letter_player)
 			printf("sale2");
 		return (1);
 	}
-	// if ((map[y][x] == '0' || map[y][x] == letter_player) && (map[y
-	// 		- 1][x] == ' ' || map[y + 1][x] == ' '))
-	// 		{
-	// 			printf("sale3");
-	// 			return (1);
-	// 		}
+	if ((map[y][x] == '0' || map[y][x] == letter_player) && (map[y
+			- 1][x] == ' ' || map[y + 1][x] == ' '))
+			{
+				printf("sale3");
+				return (1);
+			}
 	if ((map[y][x] == '0' || map[y][x] == letter_player) && map[y + 1] == NULL)
 	{
 		printf("sale4");
 		return (1);
 	}
-	// if ((map[y][x] == '0' || map[y][x] == letter_player) && (map[y][x
-	// 		+ 1] == ' ' || map[y][x + 1] == '\0'))
-	// 	{
-	// 		printf("sale5");
-	// 		return (1);
-	// 	}
+	if ((map[y][x] == '0' || map[y][x] == letter_player) && (map[y][x
+			+ 1] == ' ' || map[y][x + 1] == '\0'))
+		{
+			printf("sale5");
+			return (1);
+		}
 	if ((map[y][x] == '0' || map[y][x] == letter_player) && map[y][x
 		- 1] == ' ')
 		{

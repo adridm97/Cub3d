@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   set_scene.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: moha <moha@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: mel-atta <mel-atta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 12:15:17 by mel-atta          #+#    #+#             */
-/*   Updated: 2024/12/26 10:33:39 by moha             ###   ########.fr       */
+/*   Updated: 2024/12/26 20:44:33 by mel-atta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,28 +28,80 @@ void	set_mlx(t_scene *scene, t_parser parser, t_data *data)
 	}
 }
 
-void	print_map(char **map, int rows)
-{
-	int	i;
+// void	print_map(char **map, int rows)
+// {
+// 	int	i;
 
-	i = 0;
-	while (i < rows)
-		printf("%s\n", map[i++]);
+// 	i = 0;
+// 	while (i < rows)
+// 		printf("%s", map[i++]);
+// }
+
+void	copy_and_replace(char *dest, const char *src, size_t len)
+{
+	size_t	j;
+
+	j = 0;
+    while (j < len)
+    {
+        if (src[j] == ' ')
+            dest[j] = '0';
+        else
+            dest[j] = src[j];
+        j++;
+    }
+    dest[len] = '\0';
+}
+
+void free_scene_map(t_scene *scene, int rows)
+{
+    for (int i = 0; i < rows; i++)
+    {
+        free(scene->map[i]);
+    }
+    free(scene->map);
 }
 
 void	parse_scene(t_scene *scene, t_data *data)
 {
-	
+	int		i;
+	size_t	len;
+	size_t	j;
+
+	i = 0;
+	scene->map = malloc(sizeof(char *) * data->rowsy);
+	if (scene->map == NULL)
+		return ;
+	while (i < data->rowsy)
+	{
+		len = ft_strlen(data->map[i]);
+		scene->map[i] = malloc(sizeof(char) * (len + 1));
+		if (scene->map[i] == NULL)
+		{
+			free_data(data->parser, data, scene);
+			return ;
+		}
+		j = 0;
+		copy_and_replace(scene->map[i], data->map[i], len);
+		scene->map[i][len] = '\0';
+		i++;
+	}
+	scene->rows = data->rowsy;
 }
+
+// void resize_map(t_scene *scene, int nuevas_filas, int nuevas_columnas)
+// {
+
+// }
 
 void	set_scene(t_scene *scene, t_parser parser, t_data *data)
 {
 	calc_x_y(data);
 	scene->rows = data->rowsy;
 	scene->cols = data->colsx;
-
-	scene->map = padding_map(data->map, &scene->rows, &scene->cols);
-	// print_map(data->map, 10);
+	parse_scene(scene, data);
+	scene->map = padding_map(scene->map, &scene->rows, &scene->cols);
+	// print_map(scene->map, 50);
 	scene->player = set_player(scene->map);
 	set_mlx(scene, parser, data);
 	if (scene->map == NULL)
@@ -64,7 +116,7 @@ char	**padding_map(char **map, int *rows, int *cols)
 	char	**new_map;
 	int		i;
 
-	delete_enter(map);
+	// delete_enter(map);
 	*rows += 20 * 2;
 	*cols += 20 * 2;
 	new_map = malloc(sizeof(char *) * (*rows + 1));

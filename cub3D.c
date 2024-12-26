@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: moha <moha@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: mel-atta <mel-atta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 23:34:14 by mel-atta          #+#    #+#             */
-/*   Updated: 2024/12/25 20:57:32 by moha             ###   ########.fr       */
+/*   Updated: 2024/12/26 22:06:07 by mel-atta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	handle_args(int argc)
 {
 	if (argc != 2)
 	{
-		perror("Bad arguments\n");
+		write(2, "Bad arguments\n", 14);
 		exit(1);
 	}
 }
@@ -33,12 +33,20 @@ void	init_parser(t_parser *parser, t_scene *scene, char *file)
 	}
 	if (check_elements(parser, scene))
 	{
-		perror("Error File\n");
+		write(2, "Error File\n", 11);
 		free_scene(parser, scene);
 		exit(1);
 	}
 }
 
+void	print_map(char **map, int rows)
+{
+	int	i;
+
+	i = 0;
+	while (i < rows)
+		printf("%s", map[i++]);
+}
 int	main(int argc, char *argv[])
 {
 	t_data		data;
@@ -50,13 +58,15 @@ int	main(int argc, char *argv[])
 	if (init_map(&data, &parser))
 	{
 		free_data(&parser, &data, &scene);
-		return (write(2, "Error maps\n", 10), 1);
+		return (write(2, "Error map\n", 9), 1);
 	}
 	set_scene(&scene, parser, &data);
 	if (check_map(&parser, scene))
 	{
-		write(2, "Error maps\n", 10);
+		write(2, "Error map\n", 9);
 		free_data(&parser, &data, &scene);
+		ft_free_game(scene.map);
+		// print_map(scene.map, scene.rows);
 		exit(1);
 	}
 	data.scene = &scene;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: moha <moha@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: mel-atta <mel-atta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 18:28:30 by adrian            #+#    #+#             */
-/*   Updated: 2024/12/25 15:07:41 by moha             ###   ########.fr       */
+/*   Updated: 2024/12/26 14:29:46 by mel-atta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ void	draw_background(mlx_image_t *image, t_scene *scene)
 {
 	int	y;
 	int	x;
+	static int	first_time = 0;
 
 	handle_errors_background(image, scene);
 	y = -1;
@@ -51,10 +52,14 @@ void	draw_background(mlx_image_t *image, t_scene *scene)
 			mlx_put_pixel(image, x, y, scene->fcolor);
 		}
 	}
-	if (mlx_image_to_window(scene->mlx, image, 0, 0) < 0)
+	if (first_time == 0)
 	{
-		perror("Error al mostrar la imagen en la ventana");
-		exit(1);
+		first_time = 1;
+		if (mlx_image_to_window(scene->mlx, image, 0, 0) < 0)
+		{
+			perror("Error al mostrar la imagen en la ventana");
+			exit(1);
+		}
 	}
 }
 
