@@ -6,7 +6,7 @@
 /*   By: aduenas- <aduenas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/24 15:43:43 by aduenas-          #+#    #+#             */
-/*   Updated: 2024/12/27 19:13:00 by aduenas-         ###   ########.fr       */
+/*   Updated: 2024/12/27 20:02:23 by aduenas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@
 # define WIDTH 1020
 # define HEIGHT 720
 # define WALL_PADDING 0.1
-# define MOVE_SPEED 0.02f
-# define ROTATION_SPEED 0.02f
+# define MOVE_SPEED 0.04f
+# define ROTATION_SPEED 0.04f
 
 typedef struct s_color
 {
@@ -303,7 +303,6 @@ void					render(void *scene_keys);
 void					draw_walls(t_data *data, t_scene *scene);
 void					init_minimap(t_data *data);
 void					draw_minimap(t_data *data);
-void					draw_player_on_minimap(t_data *data);
 void					close_window(void *param);
 void					cleanup(t_data *data);
 void					handle_mouse_move(double x, double y, void *param);
@@ -380,7 +379,6 @@ void					render(void *scene_keys);
 void					draw_walls(t_data *data, t_scene *scene);
 void					init_minimap(t_data *data);
 void					draw_minimap(t_data *data);
-void					draw_player_on_minimap(t_data *data);
 void					close_window(void *param);
 void					cleanup(t_data *data);
 void					handle_mouse_move(double x, double y, void *param);
