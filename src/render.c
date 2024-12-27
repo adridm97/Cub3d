@@ -6,7 +6,7 @@
 /*   By: adrian <adrian@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 18:28:30 by adrian            #+#    #+#             */
-/*   Updated: 2024/12/26 13:29:05 by adrian           ###   ########.fr       */
+/*   Updated: 2024/12/27 14:43:27 by adrian           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ void	draw_background(mlx_image_t *image, t_scene *scene)
 {
 	int	y;
 	int	x;
+	static int	first_time = 0;
 
 	handle_errors_background(image, scene);
 	y = -1;
@@ -49,10 +50,14 @@ void	draw_background(mlx_image_t *image, t_scene *scene)
 			mlx_put_pixel(image, x, y, scene->fcolor);
 		}
 	}
-	if (mlx_image_to_window(scene->mlx, image, 0, 0) < 0)
+	if (first_time == 0)
 	{
-		perror("Error al mostrar la imagen en la ventana");
-		exit(1);
+		first_time = 1;
+		if (mlx_image_to_window(scene->mlx, image, 0, 0) < 0)
+		{
+			perror("Error al mostrar la imagen en la ventana");
+			exit(1);
+		}
 	}
 }
 

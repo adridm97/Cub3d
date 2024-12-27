@@ -6,7 +6,7 @@
 /*   By: mel-atta <mel-atta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 16:59:56 by adrian            #+#    #+#             */
-/*   Updated: 2024/12/24 16:37:45 by mel-atta         ###   ########.fr       */
+/*   Updated: 2024/12/26 15:35:07 by mel-atta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ void	draw_minimap(t_data *data)
 {
 	int	y;
 	int	x;
+	static int first_time = 0;
 
 	data->minimap.player_x = data->scene->player.pos.x * data->minimap.scale_x;
 	data->minimap.player_y = data->scene->player.pos.y * data->minimap.scale_y;
@@ -73,7 +74,12 @@ void	draw_minimap(t_data *data)
 		}
 	}
 	draw_player_minimap(data);
-	mlx_image_to_window(data->scene->mlx, data->minimap.img, 550, 300);
+	if (first_time == 0)
+	{
+		mlx_image_to_window(data->scene->mlx, data->minimap.img, 0, 0);
+		first_time = 1;
+	}
+	// mlx_image_to_window(data->scene->mlx, data->minimap.img, 550, 300);
 }
 
 void	my_mlx_pixel_put(t_minimap *img, int x, int y, int color)

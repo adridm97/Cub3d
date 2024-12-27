@@ -6,7 +6,7 @@
 /*   By: adrian <adrian@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 23:34:14 by mel-atta          #+#    #+#             */
-/*   Updated: 2024/12/26 18:18:36 by adrian           ###   ########.fr       */
+/*   Updated: 2024/12/27 14:41:27 by adrian           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	handle_args(int argc)
 {
 	if (argc != 2)
 	{
-		perror("Bad arguments\n");
+		write(2, "Bad arguments\n", 14);
 		exit(1);
 	}
 }
@@ -33,11 +33,20 @@ void	init_parser(t_parser *parser, t_scene *scene, char *file)
 	}
 	if (check_elements(parser, scene))
 	{
-		perror("Error File\n");
+		write(2, "Error File\n", 11);
 		free_scene(parser, scene);
 		exit(1);
 	}
 }
+
+// void	print_map(char **map, int rows)
+// {
+// 	int	i;
+
+// 	i = 0;
+// 	while (i < rows)
+// 		printf("%s\n", map[i++]);
+// }
 
 int	main(int argc, char *argv[])
 {
@@ -50,13 +59,14 @@ int	main(int argc, char *argv[])
 	if (init_map(&data, &parser))
 	{
 		free_data(&parser, &data, &scene);
-		return (write(2, "Error map\n", 10), 1);
+		return (write(2, "Error map\n", 9), 1);
 	}
 	set_scene(&scene, parser, &data);
 	if (check_map(&parser, scene))
 	{
-		write(2, "Error map\n", 10);
 		free_data(&parser, &data, &scene);
+		write(2, "Error map\n", 9);
+		// ft_free_game(scene.map);
 		exit(1);
 	}
 	data.scene = &scene;

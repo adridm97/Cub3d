@@ -6,7 +6,7 @@
 /*   By: adrian <adrian@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/24 15:43:43 by aduenas-          #+#    #+#             */
-/*   Updated: 2024/12/27 13:23:25 by adrian           ###   ########.fr       */
+/*   Updated: 2024/12/27 14:43:00 by adrian           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -420,4 +420,6 @@ void					draw_wall_column_optimized(t_data *data, t_wall *walls, mlx_image_t *te
 void					update_keys(t_keys *keys, void *mlx);
 t_byte					key_pressed(t_key key);
 t_byte					key_held(t_key key);
+int						contar_comas(const char *cadena);
+int						check_rgb_rang(int r, int g, int b);
 #endif

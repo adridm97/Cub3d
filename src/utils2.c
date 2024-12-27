@@ -6,7 +6,7 @@
 /*   By: adrian <adrian@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 12:15:26 by mel-atta          #+#    #+#             */
-/*   Updated: 2024/12/25 01:14:55 by adrian           ###   ########.fr       */
+/*   Updated: 2024/12/27 14:44:55 by adrian           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,8 @@ int	check_f_c(t_parser *parser, t_scene *scene)
 
 	sp_f = ft_split(parser->elem.f, ',');
 	sp_c = ft_split(parser->elem.c, ',');
+	if (contar_comas(parser->elem.f) != 2 || contar_comas(parser->elem.c) != 2)
+		return (ft_free_game(sp_f), ft_free_game(sp_c), 1);
 	if (count_args(sp_f) != 3 || count_args(sp_c) != 3)
 		return (free(sp_f), free(sp_c), 1);
 	else
@@ -52,7 +54,7 @@ int	check_f_c(t_parser *parser, t_scene *scene)
 		if (check_rgb_nums(sp_f) == 0 && check_rgb_nums(sp_c) == 0)
 		{
 			if (convert_hexa(sp_f, sp_c, scene) == 1)
-				return (ft_free_game(sp_f), ft_free_game(sp_c), 0);
+				return (ft_free_game(sp_f), ft_free_game(sp_c), 1);
 		}
 		else
 			return (ft_free_game(sp_f), ft_free_game(sp_c), 1);
@@ -103,16 +105,22 @@ void	parser_init(t_parser *parser, char *str)
 
 int	check_rgb_nums(char **sp)
 {
-	int	i;
-	int	num;
+	int	y;
+	int	x;
 
-	i = 0;
-	while (sp[i] != NULL)
+	y = 0;
+	x = 0;
+	while (sp[y] != NULL)
 	{
-		num = atoi(sp[i]);
-		if (num >= 0 && num <= 255)
-			return (0);
-		i++;
+		x = 0;
+		while (sp[y][x] != '\0')
+		{
+			if (!ft_isdigit(sp[y][x]) && (sp[y][x] != '\0'
+				&& sp[y][x] != '\n'))
+				return (1);
+			x++;
+		}
+		y++;
 	}
-	return (1);
+	return (0);
 }
