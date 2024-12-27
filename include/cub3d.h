@@ -6,7 +6,7 @@
 /*   By: adrian <adrian@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/24 15:43:43 by aduenas-          #+#    #+#             */
-/*   Updated: 2024/12/27 14:43:00 by adrian           ###   ########.fr       */
+/*   Updated: 2024/12/27 14:51:21 by adrian           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@
 # define WIDTH 1020
 # define HEIGHT 720
 # define WALL_PADDING 0.1
-# define MOVE_SPEED 0.2f
-# define ROTATION_SPEED 0.2f
+# define MOVE_SPEED 0.02f
+# define ROTATION_SPEED 0.02f
 
 typedef struct s_color
 {
