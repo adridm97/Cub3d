@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mel-atta <mel-atta@student.42.fr>          +#+  +:+       +#+        */
+/*   By: adrian <adrian@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/24 15:43:43 by aduenas-          #+#    #+#             */
-/*   Updated: 2024/12/24 16:38:23 by mel-atta         ###   ########.fr       */
+/*   Updated: 2024/12/27 13:23:25 by adrian           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,18 +161,24 @@ typedef struct s_pos
 	t_point				begin;
 }						t_pos;
 
+typedef struct s_key
+{
+	t_byte				curr;
+	t_byte				prev;
+}	t_key;
+
 typedef struct s_keys
 {
-	t_byte				esc;
-	t_byte				w;
-	t_byte				a;
-	t_byte				s;
-	t_byte				d;
-	t_byte				up;
-	t_byte				down;
-	t_byte				left;
-	t_byte				right;
-	t_byte				space;
+	t_key				esc;
+	t_key				w;
+	t_key				a;
+	t_key				s;
+	t_key				d;
+	t_key				up;
+	t_key				down;
+	t_key				left;
+	t_key				right;
+	t_key				space;
 }						t_keys;
 
 typedef struct s_cub3d
@@ -236,6 +242,10 @@ typedef struct s_textures
 	mlx_texture_t		*south;
 	mlx_texture_t		*east;
 	mlx_texture_t		*west;
+	mlx_image_t			*img_n;
+	mlx_image_t			*img_s;
+	mlx_image_t			*img_e;
+	mlx_image_t			*img_w;
 }						t_textures;
 
 typedef struct s_data
@@ -252,6 +262,7 @@ typedef struct s_data
 	t_map				*v_map;
 	t_parser			*parser;
 	t_textures			textures;
+	t_keys				*key;
 }						t_data;
 
 int						check_is_valid(char **check_line);
@@ -310,7 +321,7 @@ void					rotate_right(t_cub3d *game);
 void					draw_floor_ceiling(t_cub3d *game, int x,
 							int wall_bottom, int wall_top);
 void					load_textures(t_cub3d *game);
-void					free_textures(t_textures textures);
+void					free_textures(t_textures textures, t_data *data);
 void					parse_scene_file(t_cub3d *game, char *scene_file);
 void					parse_resolution(t_cub3d *game, char *line);
 void					parse_map(t_cub3d *game, char *line);
@@ -329,9 +340,8 @@ void					initialize_ray_properties(t_wall *walls, t_scene *scene,
 void					perform_dda(t_wall *walls, t_scene *scene);
 void					calculate_wall_parameters(t_wall *walls,
 							t_scene *scene);
-mlx_texture_t			*select_texture(t_wall *walls, t_data *data);
-void					draw_walls_loop(t_data *data, t_wall *walls,
-							mlx_texture_t *texture);
+mlx_image_t				*select_texture(t_wall *walls, t_data *data);
+void					draw_walls_loop(t_data *data, mlx_image_t *texture);
 int						check_is_valid(char **check_line);
 int						check_elem1(char **check_line, t_parser *parser);
 int						count_args(char **check_line);
@@ -406,4 +416,8 @@ void					free_map(char **map, int size);
 int						check_file1(const char *filename);
 void					draw_player_minimap(t_data *data);
 void					draw_pixel_block(t_data *data);
+void					draw_wall_column_optimized(t_data *data, t_wall *walls, mlx_image_t *texture, int x);
+void					update_keys(t_keys *keys, void *mlx);
+t_byte					key_pressed(t_key key);
+t_byte					key_held(t_key key);
 #endif

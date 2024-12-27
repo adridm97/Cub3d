@@ -6,7 +6,7 @@
 /*   By: adrian <adrian@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 12:15:17 by mel-atta          #+#    #+#             */
-/*   Updated: 2024/12/23 19:07:51 by adrian           ###   ########.fr       */
+/*   Updated: 2024/12/27 14:39:19 by adrian           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,17 @@ void	set_scene(t_scene *scene, t_parser parser, t_data *data)
 		free_data(&parser, data, scene);
 		exit(0);
 	}
+	if (!data->key)
+	{
+		data->key = malloc(sizeof(t_keys));
+		if (!data->key)
+		{
+			free_data(&parser, data, scene);
+			perror("Error al asignar memoria para data->key");
+			exit(1);
+		}
+	}
+	ft_memset(data->key, 0, sizeof(t_keys));
 }
 
 char	**padding_map(char **map, int *rows, int *cols)

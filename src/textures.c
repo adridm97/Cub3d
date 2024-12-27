@@ -6,7 +6,7 @@
 /*   By: adrian <adrian@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/20 23:03:11 by adrian            #+#    #+#             */
-/*   Updated: 2024/12/23 19:16:59 by adrian           ###   ########.fr       */
+/*   Updated: 2024/12/26 13:30:45 by adrian           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,13 @@ void	init_textures(t_data *data)
 	data->textures.south = load_texture(data->parser->elem.so, "sur");
 	data->textures.east = load_texture(data->parser->elem.ea, "este");
 	data->textures.west = load_texture(data->parser->elem.we, "oeste");
+	data->textures.img_n = mlx_texture_to_image(data->scene->mlx, data->textures.north);
+	data->textures.img_s = mlx_texture_to_image(data->scene->mlx, data->textures.south);
+	data->textures.img_e = mlx_texture_to_image(data->scene->mlx, data->textures.east);
+	data->textures.img_w = mlx_texture_to_image(data->scene->mlx, data->textures.west);
 }
 
-void	calculate_wall_x(t_wall *walls, t_data *data, mlx_texture_t *texture)
+void	calculate_wall_x(t_wall *walls, t_data *data, mlx_image_t *texture)
 {
 	if (walls->side == 0)
 		walls->wall_x = data->scene->player.pos.y + walls->perp_wall_dist * \
@@ -58,23 +62,23 @@ void	calculate_wall_x(t_wall *walls, t_data *data, mlx_texture_t *texture)
 		walls->tex_x = texture->width - walls->tex_x - 1;
 }
 
-mlx_texture_t	*select_texture(t_wall *walls, t_data *data)
+mlx_image_t	*select_texture(t_wall *walls, t_data *data)
 {
-	mlx_texture_t	*texture;
+	mlx_image_t	*texture;
 
 	if (walls->side == 0)
 	{
 		if (walls->ray_dir_x > 0)
-			texture = data->textures.north;
+			texture = data->textures.img_e;
 		else
-			texture = data->textures.south;
+			texture = data->textures.img_w;
 	}
 	else
 	{
 		if (walls->ray_dir_y > 0)
-			texture = data->textures.east;
+			texture = data->textures.img_s;
 		else
-			texture = data->textures.west;
+			texture = data->textures.img_n;
 	}
 	calculate_wall_x(walls, data, texture);
 	return (texture);

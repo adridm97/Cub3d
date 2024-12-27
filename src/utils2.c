@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: moha <moha@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: adrian <adrian@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 12:15:26 by mel-atta          #+#    #+#             */
-/*   Updated: 2024/12/24 00:28:58 by moha             ###   ########.fr       */
+/*   Updated: 2024/12/25 01:14:55 by adrian           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,21 +64,18 @@ int	check_f_c(t_parser *parser, t_scene *scene)
 
 int	convert_hexa(char **sp_f, char **sp_c, t_scene *scene)
 {
-	int	num;
-	int	num2;
-	int	num3;
+	int	r;
+	int	g;
+	int	b;
 
-	num = 0;
-	num2 = 0;
-	num3 = 0;
-	num = atoi(sp_f[0]);
-	num2 = atoi(sp_f[1]);
-	num3 = atoi(sp_f[2]);
-	scene->fcolor = (num << 16) | (num2 << 8) | num3;
-	num = atoi(sp_c[0]);
-	num2 = atoi(sp_c[1]);
-	num3 = atoi(sp_c[2]);
-	scene->ccolor = (num << 16) | (num2 << 8) | num3;
+	r = atoi(sp_f[0]);
+	g = atoi(sp_f[1]);
+	b = atoi(sp_f[2]);
+	scene->fcolor = (r << 24) | (g << 16) | (b << 8) | 0xFF;
+	r = atoi(sp_c[0]);
+	g = atoi(sp_c[1]);
+	b = atoi(sp_c[2]);
+	scene->ccolor = (r << 24) | (g << 16) | (b << 8) | 0xFF;
 	return (0);
 }
 

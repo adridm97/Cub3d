@@ -6,7 +6,7 @@
 /*   By: adrian <adrian@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 23:34:14 by mel-atta          #+#    #+#             */
-/*   Updated: 2024/12/23 20:07:18 by adrian           ###   ########.fr       */
+/*   Updated: 2024/12/26 18:18:36 by adrian           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,8 @@ int	main(int argc, char *argv[])
 	}
 	data.scene = &scene;
 	data.parser = &parser;
+	init_textures(&data);
+	init_minimap(&data);
 	mlx_loop_hook(scene.mlx, &render, &data);
 	mlx_cursor_hook(scene.mlx, handle_mouse_move, &data);
 	mlx_close_hook(scene.mlx, close_window, &data);

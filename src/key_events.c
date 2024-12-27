@@ -6,70 +6,68 @@
 /*   By: adrian <adrian@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 18:57:16 by adrian            #+#    #+#             */
-/*   Updated: 2024/12/23 20:25:41 by adrian           ###   ########.fr       */
+/*   Updated: 2024/12/27 14:35:10 by adrian           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/cub3d.h"
 
-void	handle_forward_backward(t_data *data)
+void	handle_forward_backward(t_data *data, t_key key_w, t_key key_s)
 {
 	t_vec2	new_pos;
-	t_vec2	forward;
-	t_vec2	backward;
+	t_vec2	direction;
 
 	new_pos = data->scene->player.pos;
-	if (mlx_is_key_down(data->scene->mlx, MLX_KEY_W))
+	if (key_w.curr)
 	{
-		forward.x = data->scene->player.dir.x * MOVE_SPEED;
-		forward.y = data->scene->player.dir.y * MOVE_SPEED;
-		new_pos = sum_vec2(new_pos, forward);
+		direction.x = data->scene->player.dir.x * MOVE_SPEED;
+		direction.y = data->scene->player.dir.y * MOVE_SPEED;
 	}
-	else if (mlx_is_key_down(data->scene->mlx, MLX_KEY_S))
+	else if (key_s.curr)
 	{
-		backward.x = -data->scene->player.dir.x * MOVE_SPEED;
-		backward.y = -data->scene->player.dir.y * MOVE_SPEED;
-		new_pos = sum_vec2(new_pos, backward);
+		direction.x = -data->scene->player.dir.x * MOVE_SPEED;
+		direction.y = -data->scene->player.dir.y * MOVE_SPEED;
 	}
-	if (is_wall(data, new_pos.x, new_pos.y))
+	else
 		return ;
-	data->scene->player.pos = new_pos;
+	new_pos = sum_vec2(new_pos, direction);
+	if (!is_wall(data, new_pos.x, new_pos.y))
+		data->scene->player.pos = new_pos;
 }
 
-void	handle_strafe(t_data *data)
+void	handle_strafe(t_data *data, t_key key_a, t_key key_d)
 {
 	t_vec2	new_pos;
-	t_vec2	left;
-	t_vec2	right;
+	t_vec2	direction;
 
 	new_pos = data->scene->player.pos;
-	if (mlx_is_key_down(data->scene->mlx, MLX_KEY_A))
+	if (key_a.curr)
 	{
-		left.x = -data->scene->player.plane.x * MOVE_SPEED;
-		left.y = -data->scene->player.plane.y * MOVE_SPEED;
-		new_pos = sum_vec2(new_pos, left);
+		direction.x = -data->scene->player.plane.x * MOVE_SPEED;
+		direction.y = -data->scene->player.plane.y * MOVE_SPEED;
 	}
-	else if (mlx_is_key_down(data->scene->mlx, MLX_KEY_D))
+	else if (key_d.curr)
 	{
-		right.x = data->scene->player.plane.x * MOVE_SPEED;
-		right.y = data->scene->player.plane.y * MOVE_SPEED;
-		new_pos = sum_vec2(new_pos, right);
+		direction.x = data->scene->player.plane.x * MOVE_SPEED;
+		direction.y = data->scene->player.plane.y * MOVE_SPEED;
 	}
-	if (is_wall(data, new_pos.x, new_pos.y))
+	else
 		return ;
-	data->scene->player.pos = new_pos;
+	new_pos = sum_vec2(new_pos, direction);
+	if (!is_wall(data, new_pos.x, new_pos.y))
+		data->scene->player.pos = new_pos;
 }
 
-void	handle_rotation(t_data *data)
+void	handle_rotation(t_data *data, t_key key_left, t_key key_right)
 {
-	if (mlx_is_key_down(data->scene->mlx, MLX_KEY_LEFT))
+	if (key_left.curr)
 	{
 		data->scene->player.dir = rotate_vec2(data->scene->player.dir, \
 		-ROTATION_SPEED);
 		data->scene->player.plane = rotate_vec2(data->scene->player.plane, \
 		-ROTATION_SPEED);
 	}
-	else if (mlx_is_key_down(data->scene->mlx, MLX_KEY_RIGHT))
+	else if (key_right.curr)
 	{
 		data->scene->player.dir = rotate_vec2(data->scene->player.dir, \
 		ROTATION_SPEED);
@@ -80,15 +78,16 @@ void	handle_rotation(t_data *data)
 
 void	key_hook(t_data *data)
 {
-	if (mlx_is_key_down(data->scene->mlx, MLX_KEY_ESCAPE))
+	t_keys	*key;
+
+	key = data->key;
+	update_keys(key, data->scene->mlx);
+	if (key_pressed(key->esc))
 		handle_exit(data);
-	if (mlx_is_key_down(data->scene->mlx, MLX_KEY_W) || \
-	mlx_is_key_down(data->scene->mlx, MLX_KEY_S))
-		handle_forward_backward(data);
-	if (mlx_is_key_down(data->scene->mlx, MLX_KEY_A) || \
-	mlx_is_key_down(data->scene->mlx, MLX_KEY_D))
-		handle_strafe(data);
-	if (mlx_is_key_down(data->scene->mlx, MLX_KEY_LEFT) || \
-	mlx_is_key_down(data->scene->mlx, MLX_KEY_RIGHT))
-		handle_rotation(data);
+	if (key_held(key->w) || key_held(key->s))
+		handle_forward_backward(data, key->w, key->s);
+	if (key_held(key->a) || key_held(key->d))
+		handle_strafe(data, key->a, key->d);
+	if (key_held(key->left) || key_held(key->right))
+		handle_rotation(data, key->left, key->right);
 }

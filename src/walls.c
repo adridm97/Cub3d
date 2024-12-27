@@ -6,7 +6,7 @@
 /*   By: adrian <adrian@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/21 09:49:07 by adrian            #+#    #+#             */
-/*   Updated: 2024/12/23 20:02:27 by adrian           ###   ########.fr       */
+/*   Updated: 2024/12/26 13:53:45 by adrian           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,31 +111,22 @@ void	calculate_wall_parameters(t_wall *walls, t_scene *scene)
 		walls->draw_end = HEIGHT - 1;
 }
 
-void	draw_walls_loop(t_data *data, t_wall *walls, mlx_texture_t *texture)
+void	draw_walls_loop(t_data *data, mlx_image_t *texture)
 {
-	int	x;
-	int	y;
+	int		x;
+	t_wall	walls;
 
 	x = -1;
 	while (++x < WIDTH)
 	{
-		initialize_ray_properties(walls, data->scene, x);
-		initialize_step_and_distance(walls, data->scene);
-		perform_dda(walls, data->scene);
-		calculate_wall_parameters(walls, data->scene);
-		texture = select_texture(walls, data);
-		walls->step = 1.0 * texture->height / walls->line_height;
-		walls->tex_pos = (walls->draw_start - HEIGHT / 2 + \
-		walls->line_height / 2) * walls->step;
-		y = walls->draw_start;
-		while (y < walls->draw_end)
-		{
-			walls->tex_y = (int)walls->tex_pos & (texture->height - 1);
-			walls->tex_pos += walls->step;
-			walls->color = ((uint32_t *)texture->pixels)[walls->tex_y * \
-			texture->width + walls->tex_x];
-			((uint32_t *)data->image->pixels)[y * WIDTH + x] = walls->color;
-			y++;
-		}
+		initialize_ray_properties(&walls, data->scene, x);
+		initialize_step_and_distance(&walls, data->scene);
+		perform_dda(&walls, data->scene);
+		calculate_wall_parameters(&walls, data->scene);
+		texture = select_texture(&walls, data);
+		walls.step = 1.0 * texture->height / walls.line_height;
+		walls.tex_pos = (walls.draw_start - HEIGHT / 2 + \
+		walls.line_height / 2) * walls.step;
+		draw_wall_column_optimized(data, &walls, texture, x);
 	}
 }
