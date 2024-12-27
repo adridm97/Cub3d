@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_parser.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mel-atta <mel-atta@student.42.fr>          +#+  +:+       +#+        */
+/*   By: moha <moha@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 12:16:33 by mel-atta          #+#    #+#             */
-/*   Updated: 2024/12/26 17:44:49 by mel-atta         ###   ########.fr       */
+/*   Updated: 2024/12/27 14:35:37 by moha             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,19 @@ int	init_map(t_data *data, t_parser *parser)
 	return (0);
 }
 
+void free_sc(t_scene *scene)
+{
+	int	y;
+
+	y = 0;
+	while (scene && scene->map && scene->map[y])
+	{
+		free(scene->map[y]);
+		y++;
+	}
+	free(scene->map);
+}
+
 int	check_map(t_parser *parser, t_scene scene)
 {
 	int	y;
@@ -80,20 +93,23 @@ int	check_map(t_parser *parser, t_scene scene)
 
 void	calc_x_y(t_data *data)
 {
-	int	i;
-	int	j;
+	size_t	x;
+	size_t	y;
+	size_t	i;
 
+	x = 0;
+	y = 0;
 	i = 0;
-	j = 0;
-	while (data->map[i] != NULL)
+	while (data->map != NULL && data->map[y] != NULL)
+		y++;
+	while ((data->map != NULL && data->map[i] != NULL))
 	{
-		j = 0;
-		while (data->map[i][j] != '\0')
-			j++;
+		if (x < ft_strlen(data->map[i]))
+			x = ft_strlen(data->map[i]);
 		i++;
 	}
-	data->rowsy = i;
-	data->colsx = j;
+	data->rowsy = y;
+	data->colsx = x;
 }
 
 void	delete_enter(char **map)

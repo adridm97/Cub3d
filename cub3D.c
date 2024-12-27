@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mel-atta <mel-atta@student.42.fr>          +#+  +:+       +#+        */
+/*   By: moha <moha@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 23:34:14 by mel-atta          #+#    #+#             */
-/*   Updated: 2024/12/26 22:06:07 by mel-atta         ###   ########.fr       */
+/*   Updated: 2024/12/27 13:56:38 by moha             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,14 +39,15 @@ void	init_parser(t_parser *parser, t_scene *scene, char *file)
 	}
 }
 
-void	print_map(char **map, int rows)
-{
-	int	i;
+// void	print_map(char **map, int rows)
+// {
+// 	int	i;
 
-	i = 0;
-	while (i < rows)
-		printf("%s", map[i++]);
-}
+// 	i = 0;
+// 	while (i < rows)
+// 		printf("%s\n", map[i++]);
+// }
+
 int	main(int argc, char *argv[])
 {
 	t_data		data;
@@ -63,10 +64,9 @@ int	main(int argc, char *argv[])
 	set_scene(&scene, parser, &data);
 	if (check_map(&parser, scene))
 	{
-		write(2, "Error map\n", 9);
 		free_data(&parser, &data, &scene);
-		ft_free_game(scene.map);
-		// print_map(scene.map, scene.rows);
+		write(2, "Error map\n", 9);
+		// ft_free_game(scene.map);
 		exit(1);
 	}
 	data.scene = &scene;
