@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_parser.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adrian <adrian@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aduenas- <aduenas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 12:16:33 by mel-atta          #+#    #+#             */
-/*   Updated: 2024/12/27 14:43:15 by adrian           ###   ########.fr       */
+/*   Updated: 2024/12/27 19:13:31 by aduenas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ int	init_map(t_data *data, t_parser *parser)
 	return (0);
 }
 
-void free_sc(t_scene *scene)
+void	free_sc(t_scene *scene)
 {
 	int	y;
 
@@ -110,17 +110,4 @@ void	calc_x_y(t_data *data)
 	}
 	data->rowsy = y;
 	data->colsx = x;
-}
-
-void	delete_enter(char **map)
-{
-	int	i;
-
-	i = 0;
-	while (map != NULL && map[i] != NULL)
-	{
-		if (map[i][ft_strlen(map[i]) - 1] == '\n')
-			map[i][ft_strlen(map[i]) - 1] = '\0';
-		i++;
-	}
 }

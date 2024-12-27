@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adrian <adrian@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aduenas- <aduenas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/24 15:43:43 by aduenas-          #+#    #+#             */
-/*   Updated: 2024/12/27 14:51:21 by adrian           ###   ########.fr       */
+/*   Updated: 2024/12/27 19:13:00 by aduenas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -416,10 +416,13 @@ void					free_map(char **map, int size);
 int						check_file1(const char *filename);
 void					draw_player_minimap(t_data *data);
 void					draw_pixel_block(t_data *data);
-void					draw_wall_column_optimized(t_data *data, t_wall *walls, mlx_image_t *texture, int x);
+void					draw_wall_column_optimized(t_data *data, t_wall *walls, \
+mlx_image_t *texture, int x);
 void					update_keys(t_keys *keys, void *mlx);
 t_byte					key_pressed(t_key key);
 t_byte					key_held(t_key key);
 int						contar_comas(const char *cadena);
 int						check_rgb_rang(int r, int g, int b);
+void					free_scene_map(char **map, int rows);
+void					delete_enter(char **map);
 #endif

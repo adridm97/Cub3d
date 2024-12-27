@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minmap.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mel-atta <mel-atta@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aduenas- <aduenas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 16:59:56 by adrian            #+#    #+#             */
-/*   Updated: 2024/12/26 15:35:07 by mel-atta         ###   ########.fr       */
+/*   Updated: 2024/12/27 19:19:55 by aduenas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,10 +52,11 @@ void	clear_minimap(t_data *data)
 
 void	draw_minimap(t_data *data)
 {
-	int	y;
-	int	x;
-	static int first_time = 0;
+	int			y;
+	int			x;
+	static int	first_time;
 
+	first_time = 0;
 	data->minimap.player_x = data->scene->player.pos.x * data->minimap.scale_x;
 	data->minimap.player_y = data->scene->player.pos.y * data->minimap.scale_y;
 	data->minimap.player_size = 5;
@@ -79,7 +80,6 @@ void	draw_minimap(t_data *data)
 		mlx_image_to_window(data->scene->mlx, data->minimap.img, 0, 0);
 		first_time = 1;
 	}
-	// mlx_image_to_window(data->scene->mlx, data->minimap.img, 550, 300);
 }
 
 void	my_mlx_pixel_put(t_minimap *img, int x, int y, int color)

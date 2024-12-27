@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mel-atta <mel-atta@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aduenas- <aduenas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 12:39:56 by mel-atta          #+#    #+#             */
-/*   Updated: 2024/12/26 20:36:06 by mel-atta         ###   ########.fr       */
+/*   Updated: 2024/12/27 18:05:36 by aduenas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	close_window(void *param)
 	t_data	*data;
 
 	data = (t_data *)param;
-	cleanup(data);
+	handle_exit(data);
 }
 
 void	cleanup(t_data *data)
@@ -30,7 +30,6 @@ void	cleanup(t_data *data)
 		mlx_delete_image(data->scene->mlx, data->image);
 	if (data->scene->mlx)
 		mlx_terminate(data->scene->mlx);
-	exit(0);
 }
 
 void	free_mlx(t_scene *scene, t_parser *parser)
@@ -48,6 +47,8 @@ void	free_map(char **map, int size)
 {
 	int	i;
 
+	if (!map)
+		return ;
 	i = 0;
 	while (i < size)
 	{

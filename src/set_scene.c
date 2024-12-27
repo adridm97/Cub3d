@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   set_scene.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adrian <adrian@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aduenas- <aduenas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 12:15:17 by mel-atta          #+#    #+#             */
-/*   Updated: 2024/12/27 14:44:03 by adrian           ###   ########.fr       */
+/*   Updated: 2024/12/27 19:24:48 by aduenas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,24 +42,15 @@ void	copy_and_replace(char *dest, const char *src, size_t len)
 	size_t	j;
 
 	j = 0;
-    while (j < len)
-    {
-        if (src[j] == ' ')
-            dest[j] = '0';
-        else
-            dest[j] = src[j];
-        j++;
-    }
-    dest[len] = '\0';
-}
-
-void free_scene_map(t_scene *scene, int rows)
-{
-    for (int i = 0; i < rows; i++)
-    {
-        free(scene->map[i]);
-    }
-    free(scene->map);
+	while (j < len)
+	{
+		if (src[j] == ' ')
+			dest[j] = '0';
+		else
+			dest[j] = src[j];
+		j++;
+	}
+	dest[len] = '\0';
 }
 
 void	parse_scene(t_scene *scene, t_data *data)
@@ -78,6 +69,7 @@ void	parse_scene(t_scene *scene, t_data *data)
 		scene->map[i] = malloc(sizeof(char) * (len + 1));
 		if (scene->map[i] == NULL)
 		{
+			free_scene_map(scene->map, i);
 			free_data(data->parser, data, scene);
 			return ;
 		}
@@ -102,43 +94,12 @@ void	set_scene(t_scene *scene, t_parser parser, t_data *data)
 		free_data(&parser, data, scene);
 		exit(0);
 	}
+	data->key = malloc(sizeof(t_keys));
 	if (!data->key)
 	{
-		data->key = malloc(sizeof(t_keys));
-		if (!data->key)
-		{
-			free_data(&parser, data, scene);
-			perror("Error al asignar memoria para data->key");
-			exit(1);
-		}
+		free_data(&parser, data, scene);
+		perror("Error al asignar memoria para data->key");
+		exit(1);
 	}
 	ft_memset(data->key, 0, sizeof(t_keys));
-}
-
-char	**padding_map(char **map, int *rows, int *cols)
-{
-	char	**new_map;
-	int		i;
-
-	*rows += 10 * 2;
-	*cols += 10 * 2;
-	new_map = malloc(sizeof(char *) * (*rows + 1));
-	if (!new_map)
-		return (NULL);
-	i = 0;
-	while (i < *rows)
-	{
-		new_map[i] = malloc(sizeof(char) * (*cols + 1));
-		if (!new_map[i])
-			return (ft_free_game(new_map), NULL);
-		ft_memset(new_map[i], ' ', *cols + 1);
-		if (i >= 10 && i < *rows - 10)
-		{
-			ft_strlcpy(new_map[i] + 10 - 2, map[i - 10], *cols + 1);
-		}
-		new_map[i][*cols] = '\0';
-		i++;
-	}
-	new_map[i] = NULL;
-	return (new_map);
 }

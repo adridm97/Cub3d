@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: adrian <adrian@student.42.fr>              +#+  +:+       +#+         #
+#    By: aduenas- <aduenas-@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/23 21:44:47 by aduenas-          #+#    #+#              #
-#    Updated: 2024/12/27 14:42:27 by adrian           ###   ########.fr        #
+#    Updated: 2024/12/27 19:24:27 by aduenas-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ LIBFT = 42libft/libft.a
 SRCS = cub3D.c src/check_map.c src/check_player.c src/ft_free.c src/map_parser.c \
 	src/set_scene.c src/utils.c src/utils2.c src/set_player.c src/render.c src/key_events.c src/minmap.c \
 	src/free.c src/handle_mouse_move.c src/player_colision.c src/errors.c src/textures.c src/walls.c \
-	src/exit.c src/vectors.c src/trim.c src/utils3.c src/draw.c src/keys.c src/check_rgb.c
+	src/exit.c src/vectors.c src/trim.c src/utils3.c src/draw.c src/keys.c src/check_rgb.c src/map.c
 OBJS = $(SRCS:.c=.o)
 MLX_LIB_DIR = MLX42/build
 MLX_LIB = -L$(MLX_LIB_DIR) -lmlx42

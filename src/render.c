@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adrian <adrian@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aduenas- <aduenas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 18:28:30 by adrian            #+#    #+#             */
-/*   Updated: 2024/12/27 14:43:27 by adrian           ###   ########.fr       */
+/*   Updated: 2024/12/27 19:16:05 by aduenas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@ void	render(void *scene_keys)
 
 void	draw_background(mlx_image_t *image, t_scene *scene)
 {
-	int	y;
-	int	x;
+	int			y;
+	int			x;
 	static int	first_time = 0;
 
 	handle_errors_background(image, scene);
@@ -46,18 +46,13 @@ void	draw_background(mlx_image_t *image, t_scene *scene)
 	{
 		x = -1;
 		while (++x < WIDTH)
-		{
 			mlx_put_pixel(image, x, y, scene->fcolor);
-		}
 	}
 	if (first_time == 0)
 	{
 		first_time = 1;
 		if (mlx_image_to_window(scene->mlx, image, 0, 0) < 0)
-		{
-			perror("Error al mostrar la imagen en la ventana");
 			exit(1);
-		}
 	}
 }
 
@@ -66,7 +61,6 @@ void	draw_walls(t_data *data, t_scene *scene)
 	mlx_image_t	*texture;
 
 	texture = NULL;
-	
 	validate_scene_and_data(data, scene);
 	draw_walls_loop(data, texture);
 }

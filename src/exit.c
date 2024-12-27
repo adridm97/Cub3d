@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adrian <adrian@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aduenas- <aduenas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/21 13:18:28 by aduenas-          #+#    #+#             */
-/*   Updated: 2024/12/26 17:36:27 by adrian           ###   ########.fr       */
+/*   Updated: 2024/12/27 19:12:29 by aduenas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,11 +57,26 @@ void	handle_exit(t_data *data)
 	if (data)
 	{
 		cleanup(data);
+		if (data->scene && data->scene->map)
+		{
+			free_map(data->scene->map, data->scene->rows);
+		}
 		free_textures(data->textures, data);
 	}
 	printf("Saliendo del juego...\n");
-	mlx_delete_image(data->scene->mlx, data->image);
-	mlx_terminate(data->scene->mlx);
 	free_data(data->parser, data, data->scene);
 	exit(0);
+}
+
+void	delete_enter(char **map)
+{
+	int	i;
+
+	i = 0;
+	while (map != NULL && map[i] != NULL)
+	{
+		if (map[i][ft_strlen(map[i]) - 1] == '\n')
+			map[i][ft_strlen(map[i]) - 1] = '\0';
+		i++;
+	}
 }

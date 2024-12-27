@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adrian <adrian@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aduenas- <aduenas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 23:34:14 by mel-atta          #+#    #+#             */
-/*   Updated: 2024/12/27 14:41:27 by adrian           ###   ########.fr       */
+/*   Updated: 2024/12/27 19:08:52 by aduenas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,23 +39,13 @@ void	init_parser(t_parser *parser, t_scene *scene, char *file)
 	}
 }
 
-// void	print_map(char **map, int rows)
-// {
-// 	int	i;
-
-// 	i = 0;
-// 	while (i < rows)
-// 		printf("%s\n", map[i++]);
-// }
-
 int	main(int argc, char *argv[])
 {
 	t_data		data;
 	t_parser	parser;
 	t_scene		scene;
 
-	handle_args(argc);
-	init_parser(&parser, &scene, argv[1]);
+	(handle_args(argc), init_parser(&parser, &scene, argv[1]));
 	if (init_map(&data, &parser))
 	{
 		free_data(&parser, &data, &scene);
@@ -66,7 +56,6 @@ int	main(int argc, char *argv[])
 	{
 		free_data(&parser, &data, &scene);
 		write(2, "Error map\n", 9);
-		// ft_free_game(scene.map);
 		exit(1);
 	}
 	data.scene = &scene;
@@ -77,5 +66,4 @@ int	main(int argc, char *argv[])
 	mlx_cursor_hook(scene.mlx, handle_mouse_move, &data);
 	mlx_close_hook(scene.mlx, close_window, &data);
 	mlx_loop(scene.mlx);
-	mlx_terminate(scene.mlx);
 }

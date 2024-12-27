@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   textures.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adrian <adrian@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aduenas- <aduenas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/20 23:03:11 by adrian            #+#    #+#             */
-/*   Updated: 2024/12/26 13:30:45 by adrian           ###   ########.fr       */
+/*   Updated: 2024/12/27 19:16:28 by aduenas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,14 @@ void	init_textures(t_data *data)
 	data->textures.south = load_texture(data->parser->elem.so, "sur");
 	data->textures.east = load_texture(data->parser->elem.ea, "este");
 	data->textures.west = load_texture(data->parser->elem.we, "oeste");
-	data->textures.img_n = mlx_texture_to_image(data->scene->mlx, data->textures.north);
-	data->textures.img_s = mlx_texture_to_image(data->scene->mlx, data->textures.south);
-	data->textures.img_e = mlx_texture_to_image(data->scene->mlx, data->textures.east);
-	data->textures.img_w = mlx_texture_to_image(data->scene->mlx, data->textures.west);
+	data->textures.img_n = mlx_texture_to_image(data->scene->mlx, \
+	data->textures.north);
+	data->textures.img_s = mlx_texture_to_image(data->scene->mlx, \
+	data->textures.south);
+	data->textures.img_e = mlx_texture_to_image(data->scene->mlx, \
+	data->textures.east);
+	data->textures.img_w = mlx_texture_to_image(data->scene->mlx, \
+	data->textures.west);
 }
 
 void	calculate_wall_x(t_wall *walls, t_data *data, mlx_image_t *texture)

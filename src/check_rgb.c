@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_rgb.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: moha <moha@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: aduenas- <aduenas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/25 14:32:38 by moha              #+#    #+#             */
-/*   Updated: 2024/12/25 15:07:16 by moha             ###   ########.fr       */
+/*   Updated: 2024/12/27 19:17:07 by aduenas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ int	contar_comas(const char *cadena)
 	int	contador;
 
 	contador = 0;
-
 	while (*cadena != '\0')
 	{
 		if (*cadena == ',')
@@ -26,7 +25,6 @@ int	contar_comas(const char *cadena)
 		}
 		cadena++;
 	}
-
 	return (contador);
 }
 
