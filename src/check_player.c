@@ -6,7 +6,7 @@
 /*   By: aduenas- <aduenas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 12:17:39 by mel-atta          #+#    #+#             */
-/*   Updated: 2024/12/28 17:52:32 by aduenas-         ###   ########.fr       */
+/*   Updated: 2024/12/28 19:40:47 by aduenas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,22 +42,26 @@ int	check_player(char **map, t_parser *parser)
 
 int	check_space(char **map, int x, int y, char letter_player)
 {
-	if (map[y][x] != '1' && map[y][x] != '0' && map[y][x] != ' '
-		&& map[y][x] != letter_player && map[y][x] != '\0' && map[y][x] != '\n')
+	if (map[y][x] != '1' && map[y][x] != '0' && map[y][x] != '2'
+		&& map[y][x] != letter_player && map[y][x] != '\0' &&
+		map[y][x] != '\n' && map[y][x] != ' ')
+		return (1);
+	if (map[y][x] == '2' && (map[y][x - 1] == '0' ||
+	map[y][x + 1] == '0' || map[y - 1][x] == '0' || map[y + 1][x] == '0'))
 		return (1);
 	if ((map[y][x] == '0' || map[y][x] == letter_player) && y == 0)
 		return (1);
 	if ((map[y][x] == '0' || map[y][x] == letter_player) && ((map[y
 			- 1][x] == '\n' || map[y + 1][x] == '\n') || (map[y
-			- 1][x] == ' ' || map[y + 1][x] == ' ')))
+			- 1][x] == '2' || map[y + 1][x] == '2')))
 		return (1);
 	if ((map[y][x] == '0' || map[y][x] == letter_player) && map[y + 1] == NULL)
 		return (1);
 	if ((map[y][x] == '0' || map[y][x] == letter_player) && (map[y][x
-			+ 1] == ' ' || map[y][x + 1] == '\0'))
+			+ 1] == '2' || map[y][x + 1] == '\0'))
 		return (1);
 	if ((map[y][x] == '0' || map[y][x] == letter_player) && map[y][x
-		- 1] == ' ')
+		- 1] == '2')
 		return (1);
 	return (0);
 }
