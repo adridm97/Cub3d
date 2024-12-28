@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mel-atta <mel-atta@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aduenas- <aduenas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/24 15:43:43 by aduenas-          #+#    #+#             */
-/*   Updated: 2024/12/28 01:12:31 by mel-atta         ###   ########.fr       */
+/*   Updated: 2024/12/28 18:15:28 by aduenas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 
 # define WIDTH 1020
 # define HEIGHT 720
-# define WALL_PADDING 0.1
+# define PLAYER_PADDING 0.1
 # define MOVE_SPEED 0.04f
 # define ROTATION_SPEED 0.04f
 
@@ -327,7 +327,7 @@ void					parse_map(t_cub3d *game, char *line);
 void					check_map_validity(t_cub3d *game);
 void					exit_error(t_cub3d *game, char *message);
 char					*ft_strtrim(char const *s1, char const *s2);
-bool					check_collision(t_data *data, t_vec2 new_pos);
+int					check_collision(t_data *data, t_vec2 new_pos);
 void					handle_errors_background(mlx_image_t *image,
 							t_scene *scene);
 void					validate_scene_and_data(t_data *data, t_scene *scene);
@@ -382,7 +382,7 @@ void					draw_minimap(t_data *data);
 void					close_window(void *param);
 void					cleanup(t_data *data);
 void					handle_mouse_move(double x, double y, void *param);
-bool					is_wall(t_data *data, int x, int y);
+int					is_wall(t_data *data, double x, double y);
 void					free_string(char *str);
 int						init_game(t_cub3d *game, char *scene_file);
 void					setup_window(t_cub3d *game);
@@ -404,7 +404,7 @@ void					parse_map(t_cub3d *game, char *line);
 void					check_map_validity(t_cub3d *game);
 void					exit_error(t_cub3d *game, char *message);
 char					*ft_strtrim(char const *s1, char const *s2);
-bool					check_collision(t_data *data, t_vec2 new_pos);
+int						check_collision(t_data *data, t_vec2 new_pos);
 void					free_split(char **split);
 void					handle_exit(t_data *data);
 t_vec2					sum_vec2(t_vec2 v1, t_vec2 v2);

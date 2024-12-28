@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_player.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mel-atta <mel-atta@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aduenas- <aduenas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 12:17:39 by mel-atta          #+#    #+#             */
-/*   Updated: 2024/12/26 22:23:11 by mel-atta         ###   ########.fr       */
+/*   Updated: 2024/12/28 17:52:32 by aduenas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,9 @@ int	check_space(char **map, int x, int y, char letter_player)
 		return (1);
 	if ((map[y][x] == '0' || map[y][x] == letter_player) && y == 0)
 		return (1);
-	if ((map[y][x] == '0' || map[y][x] == letter_player) && (map[y
-			- 1][x] == ' ' || map[y + 1][x] == ' '))
+	if ((map[y][x] == '0' || map[y][x] == letter_player) && ((map[y
+			- 1][x] == '\n' || map[y + 1][x] == '\n') || (map[y
+			- 1][x] == ' ' || map[y + 1][x] == ' ')))
 		return (1);
 	if ((map[y][x] == '0' || map[y][x] == letter_player) && map[y + 1] == NULL)
 		return (1);
