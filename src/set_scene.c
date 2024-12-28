@@ -6,7 +6,7 @@
 /*   By: aduenas- <aduenas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 12:15:17 by mel-atta          #+#    #+#             */
-/*   Updated: 2024/12/28 19:35:25 by aduenas-         ###   ########.fr       */
+/*   Updated: 2024/12/28 19:42:45 by aduenas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,6 @@ void	set_scene(t_scene *scene, t_parser parser, t_data *data)
 	scene->cols = data->colsx;
 	parse_scene(scene, data);
 	scene->map = padding_map(scene->map, &scene->rows, &scene->cols);
-	print_map(scene->map, scene->rows);
 	scene->player = set_player(scene->map);
 	set_mlx(scene, parser, data);
 	if (scene->map == NULL)
