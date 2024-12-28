@@ -6,7 +6,7 @@
 /*   By: aduenas- <aduenas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 12:35:00 by adrian            #+#    #+#             */
-/*   Updated: 2024/12/28 17:59:01 by aduenas-         ###   ########.fr       */
+/*   Updated: 2024/12/28 18:22:24 by aduenas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,11 @@ int	is_wall(t_data *data, double x, double y)
 		return (1);
 	if (data->scene->map[check_y][check_x] == '1')
 		return (1);
-	check_x = (int)(x - PLAYER_PADDING);
-	while (check_x <= (int)(x + PLAYER_PADDING))
+	check_x = (int)(x - PLAYER_PADDING - 1);
+	while (++check_x <= (int)(x + PLAYER_PADDING))
 	{
-		check_y = (int)(y - PLAYER_PADDING);
-		while (check_y <= (int)(y + PLAYER_PADDING))
+		check_y = (int)(y - PLAYER_PADDING - 1);
+		while (++check_y <= (int)(y + PLAYER_PADDING))
 		{
 			if (check_x >= 0 && check_x < data->scene->cols && check_y >= 0 && \
 			check_y < data->scene->rows)
@@ -36,13 +36,10 @@ int	is_wall(t_data *data, double x, double y)
 				if (data->scene->map[check_y][check_x] == '1')
 					return (1);
 			}
-			check_y++;
 		}
-		check_x++;
 	}
 	return (0);
 }
-
 
 int	check_collision(t_data *data, t_vec2 new_pos)
 {
