@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aduenas- <aduenas-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mel-atta <mel-atta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 12:39:56 by mel-atta          #+#    #+#             */
-/*   Updated: 2024/12/27 18:05:36 by aduenas-         ###   ########.fr       */
+/*   Updated: 2024/12/27 23:08:39 by mel-atta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,4 +57,13 @@ void	free_map(char **map, int size)
 		i++;
 	}
 	free(map);
+}
+
+void	put_image_window_once(t_data *data, int first_time)
+{
+	if (first_time == 0)
+	{
+		mlx_image_to_window(data->scene->mlx, data->minimap.img, 0, 0);
+		first_time = 1;
+	}
 }

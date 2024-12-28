@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minmap.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aduenas- <aduenas-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mel-atta <mel-atta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 16:59:56 by adrian            #+#    #+#             */
-/*   Updated: 2024/12/27 20:05:42 by aduenas-         ###   ########.fr       */
+/*   Updated: 2024/12/28 18:02:39 by mel-atta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	init_minimap(t_data *data)
 		data->minimap.width, data->minimap.height);
 	if (!data->minimap.img)
 	{
-		fprintf(stderr, "Error: could not create minimap image\n");
+		ft_putstr_fd("Error: could not create minimap image\n", 2);
 		exit(1);
 	}
 }
@@ -75,11 +75,7 @@ void	draw_minimap(t_data *data)
 		}
 	}
 	draw_player_minimap(data);
-	if (first_time == 0)
-	{
-		mlx_image_to_window(data->scene->mlx, data->minimap.img, 0, 0);
-		first_time = 1;
-	}
+	put_image_window_once(data, first_time);
 }
 
 void	my_mlx_pixel_put(t_minimap *img, int x, int y, int color)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   textures.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aduenas- <aduenas-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mel-atta <mel-atta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/20 23:03:11 by adrian            #+#    #+#             */
-/*   Updated: 2024/12/27 19:16:28 by aduenas-         ###   ########.fr       */
+/*   Updated: 2024/12/27 22:57:00 by mel-atta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@ static mlx_texture_t	*load_texture(const char *path, const char *name)
 	texture = mlx_load_png(trimmed_path);
 	if (!texture)
 	{
-		printf("Error al cargar textura %s: %s\n", name, trimmed_path);
+		write(1, "Error al cargar textura ", 25);
+		write(1, name, ft_strlen(name));
 		free(trimmed_path);
 		exit(1);
 	}

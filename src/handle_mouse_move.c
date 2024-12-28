@@ -6,23 +6,38 @@
 /*   By: mel-atta <mel-atta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 22:26:47 by mel-atta          #+#    #+#             */
-/*   Updated: 2024/12/24 16:43:34 by mel-atta         ###   ########.fr       */
+/*   Updated: 2024/12/28 12:29:20 by mel-atta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/cub3d.h"
 
+void	rotate(t_data *data, double angle)
+{
+	float	plane;
+	float	old_dir_x;
+
+	old_dir_x = data->scene->player.dir.x;
+	data->scene->player.dir.x = data->scene->player.dir.x * cos(angle)
+		- data->scene->player.dir.y * sin(angle);
+	data->scene->player.dir.y = old_dir_x * sin(angle)
+		+ data->scene->player.dir.y * cos(angle);
+	plane = data->scene->player.plane.x;
+	data->scene->player.plane.x = data->scene->player.plane.x * cos(angle) \
+		- data->scene->player.plane.y * sin(angle);
+	data->scene->player.plane.y = plane * sin(angle)
+		+ data->scene->player.plane.y * cos(angle);
+}
+
 void	handle_mouse_move(double x, double y, void *param)
 {
-	static int	last_x;
+	static int	last_x = -1;
 	int			delta_x;
 	float		angle;
-	float		old_dir_x;
 	t_data		*data;
 
 	(void)y;
 	data = (t_data *)param;
-	last_x = -1;
 	if (last_x == -1)
 	{
 		last_x = x;
@@ -30,12 +45,8 @@ void	handle_mouse_move(double x, double y, void *param)
 	}
 	delta_x = x - last_x;
 	last_x = x;
-	angle = delta_x * 0.002;
-	old_dir_x = data->scene->player.dir.x;
-	data->scene->player.dir.x = data->scene->player.dir.x * cos(angle)
-		- data->scene->player.dir.y * sin(angle);
-	data->scene->player.dir.y = old_dir_x * sin(angle)
-		+ data->scene->player.dir.y * cos(angle);
+	angle = delta_x * 0.005f;
+	rotate(data, angle);
 }
 
 void	draw_player_minimap(t_data *data)

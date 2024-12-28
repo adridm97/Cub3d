@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aduenas- <aduenas-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mel-atta <mel-atta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/24 15:43:43 by aduenas-          #+#    #+#             */
-/*   Updated: 2024/12/27 20:02:23 by aduenas-         ###   ########.fr       */
+/*   Updated: 2024/12/28 01:12:31 by mel-atta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -423,4 +423,6 @@ int						contar_comas(const char *cadena);
 int						check_rgb_rang(int r, int g, int b);
 void					free_scene_map(char **map, int rows);
 void					delete_enter(char **map);
+void					put_image_window_once(t_data *data, int first_time);
+void					rotate(t_data *data, double angle);
 #endif

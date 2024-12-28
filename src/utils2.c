@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adrian <adrian@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mel-atta <mel-atta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 12:15:26 by mel-atta          #+#    #+#             */
-/*   Updated: 2024/12/27 14:44:55 by adrian           ###   ########.fr       */
+/*   Updated: 2024/12/27 22:58:48 by mel-atta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,13 +70,13 @@ int	convert_hexa(char **sp_f, char **sp_c, t_scene *scene)
 	int	g;
 	int	b;
 
-	r = atoi(sp_f[0]);
-	g = atoi(sp_f[1]);
-	b = atoi(sp_f[2]);
+	r = ft_atoi(sp_f[0]);
+	g = ft_atoi(sp_f[1]);
+	b = ft_atoi(sp_f[2]);
 	scene->fcolor = (r << 24) | (g << 16) | (b << 8) | 0xFF;
-	r = atoi(sp_c[0]);
-	g = atoi(sp_c[1]);
-	b = atoi(sp_c[2]);
+	r = ft_atoi(sp_c[0]);
+	g = ft_atoi(sp_c[1]);
+	b = ft_atoi(sp_c[2]);
 	scene->ccolor = (r << 24) | (g << 16) | (b << 8) | 0xFF;
 	return (0);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   set_scene.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aduenas- <aduenas-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mel-atta <mel-atta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 12:15:17 by mel-atta          #+#    #+#             */
-/*   Updated: 2024/12/27 19:24:48 by aduenas-         ###   ########.fr       */
+/*   Updated: 2024/12/28 18:03:07 by mel-atta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	copy_and_replace(char *dest, const char *src, size_t len)
 	while (j < len)
 	{
 		if (src[j] == ' ')
-			dest[j] = '0';
+			dest[j] = '2';
 		else
 			dest[j] = src[j];
 		j++;
@@ -82,6 +82,7 @@ void	parse_scene(t_scene *scene, t_data *data)
 
 void	set_scene(t_scene *scene, t_parser parser, t_data *data)
 {
+
 	calc_x_y(data);
 	scene->rows = data->rowsy;
 	scene->cols = data->colsx;
