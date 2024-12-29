@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_parser.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aduenas- <aduenas-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mel-atta <mel-atta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 12:16:33 by mel-atta          #+#    #+#             */
-/*   Updated: 2024/12/27 19:13:31 by aduenas-         ###   ########.fr       */
+/*   Updated: 2024/12/29 20:05:33 by mel-atta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,18 +39,24 @@ int	init_map(t_data *data, t_parser *parser)
 {
 	int		y;
 	char	*trimed;
+	int		is_map;
 
 	y = 0;
+	is_map = 0;
 	parser->rowsfile = ft_rowsfile(parser->file);
 	while (parser->file[y] != NULL)
 	{
 		trimed = ft_strtrim(parser->file[y], " ");
 		if (trimed[0] == '1')
+		{
+			is_map = 1;
 			break ;
+		}
 		y++;
 		free(trimed);
 	}
-	free(trimed);
+	if (is_map == 1)
+		free(trimed);
 	data->map = copy_map(*parser, y);
 	return (0);
 }
